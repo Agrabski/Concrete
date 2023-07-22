@@ -1,5 +1,6 @@
 ﻿using Concrete.Core;
 using Concrete.Core.Serialization;
+using Concrete.Quizes.Questions.Instances.MultipleChoice.Grading;
 using Concrete.Quizes.Questions.Templates.MultipleChoice;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,10 +13,10 @@ public class SerializationTests
 		.AddBuiltInConcreteQuestions()
 		.BuildServiceProvider();
 	[Fact]
-	public void Test1()
+	public void QuestionBankWithMultipleChoiceQuestionCanBeSerializedAndDeserialized()
 	{
 		var serializer = _serviceProvider.GetRequiredService<IConcreteSerializer>();
-		var text = serializer.Serialize(new MultipleChoiceQuestionTemplate()
+		var question = new MultipleChoiceQuestionTemplate()
 		{
 			Question = new(new()
 			{
@@ -29,7 +30,24 @@ public class SerializationTests
 				new(1, new(new(){["pl"] = "?!", ["en"] = "?1"})),
 				new(2, new(new(){["pl"] = "Nie wiem", ["en"] = "I dont know"})),
 			},
-		});
-		text.Trim();
+			Grading = new AllOrNothingGrading(0)
+		};
+		var questionBank = new QuestionBank()
+		{
+			QuestionTemplates = { question }
+		};
+		var text = serializer.Serialize(questionBank);
+
+
+		var deserializedBank = serializer.Deserialize<QuestionBank>(text);
+		Assert.Collection(
+			deserializedBank.QuestionTemplates,
+			q => Assert.Collection(
+				Assert.IsType<MultipleChoiceQuestionTemplate>(q).Answers,
+				_ => { },
+				_ => { },
+				_ => { }
+				)
+		);
 	}
 }

@@ -1,19 +1,17 @@
 ﻿using Concrete.Core.Questions.Templates;
 
 namespace Concrete.Core;
-public class QuestionBank
+public class QuestionBank : IQuestionBank
 {
-	private readonly Dictionary<Guid, IQuestionTemplate> _questionTemplates = new();
+	public List<IQuestionTemplate> QuestionTemplates { get; init; } = new();
 	public Guid Id { get; init; } = Guid.NewGuid();
 	public void AddQuestion(IQuestionTemplate questionTemplate)
 	{
-		_questionTemplates.Add(questionTemplate.Id, questionTemplate);
+		QuestionTemplates.Add(questionTemplate);
 	}
 
 	public IQuestionTemplate? TryGetQuestionTemplate(Guid id)
 	{
-		if (_questionTemplates.TryGetValue(id, out var question))
-			return question;
-		return null;
+		return QuestionTemplates.FirstOrDefault(q => q.Id == id);
 	}
 }

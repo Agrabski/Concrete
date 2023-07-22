@@ -2,6 +2,7 @@
 using Concrete.Core.Questions.Templates;
 using Concrete.Localization;
 using Concrete.Quizes.Questions.Instances.MultipleChoice;
+using Concrete.Quizes.Questions.Instances.MultipleChoice.Grading;
 
 namespace Concrete.Quizes.Questions.Templates.MultipleChoice;
 public class MultipleChoiceQuestionTemplate : IQuestionTemplate<MultipleChoiceQuestionAnswerSet>
@@ -12,6 +13,7 @@ public class MultipleChoiceQuestionTemplate : IQuestionTemplate<MultipleChoiceQu
 	public List<string> ParameterNames { get; init; } = new();
 	// todo
 	public IEnumerable<QuestionTemplateInstance> AvailableInstances { get; } = Array.Empty<QuestionTemplateInstance>();
+	public required IGrading Grading { get; init; }
 
 	public IQuestion<MultipleChoiceQuestionAnswerSet> FillTemplate(Dictionary<string, object> parameters)
 	{
@@ -23,7 +25,8 @@ public class MultipleChoiceQuestionTemplate : IQuestionTemplate<MultipleChoiceQu
 			Answers = Answers
 				.Select(a => new MultipleChoiceQuestionAnswer(a.Index, a.Text.Fill(parameters)))
 				.ToList(),
-			Question = Question.Fill(parameters)
+			Question = Question.Fill(parameters),
+			Grading = Grading
 		};
 	}
 }

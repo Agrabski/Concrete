@@ -2,7 +2,4 @@
   <ItemGroup>
     <ProjectReference Include="..\Concrete.Core\Concrete.Core.csproj" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="CultureFilledDtos\MultipleChoice\" />
-  </ItemGroup>
 </Project>
