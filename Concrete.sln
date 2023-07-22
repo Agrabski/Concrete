@@ -5,7 +5,19 @@ VisualStudioVersion = 17.6.33417.168
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Concrete.Server", "Concrete.Server\Concrete.Server.csproj", "{367B9029-190C-4126-8BB1-42A60B950063}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Concrete.Core", "Concrete.Core\Concrete.Core.csproj", "{D1020851-18EC-4B85-8F5A-B613B73F52A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Concrete.Core", "Concrete.Core\Concrete.Core.csproj", "{D1020851-18EC-4B85-8F5A-B613B73F52A4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F6E64E16-976F-4DAD-9626-C79FD920B1B8}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		Directory.Build.props = Directory.Build.props
+		LICENSE.txt = LICENSE.txt
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Concrete.Localization", "Concrete.Localization\Concrete.Localization.csproj", "{F0A9D307-22F2-4AD8-842C-D359C86A7277}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Concrete.Quizes.Questions", "Concrete.Quizes.Questions\Concrete.Quizes.Questions.csproj", "{47D1AD2F-1C23-4B16-86B2-0572F08DAF85}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +33,14 @@ Global
 		{D1020851-18EC-4B85-8F5A-B613B73F52A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D1020851-18EC-4B85-8F5A-B613B73F52A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D1020851-18EC-4B85-8F5A-B613B73F52A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F0A9D307-22F2-4AD8-842C-D359C86A7277}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0A9D307-22F2-4AD8-842C-D359C86A7277}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0A9D307-22F2-4AD8-842C-D359C86A7277}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0A9D307-22F2-4AD8-842C-D359C86A7277}.Release|Any CPU.Build.0 = Release|Any CPU
+		{47D1AD2F-1C23-4B16-86B2-0572F08DAF85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{47D1AD2F-1C23-4B16-86B2-0572F08DAF85}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{47D1AD2F-1C23-4B16-86B2-0572F08DAF85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{47D1AD2F-1C23-4B16-86B2-0572F08DAF85}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
