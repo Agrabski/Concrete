@@ -3,25 +3,23 @@
 namespace Concrete.Localization;
 public class LocalisedStringTemplate
 {
-	private readonly Dictionary<string, string> _templatesByLocale = new();
-
+	public Dictionary<string, string> TemplatesByLocale { get; init; } = new();
 	public LocalisedStringTemplate()
 	{
 	}
-
 	public LocalisedStringTemplate(Dictionary<string, string> templatesByLocale)
 	{
-		_templatesByLocale = templatesByLocale;
+		TemplatesByLocale = templatesByLocale;
 	}
 
 	public string FillTemplateForLocale(string locale, Dictionary<string, object> parameters)
 	{
 		// todo: verify locale
-		return Smart.Format(_templatesByLocale[locale], parameters);
+		return Smart.Format(TemplatesByLocale[locale], parameters);
 	}
 
 	public LocalisedString Fill(Dictionary<string, object> parameters)
 	{
-		return new(_templatesByLocale.ToDictionary(kv => kv.Key, kv => Smart.Format(kv.Value, parameters)));
+		return new(TemplatesByLocale.ToDictionary(kv => kv.Key, kv => Smart.Format(kv.Value, parameters)));
 	}
 }

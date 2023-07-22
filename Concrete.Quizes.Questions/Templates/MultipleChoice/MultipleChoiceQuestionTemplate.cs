@@ -19,6 +19,7 @@ public class MultipleChoiceQuestionTemplate : IQuestionTemplate<MultipleChoiceQu
 		{
 			Parameters = parameters,
 			TemplateId = Id,
+			QuestionId = Guid.NewGuid(),
 			Answers = Answers
 				.Select(a => new MultipleChoiceQuestionAnswer(a.Index, a.Text.Fill(parameters)))
 				.ToList(),

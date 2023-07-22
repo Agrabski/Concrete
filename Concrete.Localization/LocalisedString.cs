@@ -2,16 +2,16 @@
 
 public class LocalisedString
 {
-	private readonly Dictionary<string, string> _textByLocale = new();
-
+	public Dictionary<string, string> TextByLocale { get; } = new();
 	public LocalisedString(Dictionary<string, string> textByLocale)
 	{
-		_textByLocale = textByLocale;
+		TextByLocale = textByLocale;
 	}
+
 
 	public string GetTextForLocale(string locale)
 	{
 		// todo: verify locale
-		return _textByLocale[locale];
+		return TextByLocale[locale];
 	}
 }
