@@ -17,4 +17,10 @@
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\Concrete.Core\Concrete.Core.csproj" />
+	  <ProjectReference Include="..\Concrete.Quizes.Questions\Concrete.Quizes.Questions.csproj" />
+	  <ProjectReference Include="..\Concrete.Storage.EfCore\Concrete.Storage.EfCore.csproj" />
+	</ItemGroup>
+
 </Project>

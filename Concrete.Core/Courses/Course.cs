@@ -2,6 +2,8 @@
 
 public class Course
 {
-	public Guid Id { get; init; }
+	public required string CourseCode { get; init; }
+	public required Guid Id { get; init; }
 	public List<Subject> Subjects { get; init; } = new();
+	public List<StudentGroup> StudentGroups { get; init; } = new();
 }
