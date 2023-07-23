@@ -5,7 +5,7 @@ using Concrete.Quizes.Questions.Instances.MultipleChoice;
 using Concrete.Quizes.Questions.Instances.MultipleChoice.Grading;
 
 namespace Concrete.Quizes.Questions.Templates.MultipleChoice;
-public class MultipleChoiceQuestionTemplate : IQuestionTemplate<MultipleChoiceQuestionAnswerSet> 
+public class MultipleChoiceQuestionTemplate : IQuestionTemplate<MultipleChoiceQuestionAnswerSet>
 {
 	public required LocalisedStringTemplate Question { get; set; }
 	public List<MultipleChoiceQuestionAnswerTemplate> Answers { get; init; } = new();
@@ -14,6 +14,7 @@ public class MultipleChoiceQuestionTemplate : IQuestionTemplate<MultipleChoiceQu
 	// todo
 	public IEnumerable<QuestionTemplateInstance> AvailableInstances { get; } = Array.Empty<QuestionTemplateInstance>();
 	public required IGrading Grading { get; init; }
+	public bool AvailableInstancesAreFinite => true;
 
 	public IQuestion<MultipleChoiceQuestionAnswerSet> FillTemplate(Dictionary<string, object> parameters)
 	{

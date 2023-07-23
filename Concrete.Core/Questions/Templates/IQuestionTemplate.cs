@@ -8,8 +8,9 @@ public interface IQuestionTemplate
 	public List<string> ParameterNames { get; }
 	IQuestion FillQuestionTemplate(Dictionary<string, object> parameters);
 	public IEnumerable<QuestionTemplateInstance> AvailableInstances { get; }
+	public bool AvailableInstancesAreFinite { get; }
 }
-public interface IQuestionTemplate<TAnswer> : IQuestionTemplate where TAnswer: IQuestionAnswer
+public interface IQuestionTemplate<TAnswer> : IQuestionTemplate where TAnswer : IQuestionAnswer
 {
 	IQuestion IQuestionTemplate.FillQuestionTemplate(Dictionary<string, object> parameters) => FillTemplate(parameters);
 	IQuestion<TAnswer> FillTemplate(Dictionary<string, object> parameters);

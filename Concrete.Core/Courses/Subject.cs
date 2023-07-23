@@ -1,6 +1,14 @@
-﻿using Concrete.Core.Activities.Templates;
-using Concrete.Localization;
+﻿using Concrete.Localization;
 
 namespace Concrete.Core.Courses;
 
-public record Subject(Guid Id, IActivityTemplate[] Activities, LocalisedString Name, LocalisedString Description, Guid TemplateId, DateTime Date);
+public class Subject
+{
+	public required Guid CourseId { get; init; }
+	public required Guid Id { get; init; }
+	public required SubjectActivity[] Activities { get; set; }
+	public required LocalisedString Name { get; init; }
+	public required LocalisedString Description { get; init; }
+	public Guid TemplateId { get; init; }
+	public DateTime Date { get; set; }
+}

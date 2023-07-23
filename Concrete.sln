@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Concrete.Quizes.Questions.T
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Concrete.Users", "Concrete.Users\Concrete.Users.csproj", "{98D7329E-7DA0-4D3B-9F9C-8CDE0D17D844}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Concrete.Storage.EfCore", "Concrete.Storage.EfCore\Concrete.Storage.EfCore.csproj", "{5DEA3778-6F56-4F44-B8FA-08D85660D064}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,6 +55,10 @@ Global
 		{98D7329E-7DA0-4D3B-9F9C-8CDE0D17D844}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{98D7329E-7DA0-4D3B-9F9C-8CDE0D17D844}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{98D7329E-7DA0-4D3B-9F9C-8CDE0D17D844}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DEA3778-6F56-4F44-B8FA-08D85660D064}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DEA3778-6F56-4F44-B8FA-08D85660D064}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DEA3778-6F56-4F44-B8FA-08D85660D064}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DEA3778-6F56-4F44-B8FA-08D85660D064}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
