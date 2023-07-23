@@ -9,7 +9,7 @@ public interface IQuestion
 	Dictionary<string, object> Parameters { get; }
 	ICultureFilledQuestion FllForCulture(string culture);
 }
-public interface IQuestion<TAnswer> : IQuestion
+public interface IQuestion<TAnswer> : IQuestion where TAnswer : IQuestionAnswer
 {
 	public QuestionGradingResponse Grade(TAnswer answer);
 }

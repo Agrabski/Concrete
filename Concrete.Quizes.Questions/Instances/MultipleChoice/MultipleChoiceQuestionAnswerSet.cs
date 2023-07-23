@@ -1,3 +1,5 @@
-﻿namespace Concrete.Quizes.Questions.Instances.MultipleChoice;
+﻿using Concrete.Core;
 
-public record struct MultipleChoiceQuestionAnswerSet(int[] AnswerIndicies);
+namespace Concrete.Quizes.Questions.Instances.MultipleChoice;
+
+public record struct MultipleChoiceQuestionAnswerSet(int[] AnswerIndicies) : IQuestionAnswer;

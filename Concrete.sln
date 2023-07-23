@@ -15,11 +15,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Concrete.Localization", "Concrete.Localization\Concrete.Localization.csproj", "{F0A9D307-22F2-4AD8-842C-D359C86A7277}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Concrete.Localization", "Concrete.Localization\Concrete.Localization.csproj", "{F0A9D307-22F2-4AD8-842C-D359C86A7277}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Concrete.Quizes.Questions", "Concrete.Quizes.Questions\Concrete.Quizes.Questions.csproj", "{47D1AD2F-1C23-4B16-86B2-0572F08DAF85}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Concrete.Quizes.Questions", "Concrete.Quizes.Questions\Concrete.Quizes.Questions.csproj", "{47D1AD2F-1C23-4B16-86B2-0572F08DAF85}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Concrete.Quizes.Questions.Tests", "Concrete.Quizes.Questions.Tests\Concrete.Quizes.Questions.Tests.csproj", "{86A557AB-C0D6-41DF-B388-09FBF3D7B1A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Concrete.Quizes.Questions.Tests", "Concrete.Quizes.Questions.Tests\Concrete.Quizes.Questions.Tests.csproj", "{86A557AB-C0D6-41DF-B388-09FBF3D7B1A4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Concrete.Users", "Concrete.Users\Concrete.Users.csproj", "{98D7329E-7DA0-4D3B-9F9C-8CDE0D17D844}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +49,10 @@ Global
 		{86A557AB-C0D6-41DF-B388-09FBF3D7B1A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86A557AB-C0D6-41DF-B388-09FBF3D7B1A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86A557AB-C0D6-41DF-B388-09FBF3D7B1A4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98D7329E-7DA0-4D3B-9F9C-8CDE0D17D844}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98D7329E-7DA0-4D3B-9F9C-8CDE0D17D844}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98D7329E-7DA0-4D3B-9F9C-8CDE0D17D844}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98D7329E-7DA0-4D3B-9F9C-8CDE0D17D844}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

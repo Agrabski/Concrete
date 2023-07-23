@@ -9,6 +9,7 @@ internal class ConcreteSerializer : IConcreteSerializer
 {
 	private readonly PolymorphicTypeInfo<IQuestion>[] _questionInfos;
 	private readonly PolymorphicTypeInfo<IQuestionTemplate>[] _templateInfos;
+	private readonly PolymorphicTypeInfo<IQuestionAnswer>[] _answerTemplates;
 	private JsonSerializerOptions? _jsonSerializerOptions;
 	private JsonSerializerOptions Options => _jsonSerializerOptions ??= GetOptions();
 
@@ -16,7 +17,11 @@ internal class ConcreteSerializer : IConcreteSerializer
 	{
 		return new JsonSerializerOptions()
 		{
-			TypeInfoResolver = new PolymorphicTypeResolver(_questionInfos, _templateInfos),
+			TypeInfoResolver = new PolymorphicTypeResolver(
+				_questionInfos,
+				_templateInfos,
+				_answerTemplates
+			),
 			WriteIndented = true,
 			UnknownTypeHandling = JsonUnknownTypeHandling.JsonElement
 		};
@@ -24,11 +29,12 @@ internal class ConcreteSerializer : IConcreteSerializer
 
 	public ConcreteSerializer(
 		IEnumerable<PolymorphicTypeInfo<IQuestion>> questionInfos,
-		IEnumerable<PolymorphicTypeInfo<IQuestionTemplate>> templateInfos
-		)
+		IEnumerable<PolymorphicTypeInfo<IQuestionTemplate>> templateInfos,
+		IEnumerable<PolymorphicTypeInfo<IQuestionAnswer>> answerTemplates)
 	{
 		_questionInfos = questionInfos.ToArray();
 		_templateInfos = templateInfos.ToArray();
+		_answerTemplates = answerTemplates.ToArray();
 	}
 
 	public string Serialize<T>(T obj) => JsonSerializer.Serialize(obj, Options);

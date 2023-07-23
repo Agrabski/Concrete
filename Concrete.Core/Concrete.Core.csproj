@@ -11,6 +11,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Concrete.Localization\Concrete.Localization.csproj" />
+		<ProjectReference Include="..\Concrete.Users\Concrete.Users.csproj" />
 	</ItemGroup>
 
 </Project>

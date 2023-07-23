@@ -10,13 +10,16 @@ internal class PolymorphicTypeResolver : DefaultJsonTypeInfoResolver
 {
 	private readonly PolymorphicTypeInfo<IQuestion>[] _questionInfos;
 	private readonly PolymorphicTypeInfo<IQuestionTemplate>[] _templateInfos;
+	private readonly PolymorphicTypeInfo<IQuestionAnswer>[] _answerInfos;
 	public PolymorphicTypeResolver(
 		IEnumerable<PolymorphicTypeInfo<IQuestion>> questionInfos,
-		IEnumerable<PolymorphicTypeInfo<IQuestionTemplate>> templateInfos
+		IEnumerable<PolymorphicTypeInfo<IQuestionTemplate>> templateInfos,
+		IEnumerable<PolymorphicTypeInfo<IQuestionAnswer>> answerInfos
 		)
 	{
 		_questionInfos = questionInfos.ToArray();
 		_templateInfos = templateInfos.ToArray();
+		_answerInfos = answerInfos.ToArray();
 	}
 	public override JsonTypeInfo GetTypeInfo(Type type, JsonSerializerOptions options)
 	{
@@ -31,6 +34,8 @@ internal class PolymorphicTypeResolver : DefaultJsonTypeInfoResolver
 				i.GetGenericTypeDefinition() == typeof(IQuestionTemplate<>)
 		))
 			return GetOptionsFor(jsonTypeInfo, _templateInfos);
+		if (type == typeof(IQuestionAnswer))
+			return GetOptionsFor(jsonTypeInfo, _answerInfos);
 		return base.GetTypeInfo(type, options);
 	}
 	private JsonTypeInfo GetOptionsFor<T>(JsonTypeInfo baseInfo, IEnumerable<PolymorphicTypeInfo<T>> typeInfos)

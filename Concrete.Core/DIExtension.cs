@@ -18,8 +18,10 @@ public static class DIExtension
 		>
 		(this IServiceCollection collection, string? discriminator = null)
 		where TQuestionTemplate : IQuestionTemplate<TQuestionAnswer>
-		where TQuestion : IQuestion<TQuestionAnswer> => collection
+		where TQuestion : IQuestion<TQuestionAnswer>
+		where TQuestionAnswer : IQuestionAnswer => collection
 			.AddSingleton(_ => PolymorphicTypeInfo<IQuestion>.FromImplementation<TQuestion>(discriminator))
-			.AddSingleton(_ => PolymorphicTypeInfo<IQuestionTemplate>.FromImplementation<TQuestionTemplate>(discriminator));
+			.AddSingleton(_ => PolymorphicTypeInfo<IQuestionTemplate>.FromImplementation<TQuestionTemplate>(discriminator))
+			.AddSingleton(_ => PolymorphicTypeInfo<IQuestionAnswer>.FromImplementation<TQuestionAnswer>(discriminator));
 
 }
