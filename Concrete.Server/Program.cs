@@ -1,7 +1,9 @@
 using Concrete.Core;
 using Concrete.Quizes.Questions;
 using Concrete.Storage.EfCore;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 using System.Text.Json.Serialization;
 using System.Text.Json.Serialization.Metadata;
 
@@ -14,23 +16,9 @@ builder.Services
 	.AddConcrete()
 	.AddConcreteEfCoreStorage(o => o.UseSqlite())
 	.AddBuiltInConcreteQuestions()
-	;
-builder.Services
+	.ConfigureOptions<JsonOptionsConfiguration>()
 	.AddControllers()
-	.AddJsonOptions(options =>
-	{
-#pragma warning disable ASP0000 // Do not call 'IServiceCollection.BuildServiceProvider' in 'ConfigureServices'
-		// todo: this hack is beyound ugly, but it works for now
-		// need to figure out how to configure type resolver in a configure action
-		options.JsonSerializerOptions.TypeInfoResolver = builder
-			.Services
-			.BuildServiceProvider()
-			.GetRequiredService<DefaultJsonTypeInfoResolver>();
-#pragma warning restore ASP0000 // Do not call 'IServiceCollection.BuildServiceProvider' in 'ConfigureServices'
-		options.JsonSerializerOptions.WriteIndented = true;
-		options.JsonSerializerOptions.UnknownTypeHandling = JsonUnknownTypeHandling.JsonElement;
-	});
-
+	;
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -46,3 +34,23 @@ app.UseHttpsRedirection();
 app.MapControllers();
 
 app.Run();
+
+
+//todo: move to some concrete library
+internal class JsonOptionsConfiguration : IConfigureOptions<JsonOptions>
+{
+	private readonly DefaultJsonTypeInfoResolver _resolver;
+
+	public JsonOptionsConfiguration(DefaultJsonTypeInfoResolver resolver)
+	{
+		_resolver = resolver;
+	}
+
+	public void Configure(JsonOptions options)
+	{
+		options.JsonSerializerOptions.TypeInfoResolver = _resolver;
+		options.JsonSerializerOptions.WriteIndented = true;
+		options.JsonSerializerOptions.UnknownTypeHandling = JsonUnknownTypeHandling.JsonElement;
+
+	}
+}
