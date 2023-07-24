@@ -1,4 +1,6 @@
 ﻿using Concrete.Core;
+using Concrete.Core.Activities.Templates;
+using Concrete.Core.Courses;
 using Concrete.Core.Serialization;
 using Concrete.Quizes.Questions.Instances.MultipleChoice.Grading;
 using Concrete.Quizes.Questions.Templates.MultipleChoice;
@@ -12,6 +14,38 @@ public class SerializationTests
 		.AddConcrete()
 		.AddBuiltInConcreteQuestions()
 		.BuildServiceProvider();
+
+	[Fact]
+	public void CourseTemplateWithMultipleChoiceQuestionCanBeSerailzedAndDeserialized()
+	{
+		var serializer = _serviceProvider.GetRequiredService<IConcreteSerializer>();
+		var courseTemplate = new CourseTemplate()
+		{
+			TemplateName = "test",
+			TemplateId = Guid.NewGuid(),
+			Subjects =
+			{
+				new(
+					new[]
+					{
+						new SubjectActivity()
+						{
+							Id= Guid.NewGuid(),
+							Template = new QuizTemplate()
+							{
+								Questions =
+								{
+									new(Guid.NewGuid(), Guid.NewGuid(), new AllQuestionVariantsTemplateFilingMode())
+								}
+							}
+						}
+					}, new(), new(), Guid.NewGuid())
+			}
+		};
+		var text = serializer.Serialize(courseTemplate);
+		text.Trim();
+	}
+
 	[Fact]
 	public void QuestionBankWithMultipleChoiceQuestionCanBeSerializedAndDeserialized()
 	{

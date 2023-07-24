@@ -2,5 +2,5 @@
 
 public static class ConcreteConvetion
 {
-	public static string TypeDiscriminator(string name, params string[] namespaceParts) => string.Join("::", namespaceParts.Append(name));
+	public static string TypeDiscriminator(params string[] namespaceParts) => string.Join("::", namespaceParts);
 }

@@ -17,9 +17,11 @@ internal class EfCoreCourseRepository : ICourseRepository
 	public async ValueTask DeleteAsync(Guid courseTemplateId, CancellationToken token) => _context.CourseTemplates.Remove(await _context.CourseTemplates.FirstAsync(c => c.Id == courseTemplateId, token));
 	public Task<Course?> TryGetCourseAsync(Guid courseId, CancellationToken token) => _context.Courses.FirstOrDefaultAsync(c => c.Id == courseId, token);
 	public async Task<CourseTemplate?> TryGetCourseTemplateAsync(Guid templateId, CancellationToken token) => (await _context.CourseTemplates.FirstOrDefaultAsync(c => c.Id == templateId, token))?.Template;
-	public ValueTask UpdateAsync(CourseTemplate courseTemplate, CancellationToken token)
+	public async ValueTask UpdateAsync(CourseTemplate courseTemplate, CancellationToken token)
 	{
-		_context.Update(courseTemplate);
-		return ValueTask.CompletedTask;
+		if (await _context.CourseTemplates.AnyAsync(c => c.Id == courseTemplate.TemplateId, token))
+			_context.Update(new CourseTemplateProxy(courseTemplate.TemplateId, courseTemplate));
+		else
+			_context.Add(new CourseTemplateProxy(courseTemplate.TemplateId, courseTemplate));
 	}
 }

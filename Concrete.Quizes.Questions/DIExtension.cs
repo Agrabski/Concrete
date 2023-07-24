@@ -11,5 +11,5 @@ public static class DIExtension
 			MultipleChoiceQuestionTemplate,
 			MultipleChoiceQuestion,
 			MultipleChoiceQuestionAnswerSet
-			>(ConcreteConvetion.TypeDiscriminator("MultipleChoice", "Concrete", "Basics"));
+			>(ConcreteConvetion.TypeDiscriminator("Concrete", "Basics", "MultipleChoice"));
 }

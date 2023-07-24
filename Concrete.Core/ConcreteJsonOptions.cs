@@ -14,10 +14,10 @@ internal class ConcreteJsonOptions : IConfigureOptions<JsonSerializerOptions>
 		_resolver = resolver;
 	}
 
-	public void Configure(JsonSerializerOptions options) => new JsonSerializerOptions()
+	public void Configure(JsonSerializerOptions options)
 	{
-		TypeInfoResolver = _resolver,
-		WriteIndented = true,
-		UnknownTypeHandling = JsonUnknownTypeHandling.JsonElement
-	};
+		options.TypeInfoResolver = _resolver;
+		options.WriteIndented = true;
+		options.UnknownTypeHandling = JsonUnknownTypeHandling.JsonElement;
+	}
 }

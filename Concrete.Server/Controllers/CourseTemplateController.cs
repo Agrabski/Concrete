@@ -10,13 +10,15 @@ namespace Concrete.Server.Controllers;
 [ApiController]
 public class CourseTemplateController : ControllerBase
 {
+	private readonly ICourseRepository _courseRepository;
 	private readonly IConcreteUnitOfWork _unitOfWork;
 	private readonly ICourseService _courseService;
 
-	public CourseTemplateController(ICourseService courseService, IConcreteUnitOfWork unitOfWork)
+	public CourseTemplateController(ICourseService courseService, IConcreteUnitOfWork unitOfWork, ICourseRepository courseRepository)
 	{
 		_courseService = courseService;
 		_unitOfWork = unitOfWork;
+		_courseRepository = courseRepository;
 	}
 
 	[HttpPost("/Create")]
@@ -25,5 +27,13 @@ public class CourseTemplateController : ControllerBase
 		var result = await _courseService.CreateCourseTemplateAsync(name, token);
 		await _unitOfWork.CommitAsync(token);
 		return result;
+	}
+
+	[HttpPost]
+	public async Task<ActionResult> UpdateTemplate(CourseTemplate template, CancellationToken token)
+	{
+		await _courseRepository.UpdateAsync(template, token);
+		await _unitOfWork.CommitAsync(token);
+		return Ok();
 	}
 }
