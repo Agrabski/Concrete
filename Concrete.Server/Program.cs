@@ -11,7 +11,7 @@ builder.Services
 	.AddEndpointsApiExplorer()
 	.AddSwaggerGen()
 	.AddConcrete()
-	.AddConcreteEfCoreStorage(o => o.UseSqlite())
+	.AddConcreteEfCoreStorage(o => o.UseSqlite(builder.Configuration.GetConnectionString("sqlite")))
 	.AddBuiltInConcreteQuestions()
 	.ConfigureConcreteSerialization()
 	.AddControllers()
@@ -23,6 +23,8 @@ if (app.Environment.IsDevelopment())
 {
 	app.UseSwagger()
 		.UseSwaggerUI();
+	using var scope = app.Services.CreateScope();
+	await scope.ServiceProvider.GetRequiredService<IConcreteMigrator>().EnsureCreatedAsync(CancellationToken.None);
 }
 
 app.UseHttpsRedirection();

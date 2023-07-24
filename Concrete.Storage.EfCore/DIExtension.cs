@@ -20,5 +20,6 @@ public static class DIExtension
 		.AddSingleton<IEntityTypeConfiguration<QuestionBankProxy>, QuestionBankConfiguration>()
 		.AddSingleton<ConcreteContextConfiguration>()
 		.AddScoped<IConcreteUnitOfWork>(s => s.GetRequiredService<ConcreteContext>())
+		.AddScoped<IConcreteMigrator, ConcreteMigrator>()
 		;
 }
