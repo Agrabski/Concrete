@@ -3,5 +3,6 @@
 namespace Concrete.Core.Services.Courses;
 public interface ICourseService
 {
-	Task<Guid> StartCourse(Guid templateId, SubjectDate[] subjectDates, string courseCode, CancellationToken token);
+	Task<Guid> StartCourseAsync(Guid templateId, SubjectDate[] subjectDates, string courseCode, CancellationToken token);
+	Task<CourseTemplate> CreateCourseTemplateAsync(string name, CancellationToken token);
 }

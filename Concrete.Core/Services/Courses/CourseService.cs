@@ -10,7 +10,18 @@ internal class CourseService : ICourseService
 		_courseRepository = courseRepository;
 	}
 
-	public async Task<Guid> StartCourse(Guid templateId, SubjectDate[] subjectDates, string courseCode, CancellationToken token)
+	public async Task<CourseTemplate> CreateCourseTemplateAsync(string name, CancellationToken token)
+	{
+		var instance = new CourseTemplate()
+		{
+			TemplateName = name,
+			TemplateId = Guid.NewGuid()
+		};
+		await _courseRepository.AddAsync(instance, token);
+		return instance;
+	}
+
+	public async Task<Guid> StartCourseAsync(Guid templateId, SubjectDate[] subjectDates, string courseCode, CancellationToken token)
 	{
 		var template = await _courseRepository.TryGetCourseTemplateAsync(templateId, token)
 			?? throw new Exception("Course template not found"); //todo

@@ -3,6 +3,7 @@
 public class LocalisedString
 {
 	public Dictionary<string, string> TextByLocale { get; } = new();
+	public LocalisedString() { }
 	public LocalisedString(Dictionary<string, string> textByLocale)
 	{
 		TextByLocale = textByLocale;

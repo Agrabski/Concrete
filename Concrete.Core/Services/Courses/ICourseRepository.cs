@@ -3,6 +3,8 @@
 namespace Concrete.Core.Services.Courses;
 public interface ICourseRepository
 {
+	ValueTask UpdateAsync(CourseTemplate courseTemplate, CancellationToken token);
+	ValueTask DeleteAsync(Guid courseTemplateId, CancellationToken token);
 	Task AddAsync(CourseTemplate template, CancellationToken token);
 	Task AddAsync(Course instance, CancellationToken token);
 	Task<Course?> TryGetCourseAsync(Guid courseId, CancellationToken token);

@@ -1,18 +1,19 @@
 using Concrete.Core;
 using Concrete.Quizes.Questions;
 using Concrete.Storage.EfCore;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services
 	.AddEndpointsApiExplorer()
 	.AddSwaggerGen()
 	.AddConcrete()
-	.AddConcreteEfCoreStorage()
-	.AddBuiltInConcreteQuestions();
+	.AddConcreteEfCoreStorage(o => o.UseSqlite())
+	.AddBuiltInConcreteQuestions()
+	.ConfigureConcreteJsonSerializerOptions()
+	.AddControllers();
 
 var app = builder.Build();
 

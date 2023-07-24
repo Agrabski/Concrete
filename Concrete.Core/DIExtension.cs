@@ -15,6 +15,7 @@ public static class DIExtension
 		.AddSingleton<IConcreteSerializer, ConcreteSerializer>()
 		.AddTransient<ICourseService, CourseService>()
 		.AddTransient<IQuizService, QuizService>()
+		.AddSingleton<PolymorphicTypeResolver>()
 		;
 
 	public static IServiceCollection AddQuestionType
@@ -44,5 +45,8 @@ public static class DIExtension
 		.AddScoped<IQuestionBankRepository, TQuestionBankRepository>()
 		.AddScoped<ISubjectRepository, TSubjectRepository>()
 		.AddScoped<ICourseRepository, TCourseRepository>();
+
+	public static IServiceCollection ConfigureConcreteJsonSerializerOptions(this IServiceCollection collection) =>
+		collection.ConfigureOptions<ConcreteJsonOptions>();
 
 }

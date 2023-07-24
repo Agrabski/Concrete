@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Concrete.Core.Courses;
+using Concrete.Core.Services;
+using Concrete.Core.Services.Courses;
+using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -7,35 +10,20 @@ namespace Concrete.Server.Controllers;
 [ApiController]
 public class CourseTemplateController : ControllerBase
 {
-	// GET: api/<CourseTemplateController>
-	[HttpGet]
-	public IEnumerable<string> Get()
+	private readonly IConcreteUnitOfWork _unitOfWork;
+	private readonly ICourseService _courseService;
+
+	public CourseTemplateController(ICourseService courseService, IConcreteUnitOfWork unitOfWork)
 	{
-		return new string[] { "value1", "value2" };
+		_courseService = courseService;
+		_unitOfWork = unitOfWork;
 	}
 
-	// GET api/<CourseTemplateController>/5
-	[HttpGet("{id}")]
-	public string Get(int id)
+	[HttpPost("/Create")]
+	public async Task<CourseTemplate> CreateTemplateAsync(string name, CancellationToken token)
 	{
-		return "value";
-	}
-
-	// POST api/<CourseTemplateController>
-	[HttpPost]
-	public void Post([FromBody] string value)
-	{
-	}
-
-	// PUT api/<CourseTemplateController>/5
-	[HttpPut("{id}")]
-	public void Put(int id, [FromBody] string value)
-	{
-	}
-
-	// DELETE api/<CourseTemplateController>/5
-	[HttpDelete("{id}")]
-	public void Delete(int id)
-	{
+		var result = await _courseService.CreateCourseTemplateAsync(name, token);
+		await _unitOfWork.CommitAsync(token);
+		return result;
 	}
 }
