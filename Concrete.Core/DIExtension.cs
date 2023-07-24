@@ -8,6 +8,7 @@ using Concrete.Core.Services.Courses;
 using Concrete.Core.Services.QuestionBanks;
 using Concrete.Core.Services.Subjects;
 using Microsoft.Extensions.DependencyInjection;
+using System.Text.Json.Serialization.Metadata;
 
 namespace Concrete.Core;
 
@@ -17,7 +18,7 @@ public static class DIExtension
 		.AddSingleton<IConcreteSerializer, ConcreteSerializer>()
 		.AddTransient<ICourseService, CourseService>()
 		.AddTransient<IQuizService, QuizService>()
-		.AddSingleton<PolymorphicTypeResolver>()
+		.AddSingleton<DefaultJsonTypeInfoResolver, PolymorphicTypeResolver>()
 		.AddActivityType<QuizTemplate, QuizInstance>(ConcreteConvetion.TypeDiscriminator("Concrete", "Core", "Quiz"))
 		;
 
@@ -63,7 +64,5 @@ public static class DIExtension
 		.AddScoped<ISubjectRepository, TSubjectRepository>()
 		.AddScoped<ICourseRepository, TCourseRepository>();
 
-	public static IServiceCollection ConfigureConcreteJsonSerializerOptions(this IServiceCollection collection) =>
-		collection.ConfigureOptions<ConcreteJsonOptions>();
 
 }
