@@ -2,10 +2,12 @@
 using Concrete.Core.Activities.Templates;
 using Concrete.Core.Questions.Instances;
 using Concrete.Core.Questions.Templates;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.Json.Serialization.Metadata;
 
+[assembly: InternalsVisibleTo("Concrete.Core.Extensions.AspNetCore")]
 namespace Concrete.Core.Serialization;
 
 internal class PolymorphicTypeResolver : DefaultJsonTypeInfoResolver

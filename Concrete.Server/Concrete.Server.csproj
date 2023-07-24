@@ -19,6 +19,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <ProjectReference Include="..\Concrete.Core.Extensions.AspNetCore\Concrete.Core.Extensions.AspNetCore.csproj" />
 	  <ProjectReference Include="..\Concrete.Core\Concrete.Core.csproj" />
 	  <ProjectReference Include="..\Concrete.Quizes.Questions\Concrete.Quizes.Questions.csproj" />
 	  <ProjectReference Include="..\Concrete.Storage.EfCore\Concrete.Storage.EfCore.csproj" />
