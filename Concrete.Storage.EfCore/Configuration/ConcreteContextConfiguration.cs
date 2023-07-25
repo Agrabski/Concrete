@@ -3,6 +3,7 @@ using Concrete.Storage.EfCore.Repos;
 using Microsoft.EntityFrameworkCore;
 
 namespace Concrete.Storage.EfCore.Configuration;
+
 internal class ConcreteContextConfiguration
 {
 	private readonly IEntityTypeConfiguration<CourseTemplateProxy> _courseTemplate;

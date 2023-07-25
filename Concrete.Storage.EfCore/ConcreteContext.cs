@@ -18,6 +18,7 @@ internal class ConcreteContext : DbContext, IConcreteUnitOfWork
 	internal DbSet<Subject> Subjects => Set<Subject>();
 	internal DbSet<QuestionBankProxy> QuestionBanks => Set<QuestionBankProxy>();
 	internal DbSet<StudentGroup> StudentGroups => Set<StudentGroup>();
+	internal DbSet<DatabaseUser> Users => Set<DatabaseUser>();
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{

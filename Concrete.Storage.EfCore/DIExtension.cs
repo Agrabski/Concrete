@@ -3,6 +3,7 @@ using Concrete.Core.Courses;
 using Concrete.Core.Services;
 using Concrete.Storage.EfCore.Configuration;
 using Concrete.Storage.EfCore.Repos;
+using Concrete.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -22,5 +23,6 @@ public static class DIExtension
 		.AddSingleton<ConcreteContextConfiguration>()
 		.AddScoped<IConcreteUnitOfWork>(s => s.GetRequiredService<ConcreteContext>())
 		.AddScoped<IConcreteMigrator, ConcreteMigrator>()
+		.AddConcreteUsers<UserRepository>()
 		;
 }

@@ -2,7 +2,7 @@
 using Concrete.Core.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace Concrete.Storage.EfCore;
+namespace Concrete.Storage.EfCore.Repos;
 
 internal class EfCoreStudentGroupRepository : IStudentGroupRepository
 {
