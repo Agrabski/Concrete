@@ -13,7 +13,7 @@ public class QuizTemplate : IActivityTemplate
 	{
 		return new()
 		{
-			Id = Guid.NewGuid(),
+			InstanceId = Guid.NewGuid(),
 			UserId = userId,
 			Questions = (await Task.WhenAll(Questions.Select(async q =>
 			{

@@ -2,5 +2,5 @@
 
 public interface IActivity
 {
-
+	Guid InstanceId { get; }
 }

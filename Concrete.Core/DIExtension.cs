@@ -9,6 +9,9 @@ using Concrete.Core.Services.Courses;
 using Concrete.Core.Services.QuestionBanks;
 using Concrete.Core.Services.Subjects;
 using Microsoft.Extensions.DependencyInjection;
+using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("Concrete.Core.Tests")]
 
 namespace Concrete.Core;
 
@@ -51,7 +54,7 @@ public static class DIExtension
 			;
 
 
-	public static IServiceCollection AddStorageImplementation
+	public static IServiceCollection AddConcreteStorageImplementation
 		<
 			TQuestionBankRepository,
 			TSubjectRepository,

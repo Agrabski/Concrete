@@ -11,7 +11,7 @@ namespace Concrete.Storage.EfCore;
 public static class DIExtension
 {
 	public static IServiceCollection AddConcreteEfCoreStorage(this IServiceCollection services, Action<DbContextOptionsBuilder>? optionsBuilder) => services
-		.AddStorageImplementation<
+		.AddConcreteStorageImplementation<
 			EfCoreQuestionBankRepository,
 			EfCoreSubjectRepository,
 			EfCoreCourseRepository,
