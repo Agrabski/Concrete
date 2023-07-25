@@ -1,4 +1,5 @@
-﻿using Concrete.Core.Courses;
+﻿using Concrete.Core;
+using Concrete.Core.Courses;
 using Concrete.Core.Services;
 using Concrete.Storage.EfCore.Configuration;
 using Concrete.Storage.EfCore.Repos;
@@ -16,10 +17,12 @@ internal class ConcreteContext : DbContext, IConcreteUnitOfWork
 	internal DbSet<CourseTemplateProxy> CourseTemplates => Set<CourseTemplateProxy>();
 	internal DbSet<Subject> Subjects => Set<Subject>();
 	internal DbSet<QuestionBankProxy> QuestionBanks => Set<QuestionBankProxy>();
+	internal DbSet<StudentGroup> StudentGroups => Set<StudentGroup>();
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
 		_configuration.Configure(modelBuilder);
+		modelBuilder.ApplyConfigurationsFromAssembly(GetType().Assembly);
 		base.OnModelCreating(modelBuilder);
 	}
 

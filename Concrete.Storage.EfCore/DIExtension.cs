@@ -13,7 +13,8 @@ public static class DIExtension
 		.AddStorageImplementation<
 			EfCoreQuestionBankRepository,
 			EfCoreSubjectRepository,
-			EfCoreCourseRepository>()
+			EfCoreCourseRepository,
+			EfCoreStudentGroupRepository>()
 		.AddDbContext<ConcreteContext>(optionsBuilder)
 		.AddSingleton<IEntityTypeConfiguration<CourseTemplateProxy>, CourseTemplateConfiguration>()
 		.AddSingleton<IEntityTypeConfiguration<Subject>, SubjectConfiguration>()

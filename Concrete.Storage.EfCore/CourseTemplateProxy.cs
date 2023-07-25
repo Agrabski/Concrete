@@ -2,4 +2,4 @@
 
 namespace Concrete.Storage.EfCore;
 
-internal record CourseTemplateProxy(Guid Id, CourseTemplate Template);
+internal record CourseTemplateProxy(Guid Id, string Name, CourseTemplate Template);

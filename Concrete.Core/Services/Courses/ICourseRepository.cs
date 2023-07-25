@@ -9,4 +9,5 @@ public interface ICourseRepository
 	Task AddAsync(Course instance, CancellationToken token);
 	Task<Course?> TryGetCourseAsync(Guid courseId, CancellationToken token);
 	Task<CourseTemplate?> TryGetCourseTemplateAsync(Guid templateId, CancellationToken token);
+	IAsyncEnumerable<CourseTemplateHeader> ListAsync(CancellationToken token);
 }

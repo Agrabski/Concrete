@@ -3,6 +3,7 @@ using Concrete.Core.Activities.Templates;
 using Concrete.Core.Questions.Instances;
 using Concrete.Core.Questions.Templates;
 using Concrete.Core.Serialization;
+using Concrete.Core.Services;
 using Concrete.Core.Services.Activities;
 using Concrete.Core.Services.Courses;
 using Concrete.Core.Services.QuestionBanks;
@@ -19,6 +20,7 @@ public static class DIExtension
 		.AddTransient<IQuizService, QuizService>()
 		.AddSingleton<PolymorphicTypeResolver>()
 		.AddActivityType<QuizTemplate, QuizInstance>(ConcreteConvetion.TypeDiscriminator("Concrete", "Core", "Quiz"))
+		.AddScoped<IStudentGroupService, StudentGroupService>()
 		;
 
 	public static IServiceCollection AddQuestionType
@@ -53,15 +55,18 @@ public static class DIExtension
 		<
 			TQuestionBankRepository,
 			TSubjectRepository,
-			TCourseRepository
+			TCourseRepository,
+			TStudentGroupRepository
 		>(this IServiceCollection collection)
 			where TQuestionBankRepository : class, IQuestionBankRepository
 			where TSubjectRepository : class, ISubjectRepository
 			where TCourseRepository : class, ICourseRepository
+			where TStudentGroupRepository : class, IStudentGroupRepository
 		=> collection
 		.AddScoped<IQuestionBankRepository, TQuestionBankRepository>()
 		.AddScoped<ISubjectRepository, TSubjectRepository>()
-		.AddScoped<ICourseRepository, TCourseRepository>();
+		.AddScoped<ICourseRepository, TCourseRepository>()
+		.AddScoped<IStudentGroupRepository, TStudentGroupRepository>();
 
 
 }

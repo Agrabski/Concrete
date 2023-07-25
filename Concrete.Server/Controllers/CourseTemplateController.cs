@@ -36,4 +36,39 @@ public class CourseTemplateController : ControllerBase
 		await _unitOfWork.CommitAsync(token);
 		return Ok();
 	}
+
+	[HttpDelete]
+	public async Task<ActionResult> DeleteTemplateAsync(Guid templateId, CancellationToken token)
+	{
+		await _courseRepository.DeleteAsync(templateId, token);
+		return Ok();
+	}
+
+	[HttpGet("{id}")]
+	public async Task<ActionResult<CourseTemplate>> GetAsync(Guid id, CancellationToken token)
+	{
+		var result = await _courseRepository.TryGetCourseTemplateAsync(id, token);
+		if (result is not null)
+			return Ok(result);
+		return NotFound($"Course {id} was not found");
+	}
+
+	[HttpGet]
+	public IAsyncEnumerable<CourseTemplateHeader> ListTemplatesAsync(CancellationToken token)
+	{
+		return _courseRepository.ListAsync(token);
+	}
+
+	[HttpPost("{templateId}")]
+	public async Task<ActionResult<Guid>> CreateCourseFromTemplateAsync(
+		[FromRoute] Guid templateId,
+		[FromRoute] string courseCode,
+		[FromBody] SubjectDate[] subjectDates,
+		CancellationToken token
+	)
+	{
+		var result = await _courseService.StartCourseAsync(templateId, subjectDates, courseCode, token);
+		return Ok(result);
+	}
+
 }

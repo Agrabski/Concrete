@@ -20,9 +20,8 @@ internal class ConcreteContextConfiguration
 
 	internal void Configure(ModelBuilder modelBuilder)
 	{
-		modelBuilder.Entity<CourseTemplateProxy>(_courseTemplate.Configure);
-		modelBuilder.Entity<Subject>(_subject.Configure);
-		modelBuilder.Entity<QuestionBankProxy>(_questionBank.Configure);
-		modelBuilder.Entity<SubjectDateForGroup>(new SubjectDateForGroupConfiguration().Configure);
+		modelBuilder.ApplyConfiguration(_courseTemplate);
+		modelBuilder.ApplyConfiguration(_subject);
+		modelBuilder.ApplyConfiguration(_questionBank);
 	}
 }

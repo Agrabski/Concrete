@@ -25,4 +25,8 @@
 	  <ProjectReference Include="..\Concrete.Storage.EfCore\Concrete.Storage.EfCore.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="data\" />
+	</ItemGroup>
+
 </Project>
