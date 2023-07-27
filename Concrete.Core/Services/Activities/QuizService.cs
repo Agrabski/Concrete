@@ -28,7 +28,7 @@ internal class QuizService : IQuizService
 			?? throw new Exception($"Quiz instance with id {quizInstanceId} was not found");
 		return await activity.FillForCulture(locale, _questionBankRepo, cancellationToken);
 	}
-	public async Task<Guid> StartQuizAttempt(Guid userId, Guid courseId, Guid subjectId, Guid activityId, CancellationToken token)
+	public async Task<Guid> StartQuizAttemptAsync(Guid userId, Guid courseId, Guid subjectId, Guid activityId, CancellationToken token)
 	{
 		var subject = await _subjectRepository.TryGetSubjectAsync(courseId, subjectId, token)
 			?? throw new Exception("Subject not found");

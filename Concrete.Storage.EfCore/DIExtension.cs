@@ -15,11 +15,13 @@ public static class DIExtension
 			EfCoreQuestionBankRepository,
 			EfCoreSubjectRepository,
 			EfCoreCourseRepository,
-			EfCoreStudentGroupRepository>()
+			EfCoreStudentGroupRepository,
+			EfCoreActivityInstanceRepository>()
 		.AddDbContext<ConcreteContext>(optionsBuilder)
 		.AddSingleton<IEntityTypeConfiguration<CourseTemplateProxy>, CourseTemplateConfiguration>()
 		.AddSingleton<IEntityTypeConfiguration<Subject>, SubjectConfiguration>()
 		.AddSingleton<IEntityTypeConfiguration<QuestionBankProxy>, QuestionBankConfiguration>()
+		.AddSingleton<IEntityTypeConfiguration<ActivityInstanceProxy>, ActivityInstanceProxyConfiguration>()
 		.AddSingleton<ConcreteContextConfiguration>()
 		.AddScoped<IConcreteUnitOfWork>(s => s.GetRequiredService<ConcreteContext>())
 		.AddScoped<IConcreteMigrator, ConcreteMigrator>()

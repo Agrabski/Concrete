@@ -10,7 +10,7 @@ public record SubjectTemplate(SubjectActivity[] Activities, LocalisedString Name
 		{
 			Activities = Activities,
 			CourseId = courseId,
-			DatesForGroups = startTime,
+			DatesForGroups = startTime.ToList(),
 			Description = Description,
 			Name = Name,
 			Id = Guid.NewGuid(),

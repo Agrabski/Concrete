@@ -9,5 +9,9 @@ internal class ConcreteMigrator : IConcreteMigrator
 		_concreteContext = concreteContext;
 	}
 
-	public Task EnsureCreatedAsync(CancellationToken token) => _concreteContext.Database.EnsureCreatedAsync(token);
+	public async Task EnsureCreatedAsync(CancellationToken token)
+	{
+		await _concreteContext.Database.EnsureCreatedAsync(token);
+		await _concreteContext.SaveChangesAsync(token);
+	}
 }

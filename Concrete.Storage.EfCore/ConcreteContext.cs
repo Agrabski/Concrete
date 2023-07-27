@@ -4,6 +4,7 @@ using Concrete.Core.Services;
 using Concrete.Storage.EfCore.Configuration;
 using Concrete.Storage.EfCore.Repos;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 namespace Concrete.Storage.EfCore;
 internal class ConcreteContext : DbContext, IConcreteUnitOfWork
@@ -16,6 +17,7 @@ internal class ConcreteContext : DbContext, IConcreteUnitOfWork
 	internal DbSet<Course> Courses => Set<Course>();
 	internal DbSet<CourseTemplateProxy> CourseTemplates => Set<CourseTemplateProxy>();
 	internal DbSet<Subject> Subjects => Set<Subject>();
+	internal DbSet<ActivityInstanceProxy> ActivityInstances => Set<ActivityInstanceProxy>();
 	internal DbSet<QuestionBankProxy> QuestionBanks => Set<QuestionBankProxy>();
 	internal DbSet<StudentGroup> StudentGroups => Set<StudentGroup>();
 	internal DbSet<DatabaseUser> Users => Set<DatabaseUser>();
@@ -30,7 +32,7 @@ internal class ConcreteContext : DbContext, IConcreteUnitOfWork
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 	{
 #if DEBUG
-		optionsBuilder.LogTo(Console.WriteLine);
+		optionsBuilder.LogTo(m => Debug.WriteLine(m));
 		optionsBuilder.EnableSensitiveDataLogging();
 #endif
 		base.OnConfiguring(optionsBuilder);

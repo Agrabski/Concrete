@@ -59,17 +59,21 @@ public static class DIExtension
 			TQuestionBankRepository,
 			TSubjectRepository,
 			TCourseRepository,
-			TStudentGroupRepository
+			TStudentGroupRepository,
+			TActivityInstanceRepository
 		>(this IServiceCollection collection)
 			where TQuestionBankRepository : class, IQuestionBankRepository
 			where TSubjectRepository : class, ISubjectRepository
 			where TCourseRepository : class, ICourseRepository
 			where TStudentGroupRepository : class, IStudentGroupRepository
+			where TActivityInstanceRepository : class, IActivityInstanceRepository
 		=> collection
 		.AddScoped<IQuestionBankRepository, TQuestionBankRepository>()
 		.AddScoped<ISubjectRepository, TSubjectRepository>()
 		.AddScoped<ICourseRepository, TCourseRepository>()
-		.AddScoped<IStudentGroupRepository, TStudentGroupRepository>();
+		.AddScoped<IStudentGroupRepository, TStudentGroupRepository>()
+		.AddScoped<IActivityInstanceRepository, TActivityInstanceRepository>()
+		;
 
 
 }

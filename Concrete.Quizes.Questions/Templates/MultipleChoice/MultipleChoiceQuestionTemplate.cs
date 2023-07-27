@@ -9,10 +9,10 @@ public class MultipleChoiceQuestionTemplate : IQuestionTemplate<MultipleChoiceQu
 {
 	public required LocalisedStringTemplate Question { get; set; }
 	public List<MultipleChoiceQuestionAnswerTemplate> Answers { get; init; } = new();
-	public Guid Id { get; }
+	public Guid Id { get; init; }
 	public List<string> ParameterNames { get; init; } = new();
 	// todo
-	public IEnumerable<QuestionTemplateInstance> AvailableInstances { get; } = Array.Empty<QuestionTemplateInstance>();
+	public IEnumerable<QuestionTemplateInstance> AvailableInstances { get; init; } = Array.Empty<QuestionTemplateInstance>();
 	public required IGrading Grading { get; init; }
 	public bool AvailableInstancesAreFinite => true;
 

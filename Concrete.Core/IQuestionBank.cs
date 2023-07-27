@@ -7,6 +7,8 @@ namespace Concrete.Core;
 [JsonDerivedType(typeof(QuestionBank))]
 public interface IQuestionBank
 {
+	Guid Id { get; init; }
+
 	void AddQuestion(IQuestionTemplate questionTemplate);
 	IQuestionTemplate? TryGetQuestionTemplate(Guid id);
 }

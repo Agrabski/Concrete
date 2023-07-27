@@ -2,4 +2,4 @@
 
 namespace Concrete.Storage.EfCore.Repos;
 
-internal record QuestionBankProxy(Guid Id, QuestionBank QuestionBank);
+internal record QuestionBankProxy(Guid Id, IQuestionBank QuestionBank);

@@ -10,5 +10,5 @@ public class Subject
 	public required LocalisedString Name { get; init; }
 	public required LocalisedString Description { get; init; }
 	public Guid TemplateId { get; init; }
-	public required SubjectDateForGroup[] DatesForGroups { get; set; }
+	public required List<SubjectDateForGroup> DatesForGroups { get; init; }
 }
