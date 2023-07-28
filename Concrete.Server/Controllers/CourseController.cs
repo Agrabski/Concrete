@@ -19,7 +19,7 @@ public class CourseController : ControllerBase
 		_userManager = userManager;
 	}
 
-	[HttpGet, Authorize()]
+	[HttpGet, Authorize(Roles = "User")]
 	public async Task<ActionResult<CourseHeader[]>> GetCoursesForStudentAsync(CancellationToken token)
 	{
 		var userId = await _userManager.GetUserAsync(HttpContext.User);

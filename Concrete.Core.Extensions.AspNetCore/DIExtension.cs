@@ -32,7 +32,9 @@ public static class DIExtension
 		builder
 			.Services
 			.AddIdentity<IAuthenticatedUser, UserRole>()
+			.AddRoles<UserRole>()
 			.AddRoleStore<RoleStore>()
+			.addsto
 			.AddUserStore<UserStore>();
 
 		return builder;
