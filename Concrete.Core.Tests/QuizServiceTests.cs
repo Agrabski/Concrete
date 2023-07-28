@@ -7,6 +7,7 @@ using Concrete.Core.Services.Courses;
 using Concrete.Core.Services.QuestionBanks;
 using Concrete.Core.Services.Subjects;
 using Concrete.Quizes.Questions;
+using Concrete.Quizes.Questions.CultureFilledDtos.MultipleChoice;
 using Concrete.Quizes.Questions.Instances.MultipleChoice.Grading;
 using Concrete.Quizes.Questions.Templates.MultipleChoice;
 using Concrete.Storage.EfCore;
@@ -15,7 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Concrete.Core.Tests;
 
-public class QuizServiceTests : IDisposable
+public class QuizServiceTests
 {
 
 	private static IServiceProvider BuildServiceProvider()
@@ -29,10 +30,8 @@ public class QuizServiceTests : IDisposable
 		return result;
 	}
 
-	public void Dispose() => Directory.Delete("data", true);
-
 	[Fact]
-	public async Task Test1Async()
+	public async Task QuizCanBeInstantiated()
 	{
 		var serviceProvider = BuildServiceProvider();
 		using var scope = serviceProvider.CreateScope();
@@ -55,8 +54,8 @@ public class QuizServiceTests : IDisposable
 					Grading = new AllOrNothingGrading(0),
 					Answers =
 					{
-						new(0, new()),
-						new(1, new())
+						new(0, new(new(){["pl"]="a1"})),
+						new(1, new(new(){["pl"]="a2"}))
 					},
 					AvailableInstances = new QuestionTemplateInstance[]
 					{
@@ -65,10 +64,10 @@ public class QuizServiceTests : IDisposable
 							Id = Guid.NewGuid(),
 							Parameters = new(),
 							QuestionBankId = questionBankId,
-							QuestionTemplateId = questionBankId,
+							QuestionTemplateId = questionId,
 						}
 					},
-					Question = new(),
+					Question = new(new(){["pl"]="test question"}),
 					Id = questionId
 				}
 			}
@@ -109,7 +108,20 @@ public class QuizServiceTests : IDisposable
 
 		var userId = Guid.NewGuid();
 		var instanceId = await quizService.StartQuizAttemptAsync(userId, courseId, subjectId, activityId, CancellationToken.None);
-
 		await scope.ServiceProvider.GetRequiredService<IConcreteUnitOfWork>().CommitAsync(CancellationToken.None);
+		var attempt = await quizService.GetQuizAsync(instanceId, "pl", CancellationToken.None);
+		Assert.Collection(
+			attempt.Questions,
+			q =>
+			{
+				var question = Assert.IsType<CultureFilledMultipleChoiceQuestionDto>(q);
+				Assert.Equal("test question", question.Question);
+				Assert.Collection(
+					question.Answers,
+					a => Assert.Equal(0, a.Index),
+					a => Assert.Equal(1, a.Index)
+				);
+			}
+		);
 	}
 }
