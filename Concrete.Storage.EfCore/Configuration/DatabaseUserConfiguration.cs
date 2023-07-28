@@ -11,7 +11,11 @@ internal class DatabaseUserConfiguration : IEntityTypeConfiguration<User>
 		builder.HasKey(x => x.Id);
 		builder.Property(x => x.Id);
 		builder.Property(x => x.Name).IsRequired();
+		builder.Property(x => x.UserName).IsRequired();
 		builder.Property(x => x.Surname).IsRequired();
 		builder.Property(x => x.Role).HasConversion<int>();
+
 	}
 }
+
+

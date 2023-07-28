@@ -24,7 +24,7 @@ public class QuizServiceTests
 		Directory.CreateDirectory("data");
 		var result = new ServiceCollection()
 			.AddConcrete()
-			.AddConcreteEfCoreStorage(db => db.UseSqlite($"Data Source=data\\{Guid.NewGuid()}.db"))
+			.AddConcreteEfCoreStorage(true, db => db.UseSqlite($"Data Source=data\\{Guid.NewGuid()}.db"))
 			.AddBuiltInConcreteQuestions()
 			.BuildServiceProvider();
 		return result;

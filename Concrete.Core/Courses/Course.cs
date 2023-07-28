@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.CodeAnalysis;
-
-namespace Concrete.Core.Courses;
+﻿namespace Concrete.Core.Courses;
 
 public class Course
 {

@@ -10,7 +10,16 @@ using Microsoft.Extensions.DependencyInjection;
 namespace Concrete.Storage.EfCore;
 public static class DIExtension
 {
-	public static IServiceCollection AddConcreteEfCoreStorage(this IServiceCollection services, Action<DbContextOptionsBuilder>? optionsBuilder) => services
+	public static IServiceCollection AddConcreteEfCoreStorage(this IServiceCollection services, bool includeDatabaseAuthenticationData, Action<DbContextOptionsBuilder>? optionsBuilder)
+	{
+		if (includeDatabaseAuthenticationData)
+		{
+			services
+				.AddSingleton<IEntityTypeConfiguration<DatabaseUser>, AuthenticatedUserConfiguration>()
+				.AddScoped<IAuthenticationInfoRepository, UserRepository>();
+		}
+
+		return services
 		.AddConcreteStorageImplementation<
 			EfCoreQuestionBankRepository,
 			EfCoreSubjectRepository,
@@ -18,6 +27,7 @@ public static class DIExtension
 			EfCoreStudentGroupRepository,
 			EfCoreActivityInstanceRepository>()
 		.AddDbContext<ConcreteContext>(optionsBuilder)
+		.AddSingleton<IEntityTypeConfiguration<User>, DatabaseUserConfiguration>()
 		.AddSingleton<IEntityTypeConfiguration<CourseTemplateProxy>, CourseTemplateConfiguration>()
 		.AddSingleton<IEntityTypeConfiguration<Subject>, SubjectConfiguration>()
 		.AddSingleton<IEntityTypeConfiguration<QuestionBankProxy>, QuestionBankConfiguration>()
@@ -27,4 +37,5 @@ public static class DIExtension
 		.AddScoped<IConcreteMigrator, ConcreteMigrator>()
 		.AddConcreteUsers<UserRepository>()
 		;
+	}
 }

@@ -1,10 +1,6 @@
-﻿using Concrete.Users;
-
-namespace Concrete.Storage.EfCore;
+﻿namespace Concrete.Storage.EfCore;
 
 public interface IConcreteMigrator
 {
-	public Task EnsureCreatedAsync(CancellationToken token);
+	public Task<bool> EnsureCreatedAsync(CancellationToken token);
 }
-
-internal class DatabaseUser : User { }
