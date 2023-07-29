@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "isRoot": true,
+  "isRoot": false,
   "tools": {
     "microsoft.dotnet-msidentity": {
       "version": "2.0.1",

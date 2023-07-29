@@ -15,7 +15,7 @@
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.9" />
 		<PackageReference Include="Microsoft.Identity.Web" Version="1.16.0" />
 		<PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.18.0" />
-		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -27,6 +27,10 @@
 
 	<ItemGroup>
 	  <Folder Include="data\" />
+	  <Folder Include="generated-docs\" />
 	</ItemGroup>
-
+	<Target Name="SwaggerPostBuildTarget" AfterTargets="Build">
+		<Exec Command="dotnet tool restore"></Exec>
+		<Exec Command="dotnet tool run swagger tofile --output generated-docs\swagger.json bin\Debug\net7.0\Concrete.Server.dll v1"></Exec>
+	</Target>
 </Project>
