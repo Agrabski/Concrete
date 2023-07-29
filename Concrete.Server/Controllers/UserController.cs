@@ -25,7 +25,7 @@ public class UserController : ControllerBase
 		_passwordHasher = passwordHasher;
 	}
 
-	[HttpPost]
+	[HttpPost("auth")]
 	public async Task<ActionResult> AuthorizeAsync([FromBody] AuthorizeRequestBody request)
 	{
 		var result = await _signInManager.PasswordSignInAsync(request.Username, request.Password, true, false);
