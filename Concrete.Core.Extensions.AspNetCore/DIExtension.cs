@@ -34,7 +34,6 @@ public static class DIExtension
 			.AddIdentity<IAuthenticatedUser, UserRole>()
 			.AddRoles<UserRole>()
 			.AddRoleStore<RoleStore>()
-			.addsto
 			.AddUserStore<UserStore>();
 
 		return builder;

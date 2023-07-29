@@ -20,7 +20,8 @@ internal class EfCoreCourseRepository : ICourseRepository
 	{
 		return _context.Courses.Where(c => c.StudentGroups.Any(g => g.Users.Any(u => u.Id == userId))).Select(c => new CourseHeader(c.Id, c.Name)).AsAsyncEnumerable();
 	}
-	public Task<Course?> TryGetCourseAsync(Guid courseId, CancellationToken token) => _context.Courses.FirstOrDefaultAsync(c => c.Id == courseId, token);
+	public Task<Course?> TryGetCourseAsync(Guid courseId, CancellationToken token) => _context.Courses.Include(c => c.Subjects).FirstOrDefaultAsync(c => c.Id == courseId, token);
+	public Task<Course?> TryGetCourseForUserAsync(Guid courseId, Guid userId, CancellationToken token) => _context.Courses.Include(c => c.Subjects).FirstOrDefaultAsync(c => c.Id == courseId && c.StudentGroups.Any(g => g.Users.Any(u => u.Id == userId)), token);
 	public async Task<CourseTemplate?> TryGetCourseTemplateAsync(Guid templateId, CancellationToken token) => (await _context.CourseTemplates.FirstOrDefaultAsync(c => c.Id == templateId, token))?.Template;
 	public async ValueTask UpdateAsync(CourseTemplate courseTemplate, CancellationToken token)
 	{

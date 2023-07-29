@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 
 namespace Concrete.Core.Extensions.AspNetCore.Auth;
-internal class UserStore : IUserRoleStore<IAuthenticatedUser>
+internal class UserStore : IUserRoleStore<IAuthenticatedUser>, IUserPasswordStore<IAuthenticatedUser>
 {
 	private readonly IAuthenticationInfoRepository _authenticationInfoRepository;
 
@@ -24,7 +24,7 @@ internal class UserStore : IUserRoleStore<IAuthenticatedUser>
 	public Task<IAuthenticatedUser?> FindByNameAsync(string normalizedUserName, CancellationToken cancellationToken) => _authenticationInfoRepository.TryGetUserAsync(normalizedUserName, cancellationToken);
 	public Task<string?> GetNormalizedUserNameAsync(IAuthenticatedUser user, CancellationToken cancellationToken) => Task.FromResult<string?>(user.UserName.ToUpperInvariant());
 	public Task<string?> GetPasswordHashAsync(IAuthenticatedUser user, CancellationToken cancellationToken) => Task.FromResult(user.GetAuthentication().PasswordHash);
-	public Task<IList<string>> GetRolesAsync(IAuthenticatedUser user, CancellationToken cancellationToken) => throw new NotImplementedException();
+	public Task<IList<string>> GetRolesAsync(IAuthenticatedUser user, CancellationToken cancellationToken) => Task.FromResult<IList<string>>(new List<string>() { user.Role.ToString() });
 	public Task<string> GetUserIdAsync(IAuthenticatedUser user, CancellationToken cancellationToken) => Task.FromResult(user.Id.ToString());
 	public Task<string?> GetUserNameAsync(IAuthenticatedUser user, CancellationToken cancellationToken) => Task.FromResult<string?>(user.UserName);
 	public Task<IList<IAuthenticatedUser>> GetUsersInRoleAsync(string roleName, CancellationToken cancellationToken) => throw new NotImplementedException();

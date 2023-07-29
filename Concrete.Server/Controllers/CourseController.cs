@@ -1,4 +1,5 @@
-﻿using Concrete.Core.Services.Courses;
+﻿using Concrete.Core.Courses;
+using Concrete.Core.Services.Courses;
 using Concrete.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -19,12 +20,26 @@ public class CourseController : ControllerBase
 		_userManager = userManager;
 	}
 
-	[HttpGet, Authorize(Roles = "User")]
+	[HttpGet, Authorize(Roles = nameof(UserRole.Student))]
 	public async Task<ActionResult<CourseHeader[]>> GetCoursesForStudentAsync(CancellationToken token)
 	{
-		var userId = await _userManager.GetUserAsync(HttpContext.User);
-		if (userId is null)
+		var user = await _userManager.GetUserAsync(HttpContext.User);
+		if (user is null)
 			return Unauthorized();
-		return Ok(await _courseRepository.ListCoursesForStudentAsync(userId.Id, token).ToArrayAsync(token));
+		return Ok(await _courseRepository.ListCoursesForStudentAsync(user.Id, token).ToArrayAsync(token));
 	}
+
+	[HttpGet("{courseId}"), Authorize(Roles = nameof(UserRole.Student))]
+	public async Task<ActionResult<Course>> GetCourseAsync(Guid courseId, CancellationToken token)
+	{
+		var user = await _userManager.GetUserAsync(HttpContext.User);
+		if (user is null)
+			return Unauthorized();
+		var result = await _courseRepository.TryGetCourseForUserAsync(courseId, user.Id, token);
+		if (result is null)
+			return NotFound();
+		return Ok(result);
+
+	}
+
 }
