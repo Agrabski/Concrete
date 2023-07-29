@@ -2,9 +2,9 @@
 
 public interface IAuthenticatedUser
 {
-	string UserName { get; }
+	string UserName { get; set; }
 	Guid Id { get; }
-	UserRole Role { get; }
+	UserRole Role { get; set; }
 
 	AuthenticationInfo GetAuthentication();
 }

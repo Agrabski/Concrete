@@ -6,4 +6,5 @@ public interface IAuthenticationInfoRepository
 	Task AddAuthenticatedUserAsync(IAuthenticatedUser user, CancellationToken token);
 	Task<IAuthenticatedUser?> TryGetUserAsync(string normalizedUserName, CancellationToken cancellationToken);
 	Task<IAuthenticatedUser?> TryGetUserAsync(Guid id, CancellationToken cancellationToken);
+	Task UpdateAsync(IAuthenticatedUser user, CancellationToken cancellationToken);
 }

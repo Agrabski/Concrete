@@ -33,4 +33,10 @@ internal class UserRepository : IUserRepository, IAuthenticationInfoRepository
 		var result = await _context.Users.FirstOrDefaultAsync(u => u.Id == id, cancellationToken);
 		return result;
 	}
+
+	public Task UpdateAsync(IAuthenticatedUser user, CancellationToken cancellationToken)
+	{
+		_context.Users.Update((DatabaseUser)user);
+		return Task.CompletedTask;
+	}
 }
