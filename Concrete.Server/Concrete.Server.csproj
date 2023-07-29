@@ -39,7 +39,8 @@
 	</ItemGroup>
 	<Target Name="SwaggerPostBuildTarget" AfterTargets="Build">
 		<Exec Command="dotnet tool restore"></Exec>
-		<Exec Command="dotnet tool run swagger tofile --output generated-docs\swagger.json bin\Debug\net7.0\Concrete.Server.dll v1"></Exec>
+		<Exec Command="dotnet tool run swagger tofile --output generated-docs\swagger.json $(OutDir)\Concrete.Server.dll v1"/>
+		<Exec Command="npx swagger-typescript-api -p generated-docs\swagger.json -o client-app/src/api"/>
 	</Target>
 
 	<ItemGroup>
