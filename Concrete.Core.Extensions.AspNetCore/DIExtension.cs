@@ -1,7 +1,5 @@
 ﻿using Concrete.Core.Extensions.AspNetCore.Auth;
 using Concrete.Users;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,26 +12,15 @@ public static class DIExtension
 
 	public static WebApplicationBuilder ConfigureConcreteAuthentication(
 		this WebApplicationBuilder builder,
-		Action<JwtBearerOptions> configureJwt,
-		Action<CookieAuthenticationOptions> configureCookies
-	)
+		Action<IdentityOptions> configureIdentity)
 	{
 		builder
 			.Services
 			.AddTransient<PasswordHasher<IAuthenticatedUser>>()
-			.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-			.AddJwtBearer(
-				JwtBearerDefaults.AuthenticationScheme,
-				configureJwt
-			)
-			.AddCookie(
-				CookieAuthenticationDefaults.AuthenticationScheme,
-				configureCookies
-			)
 			;
 		builder
 			.Services
-			.AddIdentity<IAuthenticatedUser, UserRole>()
+			.AddIdentity<IAuthenticatedUser, UserRole>(configureIdentity)
 			.AddRoles<UserRole>()
 			.AddRoleStore<RoleStore>()
 			.AddUserStore<UserStore>()

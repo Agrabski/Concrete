@@ -20,7 +20,7 @@ builder.Services
 	.AddControllers()
 	;
 builder
-	.ConfigureConcreteAuthentication(o => { }, o => { });
+	.ConfigureConcreteAuthentication(o => { });
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -51,8 +51,18 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app
+	// idiotic hack around the fact that asp.net core identity redirects to /Account/accessdenied instead of returning 403
+	.Use(async (context, next) =>
+	{
+		await next(context);
+		if (context.Response.StatusCode == 302)
+		{
+			context.Response.StatusCode = 403;
+		}
+	})
 	.UseAuthentication()
-	.UseAuthorization();
+	.UseAuthorization()
+	;
 
 app.MapControllers();
 
