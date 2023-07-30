@@ -21,7 +21,7 @@ public class CourseTemplateController : ControllerBase
 		_courseRepository = courseRepository;
 	}
 
-	[HttpPost("/Create")]
+	[HttpPost("Create")]
 	public async Task<CourseTemplate> CreateTemplateAsync(string name, CancellationToken token)
 	{
 		var result = await _courseService.CreateCourseTemplateAsync(name, token);

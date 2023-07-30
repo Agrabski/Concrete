@@ -3,9 +3,13 @@ import { useEffect, useState } from "react";
 import { CourseHeader } from "../api/Api";
 import { api } from "../api/ApiWrapper";
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
-
+// todo: more properties
 const columns: GridColDef<CourseHeader>[] = [
-
+	{
+		valueGetter: h => h.row.name,
+		type: 'string',
+		field: 'Name'
+	}
 ]
 
 export function Courses() {
@@ -16,9 +20,8 @@ export function Courses() {
 		}
 	})
 	return (
-		<Stack>
-			<Typography variant="h1">Courses</Typography>
+		<Stack sx={{ height: '80vh' }} >
 			{courses ? (<DataGrid rows={courses} columns={columns} />) : <CircularProgress />}
-		</Stack>
+		</Stack >
 	);
 }

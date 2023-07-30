@@ -20,13 +20,20 @@ public class CourseController : ControllerBase
 		_userManager = userManager;
 	}
 
-	[HttpGet, Authorize(Roles = nameof(UserRole.Student))]
+	[HttpGet, Authorize]
 	public async Task<ActionResult<CourseHeader[]>> GetCoursesForStudentAsync(CancellationToken token)
 	{
 		var user = await _userManager.GetUserAsync(HttpContext.User);
 		if (user is null)
 			return Unauthorized();
-		return Ok(await _courseRepository.ListCoursesForStudentAsync(user.Id, token).ToArrayAsync(token));
+		return user.Role switch
+		{
+			UserRole.Student => Ok(await _courseRepository.ListCoursesForStudentAsync(user.Id, token).ToArrayAsync(token)),
+			UserRole.Admin => Ok(await _courseRepository.ListAsync(token).ToArrayAsync(token)),
+			UserRole.Teacher => throw new NotImplementedException(),
+			UserRole.TeachingAssistant => throw new NotImplementedException(),
+			_ => BadRequest($"Unrecognized user role {user.Role}")
+		};
 	}
 
 	[HttpGet("{courseId}"), Authorize(Roles = nameof(UserRole.Student))]
