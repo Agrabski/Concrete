@@ -56,4 +56,13 @@ public class UserController : ControllerBase
 			return Ok(user.Id);
 		return Unauthorized(result.Errors);
 	}
+
+	[HttpGet("me")]
+	public async Task<ActionResult<UserDto>> GetMeAsync(CancellationToken token)
+	{
+		var user = await _userManager.GetUserAsync(HttpContext.User);
+		if (user is null)
+			return Unauthorized();
+		return Ok(new UserDto(user.Id, user.UserName, user.GetAuthentication().Email, user.Role));
+	}
 }
