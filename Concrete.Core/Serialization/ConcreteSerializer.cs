@@ -29,7 +29,9 @@ internal class ConcreteSerializer : IConcreteSerializer
 				_activityTemplateInfos
 			),
 			WriteIndented = true,
-			UnknownTypeHandling = JsonUnknownTypeHandling.JsonElement
+			UnknownTypeHandling = JsonUnknownTypeHandling.JsonElement,
+			PropertyNameCaseInsensitive = true,
+			AllowTrailingCommas = true
 		};
 	}
 

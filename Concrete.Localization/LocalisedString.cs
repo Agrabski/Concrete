@@ -2,7 +2,7 @@
 
 public class LocalisedString
 {
-	public Dictionary<string, string> TextByLocale { get; } = new();
+	public Dictionary<string, string> TextByLocale { get; init; } = new();
 	public LocalisedString() { }
 	public LocalisedString(Dictionary<string, string> textByLocale)
 	{
