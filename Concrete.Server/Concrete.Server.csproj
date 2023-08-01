@@ -10,7 +10,7 @@
 
 		<SpaRoot>client-app\</SpaRoot>
 		<DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
-		<SpaProxyServerUrl>https://localhost:3000</SpaProxyServerUrl>
+		<SpaProxyServerUrl>http://localhost:3000</SpaProxyServerUrl>
 		<SpaProxyLaunchCommand>npm start</SpaProxyLaunchCommand>
 		<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
 		<TypeScriptJSXEmit>react</TypeScriptJSXEmit>
@@ -50,6 +50,7 @@
 	<ItemGroup>
 		<!-- Don't publish the SPA source files, but do show them in the project files list -->
 		<Content Remove="$(SpaRoot)**" />
+		<Content Remove="generated-docs"/>
 		<None Remove="$(SpaRoot)**" />
 		<None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
 	</ItemGroup>
