@@ -12,7 +12,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services
 	.AddEndpointsApiExplorer()
-	.AddSwaggerGen()
+	.AddSwaggerGen(s =>
+	{
+		s.SupportNonNullableReferenceTypes();
+		s.SchemaFilter<RequiredNotNullableSchemaFilter>();
+	})
 	.AddConcrete()
 	.AddConcreteEfCoreStorage(true, o => o.UseSqlite(builder.Configuration.GetConnectionString("sqlite")))
 	.AddBuiltInConcreteQuestions()

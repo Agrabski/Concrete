@@ -1,8 +1,12 @@
-﻿namespace Concrete.Core.Courses;
+﻿using System.Text.Json.Serialization;
+
+namespace Concrete.Core.Courses;
 public class CourseTemplate
 {
 	public required Guid TemplateId { get; init; }
+	[JsonRequired]
 	public required string TemplateName { get; set; }
+	[JsonRequired]
 	public List<SubjectTemplate> Subjects { get; init; } = new();
 	public Course FillTemplate(SubjectDate[] subjectDates, string courseCode)
 	{
