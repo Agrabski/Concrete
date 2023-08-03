@@ -14,6 +14,7 @@ public class MultipleChoiceQuestion : IQuestion<MultipleChoiceQuestionAnswerSet>
 	public required Dictionary<string, object> Parameters { get; init; }
 	public required Guid QuestionId { get; init; }
 	public required IGrading Grading { get; init; }
+	public List<string> Categories { get; init; } = new();
 
 	public ICultureFilledQuestion FllForCulture(string culture) => new CultureFilledMultipleChoiceQuestionDto(
 		Question.GetTextForLocale(culture),

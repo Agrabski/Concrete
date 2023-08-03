@@ -1,4 +1,5 @@
-﻿using Concrete.Core.Questions.Instances;
+﻿using Concrete.Core.Activities.Templates;
+using Concrete.Core.Questions.Instances;
 using Concrete.Core.Questions.Templates;
 using Concrete.Localization;
 using Concrete.Quizes.Questions.Instances.MultipleChoice;
@@ -15,6 +16,8 @@ public class MultipleChoiceQuestionTemplate : IQuestionTemplate<MultipleChoiceQu
 	public IEnumerable<QuestionTemplateInstance> AvailableInstances { get; init; } = Array.Empty<QuestionTemplateInstance>();
 	public required IGrading Grading { get; init; }
 	public bool AvailableInstancesAreFinite => true;
+
+	public CategoryName Category { get; set; }
 
 	public IQuestion<MultipleChoiceQuestionAnswerSet> FillTemplate(Dictionary<string, object> parameters)
 	{

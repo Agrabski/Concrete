@@ -96,7 +96,7 @@ public class QuizServiceTests
 					{
 						Questions =
 						{
-							new QuizTemplateQuestionReference(questionBankId, questionId, new AllQuestionVariantsTemplateFilingMode())
+							new QuizTemplateSingleQuestionReference(questionBankId, questionId, new AllQuestionVariantsTemplateFilingMode())
 						}
 					}
 				}

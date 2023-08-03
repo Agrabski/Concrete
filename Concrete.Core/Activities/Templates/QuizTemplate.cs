@@ -4,7 +4,7 @@ using Concrete.Core.Services.QuestionBanks;
 namespace Concrete.Core.Activities.Templates;
 public class QuizTemplate : IActivityTemplate
 {
-	public List<QuizTemplateQuestionReference> Questions { get; init; } = new();
+	public List<IQuizTemplateQuestionReference> Questions { get; init; } = new();
 	public async Task<QuizInstance> CreateInstanceAsync(
 		Guid userId,
 		IQuestionBankRepository questionBankRepository,
@@ -18,9 +18,9 @@ public class QuizTemplate : IActivityTemplate
 			Questions = (await Task.WhenAll(Questions.Select(async q =>
 			{
 				var questionBank = (await questionBankRepository.TryGet(q.QuestionBankId, token))
-					?? throw new Exception();//todo
-				var question = questionBank.TryGetQuestionTemplate(q.QuestionTemplateId)
-					?? throw new Exception(); // todo
+					?? throw new Exception(); //todo
+				var question = q.FindTemplate(questionBank)
+					?? throw new Exception(); //todo
 				return q.FilingMode.Fill(question);
 			}))).ToList()
 		};

@@ -1,4 +1,5 @@
-﻿using Concrete.Core.Questions.Templates;
+﻿using Concrete.Core.Activities.Templates;
+using Concrete.Core.Questions.Templates;
 
 namespace Concrete.Core;
 public class QuestionBank : IQuestionBank
@@ -9,6 +10,8 @@ public class QuestionBank : IQuestionBank
 	{
 		QuestionTemplates.Add(questionTemplate);
 	}
+
+	public IEnumerable<IQuestionTemplate> GetQuestionsByCategory(CategoryName categoryName) => QuestionTemplates.Where(q => categoryName.Contains(q.Category));
 
 	public IQuestionTemplate? TryGetQuestionTemplate(Guid id)
 	{

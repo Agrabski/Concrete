@@ -35,7 +35,7 @@ public class SerializationTests
 							{
 								Questions =
 								{
-									new(Guid.NewGuid(), Guid.NewGuid(), new AllQuestionVariantsTemplateFilingMode())
+									new QuizTemplateSingleQuestionReference(Guid.NewGuid(), Guid.NewGuid(), new AllQuestionVariantsTemplateFilingMode())
 								}
 							}
 						}
