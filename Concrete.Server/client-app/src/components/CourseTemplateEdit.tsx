@@ -2,18 +2,19 @@ import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { CourseTemplate } from "../api/Api";
 import { api } from "../api/ApiWrapper";
-import { Box, Button, Card, CardActions, CardContent, CircularProgress, FormControlLabel, IconButton, Stack, Switch, TextField, debounce } from "@mui/material";
-import { LocalisedStringEditor } from "./LocalisedStringEditor";
+import { Button, Card, CardActions, CardContent, CircularProgress, FormControlLabel, IconButton, Stack, Switch, TextField, debounce } from "@mui/material";
 import { SubjectTemplateEditor } from "./SubjectTemplateEditor";
 import { RemoveAtIndex, ReplaceAtIndex } from "../utils/ArrayUtils";
 import AddIcon from '@mui/icons-material/Add';
+import JsonEditor from 'react-json-editor-ui'
 
 interface EditorProps {
 	template: CourseTemplate,
 	updateTemplate: (template: CourseTemplate) => void
 }
-function EditByJson({ }: EditorProps) {
-	return <div >json</div>;
+function EditByJson({ template, updateTemplate }: EditorProps) {
+	// todo: actually good json editor. ffs imma use monaco at some point i fucking swear
+	return <JsonEditor data={template} onChange={updateTemplate} />
 }
 function EditByEditor({ template, updateTemplate }: EditorProps) {
 	return (
@@ -45,7 +46,8 @@ function EditByEditor({ template, updateTemplate }: EditorProps) {
 							activities: [],
 							name: { textByLocale: {} },
 							description: { textByLocale: {} },
-							id: crypto.randomUUID()
+							id: crypto.randomUUID(),
+							tempalteName: 'Untitled subject template'
 						}
 					]
 				})}>

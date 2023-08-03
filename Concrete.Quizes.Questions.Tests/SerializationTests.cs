@@ -39,7 +39,7 @@ public class SerializationTests
 								}
 							}
 						}
-					}, new(), new(), Guid.NewGuid())
+					}, new(), new(), Guid.NewGuid(), "test")
 			}
 		};
 		var text = serializer.Serialize(courseTemplate);

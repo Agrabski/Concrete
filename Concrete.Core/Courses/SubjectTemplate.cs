@@ -2,7 +2,7 @@
 
 namespace Concrete.Core.Courses;
 
-public record SubjectTemplate(SubjectActivity[] Activities, LocalisedString Name, LocalisedString Description, Guid Id)
+public record SubjectTemplate(SubjectActivity[] Activities, LocalisedString Name, LocalisedString Description, Guid Id, string TempalteName)
 {
 	public Subject FillTemplate(SubjectDateForGroup[] startTime, Guid courseId)
 	{

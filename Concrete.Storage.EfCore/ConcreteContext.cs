@@ -32,8 +32,10 @@ internal class ConcreteContext : DbContext, IConcreteUnitOfWork
 	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 	{
 #if DEBUG
-		optionsBuilder.LogTo(m => Debug.WriteLine(m));
-		optionsBuilder.EnableSensitiveDataLogging();
+		optionsBuilder
+			.LogTo(m => Debug.WriteLine(m), new[] { DbLoggerCategory.Database.Command.Name })
+			.EnableSensitiveDataLogging()
+			.EnableDetailedErrors();
 #endif
 		base.OnConfiguring(optionsBuilder);
 	}

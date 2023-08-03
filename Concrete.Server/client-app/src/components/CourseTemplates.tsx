@@ -10,7 +10,8 @@ const columns: GridColDef<CourseHeader>[] = [
 	{
 		valueGetter: h => h.row.name,
 		type: 'string',
-		field: 'Name'
+		field: 'Name',
+		width: 600
 	}
 ]
 
@@ -39,7 +40,13 @@ export function CourseTemplates() {
 					<Typography>Add template</Typography>
 				</IconButton>
 			</Stack>
-			{courseTemplates ? (<DataGrid rows={courseTemplates} columns={columns} />) : <CircularProgress />}
+			{courseTemplates ? (
+				<DataGrid
+					rows={courseTemplates}
+					columns={columns}
+					onRowDoubleClick={r => navigate(`/course-templates/${r.id}`)} />)
+				: <CircularProgress />
+			}
 		</Stack >
 	);
 }
