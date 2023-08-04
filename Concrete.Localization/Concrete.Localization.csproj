@@ -1,5 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <PackageReference Include="SmartFormat.NET" Version="3.2.1" />
+    <PackageReference Include="SmartFormat.NET"/>
   </ItemGroup>
 </Project>
