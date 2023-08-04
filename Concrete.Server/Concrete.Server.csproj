@@ -14,7 +14,7 @@
 		<SpaProxyLaunchCommand>npm start</SpaProxyLaunchCommand>
 		<EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
 		<TypeScriptJSXEmit>react</TypeScriptJSXEmit>
-
+		<IsPackable>false</IsPackable>
 	</PropertyGroup>
 
 	<ItemGroup>
