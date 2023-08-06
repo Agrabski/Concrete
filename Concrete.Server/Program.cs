@@ -1,31 +1,10 @@
-using Concrete.Core;
-using Concrete.Core.Extensions.AspNetCore;
 using Concrete.Core.Services;
-using Concrete.Quizes.Questions;
+using Concrete.Server;
 using Concrete.Storage.EfCore;
 using Concrete.Users;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 
-var builder = WebApplication.CreateBuilder(args);
-
-
-builder.Services
-	.AddEndpointsApiExplorer()
-	.AddSwaggerGen(s =>
-	{
-		s.SupportNonNullableReferenceTypes();
-		s.SchemaFilter<RequiredNotNullableSchemaFilter>();
-	})
-	.AddConcrete()
-	.AddConcreteEfCoreStorage(true, o => o.UseSqlite(builder.Configuration.GetConnectionString("sqlite")))
-	.AddBuiltInConcreteQuestions()
-	.ConfigureConcreteSerialization()
-	.AddControllers()
-	;
-builder
-	.ConfigureConcreteAuthentication(o => { });
-var app = builder.Build();
+var app = HostHelper.BuildHost(args);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -71,5 +50,4 @@ app
 app.MapControllers();
 
 app.Run();
-
 

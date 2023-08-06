@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { CourseTemplate } from "../api/Api";
 import { api } from "../api/ApiWrapper";
-import { Button, Card, CardActions, CardContent, CircularProgress, FormControlLabel, IconButton, Stack, Switch, TextField, debounce } from "@mui/material";
+import { Box, Button, Card, CardActions, CardContent, CircularProgress, FormControlLabel, IconButton, Stack, Switch, TextField, Typography, debounce } from "@mui/material";
 import { SubjectTemplateEditor } from "./SubjectTemplateEditor";
 import { RemoveAtIndex, ReplaceAtIndex } from "../utils/ArrayUtils";
 import AddIcon from '@mui/icons-material/Add';
@@ -18,43 +18,45 @@ function EditByJson({ template, updateTemplate }: EditorProps) {
 }
 function EditByEditor({ template, updateTemplate }: EditorProps) {
 	return (
-		<Card>
-			<CardContent>Subjects</CardContent>
-			<Stack spacing={2}>
-				{template.subjects.map((s, index) => {
-					return <Card sx={{ margin: 1 }}>
-						<SubjectTemplateEditor
-							value={s}
-							updateValue={v => updateTemplate({
-								...template,
-								subjects: ReplaceAtIndex(template.subjects, v, index)
-							})}
-						/>
-						<CardActions>
-							<Button onClick={() => updateTemplate({
-								...template,
-								subjects: RemoveAtIndex(template.subjects, index)
-							})}>Remove</Button>
-						</CardActions>
-					</Card>
-				})}
-				<IconButton onClick={() => updateTemplate({
-					...template,
-					subjects: [
-						...template.subjects,
-						{
-							activities: [],
-							name: { textByLocale: {} },
-							description: { textByLocale: {} },
-							id: crypto.randomUUID(),
-							tempalteName: 'Untitled subject template'
-						}
-					]
-				})}>
-					<AddIcon />Add
-				</IconButton>
-			</Stack>
-		</Card>
+		<Stack>
+			<Typography>Subjects</Typography>
+			<Box sx={{ marign: 2 }}>
+				<Stack spacing={2}>
+					{template.subjects.map((s, index) => {
+						return <Card>
+							<SubjectTemplateEditor
+								value={s}
+								updateValue={v => updateTemplate({
+									...template,
+									subjects: ReplaceAtIndex(template.subjects, v, index)
+								})}
+							/>
+							<CardActions>
+								<Button onClick={() => updateTemplate({
+									...template,
+									subjects: RemoveAtIndex(template.subjects, index)
+								})}>Remove</Button>
+							</CardActions>
+						</Card>
+					})}
+					<IconButton onClick={() => updateTemplate({
+						...template,
+						subjects: [
+							...template.subjects,
+							{
+								activities: [],
+								name: { textByLocale: {} },
+								description: { textByLocale: {} },
+								id: crypto.randomUUID(),
+								tempalteName: 'Untitled subject template'
+							}
+						]
+					})}>
+						<AddIcon />Add
+					</IconButton>
+				</Stack>
+			</Box>
+		</Stack>
 	);
 }
 

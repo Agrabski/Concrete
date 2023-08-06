@@ -10,6 +10,7 @@ using Concrete.Core.Services.QuestionBanks;
 using Concrete.Core.Services.Subjects;
 using Microsoft.Extensions.DependencyInjection;
 using System.Runtime.CompilerServices;
+using System.Text.Json.Serialization.Metadata;
 
 [assembly: InternalsVisibleTo("Concrete.Core.Tests")]
 
@@ -22,6 +23,7 @@ public static class DIExtension
 		.AddTransient<ICourseService, CourseService>()
 		.AddTransient<IQuizService, QuizService>()
 		.AddSingleton<PolymorphicTypeResolver>()
+		.AddSingleton<DefaultJsonTypeInfoResolver, PolymorphicTypeResolver>()
 		.AddActivityType<QuizTemplate, QuizInstance>(ConcreteConvetion.TypeDiscriminator("Concrete", "Core", "Quiz"))
 		.AddScoped<IStudentGroupService, StudentGroupService>()
 		;
