@@ -10,8 +10,3 @@ public record AllOrNothingGrading(params int[] CorrectAnswers) : IGrading
 		: 0
 	);
 }
-
-public record ProportionalGrading(params int[] CorrectAnswers) : IGrading
-{
-	QuestionGradingResponse IGrading.Grade(int[] AnswerIndicies) => new(CorrectAnswers.Where(CorrectAnswers.Contains).Count() / CorrectAnswers.Length * QuestionGradingResponse.MaxGrade);
-}

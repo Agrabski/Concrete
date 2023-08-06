@@ -2,8 +2,8 @@
 using System.Text.Json.Serialization;
 
 namespace Concrete.Quizes.Questions.Instances.MultipleChoice.Grading;
-[JsonDerivedType(typeof(AllOrNothingGrading), 0)]
-[JsonDerivedType(typeof(ProportionalGrading), 1)]
+[JsonDerivedType(typeof(AllOrNothingGrading), "all-or-nothing")]
+[JsonDerivedType(typeof(ProportionalGrading), "proportional")]
 [JsonPolymorphic(TypeDiscriminatorPropertyName = "$$type")]
 public interface IGrading
 {

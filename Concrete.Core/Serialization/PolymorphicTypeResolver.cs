@@ -34,27 +34,29 @@ internal class PolymorphicTypeResolver : DefaultJsonTypeInfoResolver
 	public override JsonTypeInfo GetTypeInfo(Type type, JsonSerializerOptions options)
 	{
 		var jsonTypeInfo = base.GetTypeInfo(type, options);
-		if (type == typeof(IQuestion) || type.GetInterfaces().Any(i =>
-				i.IsConstructedGenericType &&
-				i.GetGenericTypeDefinition() == typeof(IQuestion<>)
-		))
-			return GetOptionsFor(jsonTypeInfo, _questionInfos);
-		if (type == typeof(IQuestionTemplate) || type.GetInterfaces().Any(i =>
-				i.IsConstructedGenericType &&
-				i.GetGenericTypeDefinition() == typeof(IQuestionTemplate<>)
-		))
-			return GetOptionsFor(jsonTypeInfo, _templateInfos);
+		if (type.IsInterface)
+		{
+			if (type == typeof(IQuestion) || type.GetInterfaces().Any(i =>
+					i.IsConstructedGenericType &&
+					i.GetGenericTypeDefinition() == typeof(IQuestion<>)
+			))
+				return GetOptionsFor(jsonTypeInfo, _questionInfos);
+			if (type == typeof(IQuestionTemplate) || type.GetInterfaces().Any(i =>
+					i.IsConstructedGenericType &&
+					i.GetGenericTypeDefinition() == typeof(IQuestionTemplate<>)
+			))
+				return GetOptionsFor(jsonTypeInfo, _templateInfos);
 
-		if (type == typeof(IQuestionAnswer))
-			return GetOptionsFor(jsonTypeInfo, _answerInfos);
+			if (type == typeof(IQuestionAnswer))
+				return GetOptionsFor(jsonTypeInfo, _answerInfos);
 
 
-		if (type == typeof(IActivity))
-			return GetOptionsFor(jsonTypeInfo, _activityInfos);
-		if (type == typeof(IActivityTemplate))
-			return GetOptionsFor(jsonTypeInfo, _activityTemplateInfos);
-
-		return base.GetTypeInfo(type, options);
+			if (type == typeof(IActivity))
+				return GetOptionsFor(jsonTypeInfo, _activityInfos);
+			if (type == typeof(IActivityTemplate))
+				return GetOptionsFor(jsonTypeInfo, _activityTemplateInfos);
+		}
+		return jsonTypeInfo;
 	}
 	private JsonTypeInfo GetOptionsFor<T>(JsonTypeInfo baseInfo, IEnumerable<PolymorphicTypeInfo<T>> typeInfos)
 	{

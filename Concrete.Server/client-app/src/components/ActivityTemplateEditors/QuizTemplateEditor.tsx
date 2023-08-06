@@ -1,10 +1,11 @@
-import { QuizTemplate } from "../../api/Api";
+import { QuestionBank, QuizTemplate } from "../../api/Api";
 
 export interface QuizTemplateEditorProps {
 	template: QuizTemplate;
 	updateTemplate: (v: QuizTemplate) => void;
+	questionBanks: { [key: string]: QuestionBank };
 }
 
-function QuizTemplateEditor({ template, updateTemplate }: QuizTemplateEditorProps) {
-	
+export function QuizTemplateEditor({ template, updateTemplate }: QuizTemplateEditorProps) {
+
 }

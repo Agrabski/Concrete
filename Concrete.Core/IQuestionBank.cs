@@ -4,8 +4,8 @@ using System.Text.Json.Serialization;
 
 namespace Concrete.Core;
 
-[JsonPolymorphic]
-[JsonDerivedType(typeof(QuestionBank))]
+[JsonPolymorphic(TypeDiscriminatorPropertyName = "type")]
+[JsonDerivedType(typeof(QuestionBank), "bank")]
 public interface IQuestionBank
 {
 	Guid Id { get; init; }

@@ -26,7 +26,7 @@ internal class SwaggerOptionsConfiguration : IConfigureOptions<SwaggerGenOptions
 			if (info.PolymorphismOptions is not null)
 			{
 				foreach (var derivedType in info.PolymorphismOptions.DerivedTypes)
-					typeDiscriminators[derivedType.DerivedType] = derivedType.TypeDiscriminator as string ?? string.Empty;
+					typeDiscriminators[derivedType.DerivedType] = derivedType.TypeDiscriminator as string ?? throw new InvalidOperationException("Type discriminator must be a string");
 				return info.PolymorphismOptions.DerivedTypes.Select(d => d.DerivedType);
 			}
 			return Enumerable.Empty<Type>();
@@ -43,7 +43,7 @@ internal class SwaggerOptionsConfiguration : IConfigureOptions<SwaggerGenOptions
 		{
 			if (typeDiscriminators.ContainsKey(type))
 				return typeDiscriminators[type];
-			return string.Empty;
+			throw new InvalidOperationException($"Unrecognised type: {type}");
 		});
 	}
 }
