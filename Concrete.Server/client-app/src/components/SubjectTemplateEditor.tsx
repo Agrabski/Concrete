@@ -1,16 +1,13 @@
 import { Accordion, AccordionDetails, AccordionSummary, IconButton, Stack, TextField } from "@mui/material";
-import { SubjectActivity, SubjectTemplate } from "../api/Api";
+import { SubjectTemplate } from "../api/Api";
 import { LocalisedStringEditor } from "./LocalisedStringEditor";
 import { ReplaceAtIndex } from "../utils/ArrayUtils";
 import AddIcon from '@mui/icons-material/Add';
+import { ActivityTemplateEditor } from "./ActivityTemplateEditors/ActivityTemplateEditor";
 
 export interface SubjectTemplateEditorProps {
 	value: SubjectTemplate,
 	updateValue: (v: SubjectTemplate) => void
-}
-
-function ActivityTemplateEditor({ actvity, updateActivities }: { actvity: SubjectActivity, updateActivities: (v: SubjectActivity) => void }): JSX.Element {
-	return <div />;
 }
 
 export function SubjectTemplateEditor({ value, updateValue }: SubjectTemplateEditorProps) {
@@ -29,7 +26,16 @@ export function SubjectTemplateEditor({ value, updateValue }: SubjectTemplateEdi
 							activities: ReplaceAtIndex(value.activities, v, index)
 						})}
 					/>)}
-					<IconButton><AddIcon /> Add activity</IconButton>
+					<IconButton onClick={() => updateValue({
+						...value,
+						activities: [...value.activities, {
+							id: crypto.randomUUID(),
+							template: {
+								$$type: 'Concrete::Core::Quiz',
+								questions: []
+							}
+						}]
+					})}><AddIcon /> Add activity</IconButton>
 				</AccordionDetails>
 			</Accordion>
 		</Stack>

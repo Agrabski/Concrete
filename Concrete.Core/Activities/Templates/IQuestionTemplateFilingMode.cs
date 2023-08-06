@@ -4,8 +4,8 @@ using System.Text.Json.Serialization;
 namespace Concrete.Core.Activities.Templates;
 
 [JsonPolymorphic]
-[JsonDerivedType(typeof(SpecificQuestionVariantsTemplateFilingMode), 0)]
-[JsonDerivedType(typeof(AllQuestionVariantsTemplateFilingMode), 1)]
+[JsonDerivedType(typeof(SpecificQuestionVariantsTemplateFilingMode), "specific")]
+[JsonDerivedType(typeof(AllQuestionVariantsTemplateFilingMode), "all")]
 public interface IQuestionTemplateFilingMode
 {
 	QuestionTemplateInstance Fill(IQuestionTemplate template);
