@@ -68,6 +68,7 @@ public class SerializationTests
 		};
 		var questionBank = new QuestionBank()
 		{
+			Name = "test",
 			QuestionTemplates = { question }
 		};
 		var text = serializer.Serialize(questionBank);

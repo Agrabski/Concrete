@@ -2,4 +2,8 @@
 
 namespace Concrete.Storage.EfCore.Repos;
 
-internal record QuestionBankProxy(Guid Id, IQuestionBank QuestionBank);
+internal class QuestionBankProxy
+{
+	public Guid Id { get; init; }
+	public required IQuestionBank QuestionBank { get; set; }
+}

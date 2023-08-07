@@ -13,11 +13,17 @@ internal class EfCoreQuestionBankRepository : IQuestionBankRepository
 		_context = context;
 	}
 
-	public Task AddAsync(IQuestionBank bank, CancellationToken token) => _context.QuestionBanks.AddAsync(new(bank.Id, bank), token).AsTask();
+	public Task AddAsync(IQuestionBank bank, CancellationToken token) => _context.QuestionBanks.AddAsync(new QuestionBankProxy { Id = bank.Id, QuestionBank = bank }, token).AsTask();
 
 	public async Task<IQuestionBank?> TryGet(Guid questionBankId, CancellationToken token)
 	{
 		var proxy = await _context.QuestionBanks.FirstOrDefaultAsync(b => b.Id == questionBankId, token);
 		return proxy?.QuestionBank;
+	}
+
+	public async Task UpdateAsync(QuestionBank bank, CancellationToken token)
+	{
+		var dbBank = await _context.QuestionBanks.FirstAsync(q => q.Id == bank.Id, token);
+		dbBank.QuestionBank = bank;
 	}
 }

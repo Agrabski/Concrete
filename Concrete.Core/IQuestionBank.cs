@@ -13,4 +13,5 @@ public interface IQuestionBank
 	void AddQuestion(IQuestionTemplate questionTemplate);
 	IQuestionTemplate? TryGetQuestionTemplate(Guid id);
 	IEnumerable<IQuestionTemplate> GetQuestionsByCategory(CategoryName categoryName);
+	IEnumerable<CategoryName> Categories { get; }
 }

@@ -46,6 +46,7 @@ public class QuizServiceTests
 		var questionId = Guid.NewGuid();
 		var questionBank = new QuestionBank()
 		{
+			Name = "test",
 			Id = questionBankId,
 			QuestionTemplates =
 			{
