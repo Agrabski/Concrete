@@ -1,8 +1,4 @@
-﻿using Concrete.Core.Activities.Instances;
-using Concrete.Core.Activities.Templates;
-using Concrete.Core.Questions.Instances;
-using Concrete.Core.Questions.Templates;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.Json.Serialization.Metadata;
@@ -12,53 +8,29 @@ namespace Concrete.Core.Serialization;
 
 internal class PolymorphicTypeResolver : DefaultJsonTypeInfoResolver
 {
-	private readonly PolymorphicTypeInfo<IQuestion>[] _questionInfos;
-	private readonly PolymorphicTypeInfo<IQuestionTemplate>[] _templateInfos;
-	private readonly PolymorphicTypeInfo<IQuestionAnswer>[] _answerInfos;
-	private readonly PolymorphicTypeInfo<IActivity>[] _activityInfos;
-	private readonly PolymorphicTypeInfo<IActivityTemplate>[] _activityTemplateInfos;
-	public PolymorphicTypeResolver(
-		IEnumerable<PolymorphicTypeInfo<IQuestion>> questionInfos,
-		IEnumerable<PolymorphicTypeInfo<IQuestionTemplate>> templateInfos,
-		IEnumerable<PolymorphicTypeInfo<IQuestionAnswer>> answerInfos,
-		IEnumerable<PolymorphicTypeInfo<IActivity>> activityInfos,
-		IEnumerable<PolymorphicTypeInfo<IActivityTemplate>> activityTemplateInfos
-		)
+	private readonly IPolymorphicTypeInfo[] _typeInfos;
+
+	public PolymorphicTypeResolver(IEnumerable<IPolymorphicTypeInfo> typeInfos)
 	{
-		_questionInfos = questionInfos.ToArray();
-		_templateInfos = templateInfos.ToArray();
-		_answerInfos = answerInfos.ToArray();
-		_activityInfos = activityInfos.ToArray();
-		_activityTemplateInfos = activityTemplateInfos.ToArray();
+		_typeInfos = typeInfos.ToArray();
 	}
+
 	public override JsonTypeInfo GetTypeInfo(Type type, JsonSerializerOptions options)
 	{
 		var jsonTypeInfo = base.GetTypeInfo(type, options);
-		if (type.IsInterface)
+		if (
+			type.IsInterface &&
+			_typeInfos
+				.Select(t => t.TryGetDerivedType(type))
+				.Where(t => t != null)
+				.Select(t => t!.Value)
+				.ToArray() is { Length: > 0 } types)
 		{
-			if (type == typeof(IQuestion) || type.GetInterfaces().Any(i =>
-					i.IsConstructedGenericType &&
-					i.GetGenericTypeDefinition() == typeof(IQuestion<>)
-			))
-				return GetOptionsFor(jsonTypeInfo, _questionInfos);
-			if (type == typeof(IQuestionTemplate) || type.GetInterfaces().Any(i =>
-					i.IsConstructedGenericType &&
-					i.GetGenericTypeDefinition() == typeof(IQuestionTemplate<>)
-			))
-				return GetOptionsFor(jsonTypeInfo, _templateInfos);
-
-			if (type == typeof(IQuestionAnswer))
-				return GetOptionsFor(jsonTypeInfo, _answerInfos);
-
-
-			if (type == typeof(IActivity))
-				return GetOptionsFor(jsonTypeInfo, _activityInfos);
-			if (type == typeof(IActivityTemplate))
-				return GetOptionsFor(jsonTypeInfo, _activityTemplateInfos);
+			return GetOptions(jsonTypeInfo, types);
 		}
 		return jsonTypeInfo;
 	}
-	private JsonTypeInfo GetOptionsFor<T>(JsonTypeInfo baseInfo, IEnumerable<PolymorphicTypeInfo<T>> typeInfos)
+	private JsonTypeInfo GetOptions(JsonTypeInfo baseInfo, IEnumerable<JsonDerivedType> derivedTypes)
 	{
 		baseInfo.PolymorphismOptions = new JsonPolymorphismOptions
 		{
@@ -66,8 +38,8 @@ internal class PolymorphicTypeResolver : DefaultJsonTypeInfoResolver
 			IgnoreUnrecognizedTypeDiscriminators = true,
 			UnknownDerivedTypeHandling = JsonUnknownDerivedTypeHandling.FailSerialization,
 		};
-		foreach (var t in typeInfos)
-			baseInfo.PolymorphismOptions.DerivedTypes.Add(t.TypeInfo);
+		foreach (var t in derivedTypes)
+			baseInfo.PolymorphismOptions.DerivedTypes.Add(t);
 		return baseInfo;
 	}
 }

@@ -7,5 +7,5 @@ namespace Concrete.Quizes.Questions.Instances.MultipleChoice.Grading;
 [JsonPolymorphic(TypeDiscriminatorPropertyName = "$$type")]
 public interface IGrading
 {
-	internal QuestionGradingResponse Grade(int[] AnswerIndicies);
+	internal IQuestionGradingResponse Grade(int[] AnswerIndicies);
 }

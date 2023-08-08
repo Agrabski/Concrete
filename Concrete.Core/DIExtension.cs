@@ -38,9 +38,10 @@ public static class DIExtension
 		where TQuestionTemplate : IQuestionTemplate<TQuestionAnswer>
 		where TQuestion : IQuestion<TQuestionAnswer>
 		where TQuestionAnswer : IQuestionAnswer => collection
-			.AddSingleton(_ => PolymorphicTypeInfo<IQuestion>.FromImplementation<TQuestion>(discriminator))
-			.AddSingleton(_ => PolymorphicTypeInfo<IQuestionTemplate>.FromImplementation<TQuestionTemplate>(discriminator))
-			.AddSingleton(_ => PolymorphicTypeInfo<IQuestionAnswer>.FromImplementation<TQuestionAnswer>(discriminator));
+			.AddSingleton<IPolymorphicTypeInfo>(_ => PolymorphicTypeInfo<IQuestion>.FromImplementation<TQuestion>(discriminator))
+			.AddSingleton<IPolymorphicTypeInfo>(_ => PolymorphicTypeInfo<IQuestionTemplate>.FromImplementation<TQuestionTemplate>(discriminator))
+			.AddSingleton<IPolymorphicTypeInfo>(_ => PolymorphicTypeInfo<IQuestionAnswer>.FromImplementation<TQuestionAnswer>(discriminator))
+			.AddSingleton<IPolymorphicTypeInfo>(_ => PolymorphicTypeInfo<IQuestionGradingResponse>.FromImplementation<ManualGradingResponse<TQuestionAnswer>>(discriminator));
 
 
 	public static IServiceCollection AddActivityType
@@ -51,8 +52,8 @@ public static class DIExtension
 	(this IServiceCollection collection, string? discriminator = null)
 		where TActivityTemplate : IActivityTemplate
 		where TActivity : IActivity => collection
-			.AddSingleton(_ => PolymorphicTypeInfo<IActivityTemplate>.FromImplementation<TActivityTemplate>(discriminator))
-			.AddSingleton(_ => PolymorphicTypeInfo<IActivity>.FromImplementation<TActivity>(discriminator))
+			.AddSingleton<IPolymorphicTypeInfo>(_ => PolymorphicTypeInfo<IActivityTemplate>.FromImplementation<TActivityTemplate>(discriminator))
+			.AddSingleton<IPolymorphicTypeInfo>(_ => PolymorphicTypeInfo<IActivity>.FromImplementation<TActivity>(discriminator))
 			;
 
 

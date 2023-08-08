@@ -11,5 +11,5 @@ public interface IQuestion
 }
 public interface IQuestion<TAnswer> : IQuestion where TAnswer : IQuestionAnswer
 {
-	public QuestionGradingResponse Grade(TAnswer answer);
+	public IQuestionGradingResponse Grade(TAnswer answer);
 }

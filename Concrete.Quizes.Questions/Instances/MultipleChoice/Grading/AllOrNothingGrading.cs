@@ -4,9 +4,9 @@ namespace Concrete.Quizes.Questions.Instances.MultipleChoice.Grading;
 
 public record AllOrNothingGrading(params int[] CorrectAnswers) : IGrading
 {
-	QuestionGradingResponse IGrading.Grade(int[] AnswerIndicies) => new(
+	IQuestionGradingResponse IGrading.Grade(int[] AnswerIndicies) => new QuestionAutomaticGradingResponse(
 		AnswerIndicies.Length == CorrectAnswers.Length && AnswerIndicies.All(CorrectAnswers.Contains)
-		? QuestionGradingResponse.MaxGrade
+		? IQuestionGradingResponse.MaxGrade
 		: 0
 	);
 }

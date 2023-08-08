@@ -21,5 +21,5 @@ public class MultipleChoiceQuestion : IQuestion<MultipleChoiceQuestionAnswerSet>
 		Answers.Select(a => new CultureFilledMultipleChoiceAnswerDto(a.Text.GetTextForLocale(culture), a.Index)).ToArray(),
 		QuestionId
 	);
-	public QuestionGradingResponse Grade(MultipleChoiceQuestionAnswerSet answer) => Grading.Grade(answer.AnswerIndicies);
+	public IQuestionGradingResponse Grade(MultipleChoiceQuestionAnswerSet answer) => Grading.Grade(answer.AnswerIndicies);
 }

@@ -1,6 +1,6 @@
 ﻿namespace Concrete.Core.Questions.Instances;
 
-public record struct QuestionGradingResponse(int Grade)
+public interface IQuestionGradingResponse
 {
 	public const int MaxGrade = 1000;
 }
