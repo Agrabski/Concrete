@@ -6,6 +6,7 @@ using Concrete.Quizes.Questions.Instances.MultipleChoice;
 using Concrete.Quizes.Questions.Instances.MultipleChoice.Grading;
 
 namespace Concrete.Quizes.Questions.Templates.MultipleChoice;
+
 public class MultipleChoiceQuestionTemplate : IQuestionTemplate<MultipleChoiceQuestionAnswerSet>
 {
 	public required LocalisedStringTemplate Question { get; set; }
