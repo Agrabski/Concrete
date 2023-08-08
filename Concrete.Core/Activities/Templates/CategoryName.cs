@@ -4,6 +4,7 @@ namespace Concrete.Core.Activities.Templates;
 
 public record struct CategoryName(params string[] Parts) : IParsable<CategoryName>
 {
+	public string Name => ToString();
 	public static CategoryName Parse(string s, IFormatProvider? provider) => new(s.Split("."));
 	public static bool TryParse([NotNullWhen(true)] string? s, IFormatProvider? provider, [MaybeNullWhen(false)] out CategoryName result)
 	{
