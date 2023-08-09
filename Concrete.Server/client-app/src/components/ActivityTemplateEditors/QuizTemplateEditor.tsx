@@ -1,4 +1,4 @@
-import { Stack } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 import { IQuizTemplateQuestionReference, QuestionBank, QuizTemplate } from "../../api/Api";
 import { ReplaceAtIndex } from "../../utils/ArrayUtils";
 import { useState } from "react";
@@ -9,15 +9,17 @@ export interface QuizTemplateEditorProps {
 	updateTemplate: (v: QuizTemplate) => void;
 	questionBanks: { [key: string]: QuestionBank };
 	updateAvailableBanks: (v: { [key: string]: QuestionBank }) => void;
+	id: string | undefined;
 }
 interface QuizQuestionReferenceEditorProps {
 	question: IQuizTemplateQuestionReference,
 	updateQuestion: (q: IQuizTemplateQuestionReference) => void,
 	questionBanks: { [key: string]: QuestionBank };
 	updateAvailableBanks: (v: { [key: string]: QuestionBank }) => void;
+	id: string | undefined;
 }
 
-function QuizQuestionReferenceEditor({ question, updateQuestion, questionBanks, updateAvailableBanks }: QuizQuestionReferenceEditorProps) {
+function QuizQuestionReferenceEditor({ question, updateQuestion, questionBanks, updateAvailableBanks, id }: QuizQuestionReferenceEditorProps) {
 	const [questionBankId, updateQuestionBankId] = useState<string | undefined>();
 	const rest = () => {
 		if (question.$type === 'single-question') {
@@ -26,9 +28,9 @@ function QuizQuestionReferenceEditor({ question, updateQuestion, questionBanks, 
 		if (question.$type === 'category') {
 
 		}
-		return <div />;
+		return <div >test</div>;
 	};
-	return <Stack direction='row'>
+	return <Stack direction='row' key={id}>
 		<QuestionBankPicker
 			availableBanks={questionBanks}
 			updateAvailableBanks={updateAvailableBanks}
@@ -39,10 +41,11 @@ function QuizQuestionReferenceEditor({ question, updateQuestion, questionBanks, 
 	</Stack>
 }
 
-export function QuizTemplateEditor({ template, updateTemplate, questionBanks, updateAvailableBanks }: QuizTemplateEditorProps) {
+export function QuizTemplateEditor({ template, updateTemplate, questionBanks, updateAvailableBanks, id }: QuizTemplateEditorProps) {
 	return (
-		<Stack>
+		<Stack key={id}>
 			{template.questions.map((q, index) => <QuizQuestionReferenceEditor
+				id={index.toString()}
 				question={q}
 				updateQuestion={n => updateTemplate({
 					...template,
@@ -52,6 +55,7 @@ export function QuizTemplateEditor({ template, updateTemplate, questionBanks, up
 				updateAvailableBanks={updateAvailableBanks}
 			/>)
 			}
+			<Button>Add question</Button>
 		</Stack>
 	)
 }
