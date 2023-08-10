@@ -1,15 +1,15 @@
-﻿using Concrete.Core.Serialization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System.Text.Json.Serialization;
+using System.Text.Json.Serialization.Metadata;
 
 namespace Concrete.Core.Extensions.AspNetCore;
 
 internal class JsonOptionsConfiguration : IConfigureOptions<JsonOptions>
 {
-	private readonly PolymorphicTypeResolver _resolver;
+	private readonly IJsonTypeInfoResolver _resolver;
 
-	public JsonOptionsConfiguration(PolymorphicTypeResolver resolver)
+	public JsonOptionsConfiguration(IJsonTypeInfoResolver resolver)
 	{
 		_resolver = resolver;
 	}

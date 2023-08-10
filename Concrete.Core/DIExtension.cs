@@ -10,7 +10,7 @@ using Concrete.Core.Services.QuestionBanks;
 using Concrete.Core.Services.Subjects;
 using Microsoft.Extensions.DependencyInjection;
 using System.Runtime.CompilerServices;
-using System.Text.Json.Serialization.Metadata;
+using Urbanite;
 
 [assembly: InternalsVisibleTo("Concrete.Core.Tests")]
 
@@ -19,11 +19,10 @@ namespace Concrete.Core;
 public static class DIExtension
 {
 	public static IServiceCollection AddConcrete(this IServiceCollection collection) => collection
+		.AddUrbanite()
 		.AddSingleton<IConcreteSerializer, ConcreteSerializer>()
 		.AddTransient<ICourseService, CourseService>()
 		.AddTransient<IQuizService, QuizService>()
-		.AddSingleton<PolymorphicTypeResolver>()
-		.AddSingleton<DefaultJsonTypeInfoResolver, PolymorphicTypeResolver>()
 		.AddActivityType<QuizTemplate, QuizInstance>(ConcreteConvetion.TypeDiscriminator("Concrete", "Core", "Quiz"))
 		.AddScoped<IStudentGroupService, StudentGroupService>()
 		;
@@ -38,10 +37,11 @@ public static class DIExtension
 		where TQuestionTemplate : IQuestionTemplate<TQuestionAnswer>
 		where TQuestion : IQuestion<TQuestionAnswer>
 		where TQuestionAnswer : IQuestionAnswer => collection
-			.AddSingleton<IPolymorphicTypeInfo>(_ => PolymorphicTypeInfo<IQuestion>.FromImplementation<TQuestion>(discriminator))
-			.AddSingleton<IPolymorphicTypeInfo>(_ => PolymorphicTypeInfo<IQuestionTemplate>.FromImplementation<TQuestionTemplate>(discriminator))
-			.AddSingleton<IPolymorphicTypeInfo>(_ => PolymorphicTypeInfo<IQuestionAnswer>.FromImplementation<TQuestionAnswer>(discriminator))
-			.AddSingleton<IPolymorphicTypeInfo>(_ => PolymorphicTypeInfo<IQuestionGradingResponse>.FromImplementation<ManualGradingResponse<TQuestionAnswer>>(discriminator));
+			.AddUrbaniteSerializableType<IQuestion, TQuestion>(discriminator)
+			.AddUrbaniteSerializableType<IQuestionTemplate, TQuestionTemplate>(discriminator)
+			.AddUrbaniteSerializableType<IQuestionAnswer, TQuestionAnswer>(discriminator)
+			.AddUrbaniteSerializableType<IQuestionGradingResponse, ManualGradingResponse<TQuestionAnswer>>(discriminator)
+			;
 
 
 	public static IServiceCollection AddActivityType
@@ -52,8 +52,8 @@ public static class DIExtension
 	(this IServiceCollection collection, string? discriminator = null)
 		where TActivityTemplate : IActivityTemplate
 		where TActivity : IActivity => collection
-			.AddSingleton<IPolymorphicTypeInfo>(_ => PolymorphicTypeInfo<IActivityTemplate>.FromImplementation<TActivityTemplate>(discriminator))
-			.AddSingleton<IPolymorphicTypeInfo>(_ => PolymorphicTypeInfo<IActivity>.FromImplementation<TActivity>(discriminator))
+			.AddUrbaniteSerializableType<IActivityTemplate, TActivityTemplate>(discriminator)
+			.AddUrbaniteSerializableType<IActivity, TActivity>(discriminator)
 			;
 
 

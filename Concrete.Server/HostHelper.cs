@@ -3,8 +3,7 @@ using Concrete.Core.Extensions.AspNetCore;
 using Concrete.Quizes.Questions;
 using Concrete.Storage.EfCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using Swashbuckle.AspNetCore.SwaggerGen;
+using Urbanite.Extensions.Swagger;
 
 namespace Concrete.Server;
 
@@ -21,7 +20,7 @@ public class HostHelper
 		builder.Services
 			.AddEndpointsApiExplorer()
 			.AddSwaggerGen()
-			.AddTransient<IConfigureOptions<SwaggerGenOptions>, SwaggerOptionsConfiguration>()
+			.AddUrbaniteSwaggerDocumentationPolymorphism()
 			.AddConcrete()
 			.AddConcreteEfCoreStorage(true, o => o.UseSqlite(builder.Configuration.GetConnectionString("sqlite")))
 			.AddBuiltInConcreteQuestions()

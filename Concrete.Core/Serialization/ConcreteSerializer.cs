@@ -1,11 +1,12 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Text.Json.Serialization.Metadata;
 
 namespace Concrete.Core.Serialization;
 internal class ConcreteSerializer : IConcreteSerializer
 {
-	private readonly IEnumerable<IPolymorphicTypeInfo> _typeInfos;
+	private readonly IJsonTypeInfoResolver _typeInfoResolver;
 	private JsonSerializerOptions? _jsonSerializerOptions;
 	private JsonSerializerOptions Options => _jsonSerializerOptions ??= GetOptions();
 
@@ -13,7 +14,7 @@ internal class ConcreteSerializer : IConcreteSerializer
 	{
 		return new JsonSerializerOptions()
 		{
-			TypeInfoResolver = new PolymorphicTypeResolver(_typeInfos),
+			TypeInfoResolver = _typeInfoResolver,
 			WriteIndented = true,
 			UnknownTypeHandling = JsonUnknownTypeHandling.JsonElement,
 			PropertyNameCaseInsensitive = true,
@@ -21,9 +22,9 @@ internal class ConcreteSerializer : IConcreteSerializer
 		};
 	}
 
-	public ConcreteSerializer(IEnumerable<IPolymorphicTypeInfo> typeInfos)
+	public ConcreteSerializer(IJsonTypeInfoResolver typeInfoResolver)
 	{
-		_typeInfos = typeInfos;
+		_typeInfoResolver = typeInfoResolver;
 	}
 
 	public string Serialize<T>(T obj) => JsonSerializer.Serialize(obj, Options);

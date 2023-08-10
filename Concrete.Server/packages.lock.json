@@ -82,6 +82,17 @@
           "Swashbuckle.AspNetCore.SwaggerUI": "6.5.0"
         }
       },
+      "Urbanite.Extensions.Swagger": {
+        "type": "Direct",
+        "requested": "[0.0.4, )",
+        "resolved": "0.0.4",
+        "contentHash": "C84512WGilMj26fFmQ4crpKkPR3rxyXW3RUUPT+aGSgEt/t5zt6+4Rd27k1x1lGQ906ixidT3OszkNttEVdjAg==",
+        "dependencies": {
+          "Microsoft.Extensions.Options": "7.0.1",
+          "Swashbuckle.AspNetCore.SwaggerGen": "6.5.0",
+          "Urbanite": "0.0.4"
+        }
+      },
       "Azure.Core": {
         "type": "Transitive",
         "resolved": "1.6.0",
@@ -463,7 +474,8 @@
           "Concrete.Users": "[0.0.0, )",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "[7.0.0, )",
           "Microsoft.Extensions.Options": "[7.0.0, )",
-          "System.Text.Json": "[7.0.3, )"
+          "System.Text.Json": "[7.0.3, )",
+          "Urbanite": "[0.0.4, )"
         }
       },
       "concrete.core.extensions.aspnetcore": {
@@ -544,8 +556,8 @@
       "Microsoft.Extensions.Options": {
         "type": "CentralTransitive",
         "requested": "[7.0.0, )",
-        "resolved": "7.0.0",
-        "contentHash": "lP1yBnTTU42cKpMozuafbvNtQ7QcBjr/CcK3bYOGEMH55Fjt+iecXjT6chR7vbgCMqy3PG3aNQSZgo/EuY/9qQ==",
+        "resolved": "7.0.1",
+        "contentHash": "pZRDYdN1FpepOIfHU62QoBQ6zdAoTvnjxFfqAzEd9Jhb2dfhA5i6jeTdgGgcgTWFRC7oT0+3XrbQu4LjvgX1Nw==",
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection.Abstractions": "7.0.0",
           "Microsoft.Extensions.Primitives": "7.0.0"
@@ -580,6 +592,16 @@
         "contentHash": "AyjhwXN1zTFeIibHimfJn6eAsZ7rTBib79JQpzg8WAuR/HKDu9JGNHTuu3nbbXQ/bgI+U4z6HtZmCHNXB1QXrQ==",
         "dependencies": {
           "System.Text.Encodings.Web": "7.0.0"
+        }
+      },
+      "Urbanite": {
+        "type": "CentralTransitive",
+        "requested": "[0.0.4, )",
+        "resolved": "0.0.4",
+        "contentHash": "QlUIpAW8ZdsFmxcpfGkynnXa2sIXdWZXd3rxGJqAIBujdQpqc52g+fgDGrPUN8v6Yr7BSgrbFy8zOGHgSJaY8g==",
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "7.0.0",
+          "system.text.json": "7.0.3"
         }
       }
     }

@@ -37,6 +37,16 @@
           "System.Text.Encodings.Web": "7.0.0"
         }
       },
+      "Urbanite": {
+        "type": "Direct",
+        "requested": "[0.0.4, )",
+        "resolved": "0.0.4",
+        "contentHash": "QlUIpAW8ZdsFmxcpfGkynnXa2sIXdWZXd3rxGJqAIBujdQpqc52g+fgDGrPUN8v6Yr7BSgrbFy8zOGHgSJaY8g==",
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "7.0.0",
+          "system.text.json": "7.0.3"
+        }
+      },
       "Microsoft.Build.Tasks.Git": {
         "type": "Transitive",
         "resolved": "1.1.1",

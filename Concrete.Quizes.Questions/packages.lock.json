@@ -97,7 +97,8 @@
           "Concrete.Users": "[0.0.0, )",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "[7.0.0, )",
           "Microsoft.Extensions.Options": "[7.0.0, )",
-          "System.Text.Json": "[7.0.3, )"
+          "System.Text.Json": "[7.0.3, )",
+          "Urbanite": "[0.0.4, )"
         }
       },
       "concrete.localization": {
@@ -148,6 +149,16 @@
         "contentHash": "AyjhwXN1zTFeIibHimfJn6eAsZ7rTBib79JQpzg8WAuR/HKDu9JGNHTuu3nbbXQ/bgI+U4z6HtZmCHNXB1QXrQ==",
         "dependencies": {
           "System.Text.Encodings.Web": "7.0.0"
+        }
+      },
+      "Urbanite": {
+        "type": "CentralTransitive",
+        "requested": "[0.0.4, )",
+        "resolved": "0.0.4",
+        "contentHash": "QlUIpAW8ZdsFmxcpfGkynnXa2sIXdWZXd3rxGJqAIBujdQpqc52g+fgDGrPUN8v6Yr7BSgrbFy8zOGHgSJaY8g==",
+        "dependencies": {
+          "Microsoft.Extensions.DependencyInjection.Abstractions": "7.0.0",
+          "system.text.json": "7.0.3"
         }
       }
     }

@@ -1,28 +1,29 @@
 ﻿<Project>
-	<PropertyGroup>
-		<ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
-	</PropertyGroup>
-	<ItemGroup>
-		<PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
-		<PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
-		<PackageVersion Include="Microsoft.Extensions.Options" Version="7.0.0" />
-		<PackageVersion Include="System.Text.Json" Version="7.0.3" />
-		<PackageVersion Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.13" />
-		<PackageVersion Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.13" />
-		<PackageVersion Include="Microsoft.EntityFrameworkCore" Version="7.0.9" />
-		<PackageVersion Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.9" />
-		<PackageVersion Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.9" />
-		<PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
-		<PackageVersion Include="xunit" Version="2.4.2" />
-		<PackageVersion Include="xunit.runner.visualstudio" Version="2.4.5"/>
-		<PackageVersion Include="coverlet.collector" Version="3.2.0"/>
-		<PackageVersion Include="SmartFormat.NET" Version="3.2.1" />
-		<PackageVersion Include="Microsoft.Identity.Web" Version="1.16.0" />
-		<PackageVersion Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.18.0" />
-		<PackageVersion Include="Swashbuckle.AspNetCore" Version="6.5.0" />
-		<PackageVersion Include="system.linq.async" Version="6.0.1" />
-		<PackageVersion Include="Microsoft.AspNetCore.SpaProxy" Version="6.0.6" />
-		<PackageVersion Include="Microsoft.SourceLink.GitHub" Version="1.1.1"/>
-
-	</ItemGroup>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
+    <PackageVersion Include="Microsoft.Extensions.Options" Version="7.0.0" />
+    <PackageVersion Include="System.Text.Json" Version="7.0.3" />
+    <PackageVersion Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.13" />
+    <PackageVersion Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.13" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="7.0.9" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Relational" Version="7.0.9" />
+    <PackageVersion Include="Microsoft.EntityFrameworkCore.Sqlite" Version="7.0.9" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
+    <PackageVersion Include="Urbanite" Version="0.0.4" />
+    <PackageVersion Include="Urbanite.Extensions.Swagger" Version="0.0.4" />
+    <PackageVersion Include="xunit" Version="2.4.2" />
+    <PackageVersion Include="xunit.runner.visualstudio" Version="2.4.5" />
+    <PackageVersion Include="coverlet.collector" Version="3.2.0" />
+    <PackageVersion Include="SmartFormat.NET" Version="3.2.1" />
+    <PackageVersion Include="Microsoft.Identity.Web" Version="1.16.0" />
+    <PackageVersion Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.18.0" />
+    <PackageVersion Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageVersion Include="system.linq.async" Version="6.0.1" />
+    <PackageVersion Include="Microsoft.AspNetCore.SpaProxy" Version="6.0.6" />
+    <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="1.1.1" />
+  </ItemGroup>
 </Project>
