@@ -16,13 +16,15 @@ export interface SubjectTemplateEditorProps {
 export function SubjectTemplateEditor({ value, updateValue, questionBanks, updateAvailableBanks }: SubjectTemplateEditorProps) {
 	return (
 		<Stack sx={{ margin: 2 }}>
-			<TextField key='name' label='Template name' value={value.tempalteName} />
+			<TextField key='name' label='Template name' value={value.tempalteName} onChange={v => updateValue({ ...value, tempalteName: v.target.value! })} />
 			<LocalisedStringEditor id='name-localised' name='Display name' value={value.name} valueChanged={v => updateValue({ ...value, name: v })} />
 			<LocalisedStringEditor id='description' name='Description' value={value.description} valueChanged={v => updateValue({ ...value, description: v })} />
 			<Accordion>
 				<AccordionSummary>Activities</AccordionSummary>
 				<AccordionDetails>
-					{value.activities.map((a, index) => <ActivityTemplateEditor id={a.id}
+					{value.activities.map((a, index) => <ActivityTemplateEditor
+						key={a.id}
+						id={a.id}
 						actvity={a}
 						updateAvailableBanks={updateAvailableBanks}
 						questionBanks={questionBanks}
@@ -36,7 +38,7 @@ export function SubjectTemplateEditor({ value, updateValue, questionBanks, updat
 						activities: [...value.activities, {
 							id: crypto.randomUUID(),
 							template: {
-								$$type: 'Concrete::Core::Quiz',
+								$type: 'Concrete::Core::Quiz',
 								questions: []
 							}
 						}]

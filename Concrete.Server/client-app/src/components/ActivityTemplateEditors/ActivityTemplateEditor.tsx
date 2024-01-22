@@ -17,10 +17,10 @@ export function ActivityTemplateEditor({ actvity, updateActivities, questionBank
 		return <QuizTemplateEditor
 			id={id}
 			template={actvity.template as QuizTemplate}
-			updateTemplate={v => updateActivities({ ...actvity, template: { ...v, $$type: 'Concrete::Core::Quiz' } })}
+			updateTemplate={v => updateActivities({ ...actvity, template: { ...v, $type: 'Concrete::Core::Quiz' } })}
 			questionBanks={questionBanks}
 			updateAvailableBanks={updateAvailableBanks}
 		/>
 	}
-	return <Typography>Unrecognised activity type {actvity.template.$$type}</Typography>
+	return <Typography>Unrecognised activity type {actvity.template.$type}</Typography>
 }
