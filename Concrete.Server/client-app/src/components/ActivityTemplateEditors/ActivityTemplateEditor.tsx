@@ -13,7 +13,7 @@ interface ActivityTemplateEditorProps {
 }
 
 export function ActivityTemplateEditor({ actvity, updateActivities, questionBanks, updateAvailableBanks, id }: ActivityTemplateEditorProps): JSX.Element {
-	if (actvity.template.$$type === 'Concrete::Core::Quiz') {
+	if (actvity.template.$type === 'Concrete::Core::Quiz') {
 		return <QuizTemplateEditor
 			id={id}
 			template={actvity.template as QuizTemplate}

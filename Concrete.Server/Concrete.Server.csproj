@@ -39,7 +39,9 @@
 	</ItemGroup>
 	<Target Name="SwaggerPostBuildTarget" AfterTargets="Build">
 		<Exec Command="dotnet tool restore"></Exec>
+		<MakeDir Directories="$(ProjectDir)generated-docs" Condition="!Exists('$(ProjectDir)generated-docs')"  />
 		<Exec Command="dotnet swagger tofile --output generated-docs\swagger.json $(OutDir)\Concrete.Server.dll v1 " />
+		<Exec Command="npm install npm -g"/>
 		<Exec Command="npx swagger-typescript-api -p generated-docs\swagger.json -o client-app/src/api" />
 	</Target>
 
