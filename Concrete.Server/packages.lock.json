@@ -82,13 +82,13 @@
       },
       "Urbanite.Extensions.Swagger": {
         "type": "Direct",
-        "requested": "[0.2.0, )",
-        "resolved": "0.2.0",
-        "contentHash": "/nhLIAwsyGKLYyzZzSm7HIFBIM4GxowGENKUCcNo/7gHWFdINy1TDkiqW2BwcB+E+87y/a8hCQ9yJcH2LS3ZrA==",
+        "requested": "[0.2.1, )",
+        "resolved": "0.2.1",
+        "contentHash": "B9Tuc1aE83XUwu410fRrwwMQN0CE8Vv9g8Vy9M7WI3KxIjPS1afSE4xGPcgtTk1rpdKhiJfGuk/o+a71RoFDBg==",
         "dependencies": {
           "Microsoft.Extensions.Options": "7.0.1",
           "Swashbuckle.AspNetCore.SwaggerGen": "6.5.0",
-          "Urbanite": "0.2.0"
+          "Urbanite": "0.2.1"
         }
       },
       "Azure.Core": {
@@ -698,8 +698,8 @@
           "Concrete.Users": "[0.0.0, )",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "[7.0.0, )",
           "Microsoft.Extensions.Options": "[7.0.0, )",
-          "System.Text.Json": "[7.0.3, )",
-          "Urbanite": "[0.0.4, )"
+          "System.Text.Json": "[8.0.0, )",
+          "Urbanite": "[0.2.1, )"
         }
       },
       "concrete.core.extensions.aspnetcore": {
@@ -810,7 +810,7 @@
       },
       "System.Text.Json": {
         "type": "CentralTransitive",
-        "requested": "[7.0.3, )",
+        "requested": "[8.0.0, )",
         "resolved": "8.0.0",
         "contentHash": "OdrZO2WjkiEG6ajEFRABTRCi/wuXQPxeV6g8xvUJqdxMvvuCCEk86zPla8UiIQJz3durtUEbNyY/3lIhS0yZvQ==",
         "dependencies": {
@@ -819,12 +819,12 @@
       },
       "Urbanite": {
         "type": "CentralTransitive",
-        "requested": "[0.0.4, )",
-        "resolved": "0.2.0",
-        "contentHash": "gFp3ollOGteTDbC0fBnDp/f1Cfx7CF0ee859RWgek0xrSyuNgLebqrjnjJ3Gai/WeiIJ9TxEatWmNe1DPunzdA==",
+        "requested": "[0.2.1, )",
+        "resolved": "0.2.1",
+        "contentHash": "4CeHT+HMl+7a2YGrilWVfOgh5+kOWJXJdN59QlQSklLXO4xeJIMfHZtrekcpTi3MAbPAyJbL28NzPvunO74P2w==",
         "dependencies": {
           "Microsoft.Extensions.DependencyInjection.Abstractions": "7.0.0",
-          "system.text.json": "7.0.3"
+          "system.text.json": "7.0.4"
         }
       }
     }
