@@ -6,7 +6,7 @@ public record QuizTemplateCategoryQuestionReference(Guid QuestionBankId, Categor
 {
 	public IQuestionTemplateFilingMode FilingMode => new AllQuestionVariantsTemplateFilingMode();
 
-	public IQuestionTemplate? FindTemplate(IQuestionBank bank)
+	public IQuestionTemplate? FindTemplate(QuestionBank bank)
 	{
 		var questions = bank.GetQuestionsByCategory(CategoryName).ToArray();
 		return questions[Random.Shared.Next(0, questions.Length)];

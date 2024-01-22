@@ -10,5 +10,5 @@ public interface IQuizTemplateQuestionReference
 {
 	IQuestionTemplateFilingMode FilingMode { get; }
 	Guid QuestionBankId { get; }
-	public IQuestionTemplate? FindTemplate(IQuestionBank bank);
+	public IQuestionTemplate? FindTemplate(QuestionBank bank);
 }

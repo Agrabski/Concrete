@@ -2,7 +2,7 @@
 using Concrete.Core.Questions.Templates;
 
 namespace Concrete.Core;
-public class QuestionBank : IQuestionBank
+public class QuestionBank
 {
 	public List<IQuestionTemplate> QuestionTemplates { get; init; } = new();
 	public Guid Id { get; init; } = Guid.NewGuid();

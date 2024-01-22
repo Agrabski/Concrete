@@ -55,7 +55,7 @@ export function QuizTemplateEditor({ template, updateTemplate, questionBanks, up
 				updateAvailableBanks={updateAvailableBanks}
 			/>)
 			}
-			<Button>Add question</Button>
+			<Button onClick={() => updateTemplate({ ...template, questions: [...template.questions, { questionBankId: '', questionTemplateId: '', $type: 'single-question', filingMode: { $type: 'all' } }] })}>Add question</Button>
 		</Stack>
 	)
 }
