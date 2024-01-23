@@ -41,4 +41,11 @@ public class QuestionBankController : ControllerBase
 		await _concreteUnitOfWork.CommitAsync(token);
 		return Ok();
 	}
+
+	[HttpGet]
+	public async Task<ActionResult<IEnumerable<QuestionBankHeader>>> GetQuestionBanksAsync(CancellationToken token)
+	{
+		var result = await _questionBankRepository.GetAllQuestionBanksAsync(token);
+		return Ok(result);
+	}
 }

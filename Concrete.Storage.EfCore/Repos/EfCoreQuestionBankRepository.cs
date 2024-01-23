@@ -14,6 +14,7 @@ internal class EfCoreQuestionBankRepository : IQuestionBankRepository
 	}
 
 	public Task AddAsync(QuestionBank bank, CancellationToken token) => _context.QuestionBanks.AddAsync(new QuestionBankProxy { Id = bank.Id, QuestionBank = bank }, token).AsTask();
+	public Task<List<QuestionBankHeader>> GetAllQuestionBanksAsync(CancellationToken token) => _context.QuestionBanks.Select(b => new QuestionBankHeader(b.QuestionBank.Name, b.Id)).ToListAsync(token);
 
 	public async Task<QuestionBank?> TryGet(Guid questionBankId, CancellationToken token)
 	{

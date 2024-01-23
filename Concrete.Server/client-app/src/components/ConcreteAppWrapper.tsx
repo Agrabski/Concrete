@@ -13,6 +13,8 @@ import { Courses } from './Courses';
 import { CourseTemplates } from './CourseTemplates';
 import SourceIcon from '@mui/icons-material/Source';
 import { CourseTemplateEdit } from './CourseTemplateEdit';
+import { QuestionBankEdit } from './QuestionBankEdit';
+import { QuestionBanks } from './QuestionBankList';
 
 export interface ConcreteAppRoute {
 	icon: string,
@@ -84,6 +86,8 @@ export function ConcreteAppWrapper({ }: ConcreteAppWrapperParams): JSX.Element {
 				<Route path='courses' Component={Courses} />
 				<Route path='course-templates' Component={CourseTemplates} />
 				<Route path='course-templates/:templateID' Component={CourseTemplateEdit} />
+				<Route path='question-banks' Component={QuestionBanks} />
+				<Route path='question-banks/:bankID' Component={QuestionBankEdit} />
 				<Route path='/' Component={Home} />
 			</Routes>
 		</Stack>
