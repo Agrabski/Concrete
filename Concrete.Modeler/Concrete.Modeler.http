@@ -1,0 +1,6 @@
+@Concrete.Modeler_HostAddress = http://localhost:5215
+
+GET {{Concrete.Modeler_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<OutputType>Exe</OutputType>
+		<TargetFramework>net9.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<IsAspireHost>true</IsAspireHost>
+		<UserSecretsId>41fbb479-5d02-4ccb-820a-5961f85945d1</UserSecretsId>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Concrete.Extensions.Quizes.Api\Concrete.Extensions.Quizes.Api.csproj" />
+		<ProjectReference Include="..\Concrete.Interface\Concrete.Interface.csproj" IsAspireProjectResource="false">
+			<ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+			<ExcludeAssets></ExcludeAssets>
+			<Private>True</Private>
+		</ProjectReference>
+		<ProjectReference Include="..\Concrete.Modeler.Extension.Registration\Concrete.Modeler.Extension.Registration.csproj" IsAspireProjectResource="false">
+			<ReferenceOutputAssembly>true</ReferenceOutputAssembly>
+			<ExcludeAssets></ExcludeAssets>
+			<Private>True</Private>
+		</ProjectReference>
+		<ProjectReference Include="..\Concrete.Modeler\Concrete.Modeler.csproj" />
+		<ProjectReference Include="..\Concrete.Web\Concrete.Web.csproj" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Aspire.Hosting.AppHost" Version="9.0.0-preview.3.24210.17" />
+		<PackageReference Include="Aspire.Hosting.Redis" Version="9.0.0-preview.3.24210.17" />
+	</ItemGroup>
+
+</Project>

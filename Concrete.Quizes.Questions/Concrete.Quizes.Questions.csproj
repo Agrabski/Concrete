@@ -1,5 +1,0 @@
-<Project Sdk="Microsoft.NET.Sdk">
-  <ItemGroup>
-    <ProjectReference Include="..\Concrete.Core\Concrete.Core.csproj" />
-  </ItemGroup>
-</Project>
