@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>net9.0</TargetFramework>
@@ -21,11 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Concrete.Modeler.Extension.Client\Concrete.Modeler.Extension.Client.csproj" />
+    <ProjectReference Include="..\Concrete.ServiceDefaults\Concrete.ServiceDefaults.csproj" />
   </ItemGroup>
 
 </Project>

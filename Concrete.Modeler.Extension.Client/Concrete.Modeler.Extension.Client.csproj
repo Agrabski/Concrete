@@ -7,13 +7,37 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0-preview.3.24172.9" />
-		<PackageReference Include="Microsoft.Extensions.Options" Version="9.0.0-preview.3.24172.9" />
+		<None Remove="ModelerExtensionApi.json" />
+	</ItemGroup>
 
+	<ItemGroup>
+		<OpenApiReference Include="ModelerExtensionApi.json" CodeGenerator="NSwagCSharp" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.ApiDescription.Client" Version="7.0.2">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0-preview.3.24172.9" />
+		<PackageReference Include="Microsoft.Extensions.Http" Version="9.0.0-preview.3.24172.9" />
+		<PackageReference Include="Microsoft.Extensions.Options" Version="9.0.0-preview.3.24172.9" />
+		<PackageReference Include="Microsoft.Extensions.ServiceDiscovery" Version="9.0.0-preview.3.24210.17" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+		<PackageReference Include="NSwag.ApiDescription.Client" Version="13.18.2">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\Concrete.Interface\Concrete.Interface.csproj" />
 	</ItemGroup>
+
+	<ProjectExtensions>
+		<VisualStudio>
+			<UserProperties modelerextensionapi_1json__JsonSchema="https://spec.openapis.org/oas/3.0/schema/2021-09-28" />
+		</VisualStudio>
+	</ProjectExtensions>
 
 </Project>

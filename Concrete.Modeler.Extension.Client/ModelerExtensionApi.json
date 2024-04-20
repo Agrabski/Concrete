@@ -1,0 +1,38 @@
+﻿{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Concrete.Modeler.Extensions",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/activities": {
+      "get": {
+        "tags": [
+          "Concrete.Modeler.Extensions"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [ "activityName" ],
+                    "properties": {
+                      "name": {
+                        "type": "string"
+                      }
+                    }
+                  },
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {}
+}

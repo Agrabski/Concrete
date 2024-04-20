@@ -1,10 +1,14 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 
 namespace Concrete.Interface;
 
+[JsonConverter(typeof(ParsableJsonConverter<ExtensionName>))]
 public record struct ExtensionName(params string[] Parts) : IParsable<ExtensionName>
 {
-	public static ExtensionName Parse(string s, IFormatProvider? provider) => new(s.Split('.'));
+	public const char NamePartsSeparator = '_';
+
+	public static ExtensionName Parse(string s, IFormatProvider? provider) => new(s.Split(NamePartsSeparator));
 	public static bool TryParse([NotNullWhen(true)] string? s, IFormatProvider? provider, [MaybeNullWhen(false)] out ExtensionName result)
 	{
 		result = default;

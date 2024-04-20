@@ -3,12 +3,14 @@ using Concrete.Modeler.Extension.Client;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
+builder.AddServiceDefaults();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddModelerExtenionsClient(builder.Configuration.GetSection("Extensions").Bind);
+builder
+	.Services
+	.AddModelerExtenionsClient(builder.Configuration.GetSection("Extensions").Bind);
 
 
 var app = builder.Build();
@@ -17,9 +19,17 @@ app.MapGet("test", () => { });
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+	app.UseSwagger();
+	app.UseSwaggerUI();
 }
+app
+	.Services
+	.GetRequiredService<ILoggerFactory>()
+	.CreateLogger("Application")
+	.LogDebug(
+		"Loaded configuration: {Configuration}",
+		builder.Configuration.GetDebugView()
+	);
 
 app.UseHttpsRedirection();
 

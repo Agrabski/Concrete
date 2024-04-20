@@ -4,5 +4,5 @@ namespace Concrete.Modeler.Extension.Client;
 
 public class ModelerExtensionOptions
 {
-	public Dictionary<ExtensionName, Uri> ExtensionAddresses { get; set; } = [];
+	public List<Uri> ExtensionAddresses { get; set; } = [];
 }
