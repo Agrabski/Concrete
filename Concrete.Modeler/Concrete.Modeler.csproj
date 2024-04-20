@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Concrete.Core\Concrete.Core.csproj" />
     <ProjectReference Include="..\Concrete.Modeler.Extension.Client\Concrete.Modeler.Extension.Client.csproj" />
     <ProjectReference Include="..\Concrete.ServiceDefaults\Concrete.ServiceDefaults.csproj" />
   </ItemGroup>

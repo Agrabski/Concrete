@@ -9,7 +9,7 @@ public static class DIExtension
 	public static IServiceCollection AddModelerExtenionsClient(this IServiceCollection services, Action<ModelerExtensionOptions> configure)
 	{
 		return services
-			.AddScoped<IModelerExtensionClient, ModelerExtensionClient>()
+			.AddSingleton<IModelerExtensionClient, ModelerExtensionClient>()
 			.AddOptionsWithValidateOnStart<ModelerExtensionOptions>()
 			.Configure(configure)
 			.Services

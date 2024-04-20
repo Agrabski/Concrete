@@ -1,4 +1,5 @@
-﻿using Concrete.Interface;
+﻿using Concrete.Core.Template;
+using Concrete.Interface;
 using Concrete.Modeler.Extension.Client;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,5 +13,11 @@ public class ActivitiesController(IModelerExtensionClient client) : ControllerBa
 	public Task<ActivityMetadata[]> GetAvailableActivities(CancellationToken token)
 	{
 		return client.GetAllActivitiesAsync(token);
+	}
+
+	[HttpGet("instance/{name}")]
+	public Task<ActivityTemplate> CreateQuizTemplate(ActivityName name, CancellationToken token)
+	{
+		return client.CreateTemplateAsync(name, token);
 	}
 }
