@@ -37,6 +37,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Concrete.Extensions.Quizes"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Concrete.Interface.Tests", "Concrete.Interface.Tests\Concrete.Interface.Tests.csproj", "{D8FB2881-BDF0-4046-A769-EC4EBB2EC713}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Concrete.Core.Data", "Concrete.Core.Data\Concrete.Core.Data.csproj", "{9ADE093D-0101-4236-98D9-57DE523C8D13}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{D8FB2881-BDF0-4046-A769-EC4EBB2EC713}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8FB2881-BDF0-4046-A769-EC4EBB2EC713}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8FB2881-BDF0-4046-A769-EC4EBB2EC713}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9ADE093D-0101-4236-98D9-57DE523C8D13}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9ADE093D-0101-4236-98D9-57DE523C8D13}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9ADE093D-0101-4236-98D9-57DE523C8D13}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9ADE093D-0101-4236-98D9-57DE523C8D13}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -101,6 +107,7 @@ Global
 		{DFA03DC8-CF49-4144-A887-108D664E16C2} = {8EA55FC3-41F4-4640-8978-1BCF42CA5357}
 		{9ED86BA0-5D3B-4C26-858F-EB7907AC7A43} = {DFA03DC8-CF49-4144-A887-108D664E16C2}
 		{D8FB2881-BDF0-4046-A769-EC4EBB2EC713} = {4CF89386-3B92-47C4-AE9B-C82AAA80DFFE}
+		{9ADE093D-0101-4236-98D9-57DE523C8D13} = {40EFC39A-B9D7-4E53-9CA3-9D7D7FF50927}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {790291DF-70FF-4A26-B4FC-EB774D06757B}

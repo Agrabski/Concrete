@@ -1,4 +1,7 @@
+using Concrete.Core.Data;
 using Concrete.Modeler.Extension.Client;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -10,6 +13,19 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.AddSqlServerDbContext<ConcreteContext>(
+	"Concrete",
+	settings =>
+	{
+		settings.Tracing = true;
+		settings.HealthChecks = true;
+	},
+	builder =>
+	{
+		builder.EnableDetailedErrors();
+		builder.EnableSensitiveDataLogging();
+	}
+);
 builder
 	.Services
 	.AddModelerExtenionsClient(builder.Configuration.GetSection("Extensions").Bind);
@@ -32,6 +48,9 @@ app
 		"Loaded configuration: {Configuration}",
 		builder.Configuration.GetDebugView()
 	);
+using var scope = app.Services.CreateScope();
+await scope.ServiceProvider.GetRequiredService<ConcreteContext>().Database.MigrateAsync();
+
 
 app.UseHttpsRedirection();
 
