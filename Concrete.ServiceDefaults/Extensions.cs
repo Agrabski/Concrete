@@ -52,7 +52,7 @@ public static class Extensions
 					// We want to view all traces in development
 					tracing.SetSampler(new AlwaysOnSampler());
 				}
-
+				tracing.AddSource("Concrete.*");
 				tracing.AddAspNetCoreInstrumentation()
 					// Uncomment the following line to enable gRPC instrumentation (requires the OpenTelemetry.Instrumentation.GrpcNetClient package)
 					//.AddGrpcClientInstrumentation()

@@ -1,7 +1,6 @@
 ﻿using Concrete.Core.Template;
 using Concrete.Interface;
 using Concrete.Modeler.Extension.Client;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Concrete.Modeler.Controllers;

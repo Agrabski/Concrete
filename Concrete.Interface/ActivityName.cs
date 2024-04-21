@@ -2,7 +2,7 @@
 using System.Text.Json.Serialization;
 
 namespace Concrete.Interface;
-[JsonConverter(typeof(ParsableJsonConverter<ActivityName>))]
+[type: JsonConverter(typeof(ParsableJsonConverter<ActivityName>))]
 public record struct ActivityName(ExtensionName Extension, string Name) : IParsable<ActivityName>
 {
 	public override readonly string ToString() => $"{Extension}::{Name}";
