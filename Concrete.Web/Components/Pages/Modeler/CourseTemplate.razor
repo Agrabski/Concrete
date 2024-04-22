@@ -1,0 +1,7 @@
+﻿@page "/modeler/course-template/{Id:guid}"
+<h3>Course template</h3>
+<span>@Id</span>
+@code {
+    [Parameter]
+    public Guid Id { get; set; }
+}

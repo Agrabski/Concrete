@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 /Concrete.Server/data
 /Concrete.Server/generated-docs
+/Concrete.AppHost/VolumeMount.sqlserver.data/.system

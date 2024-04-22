@@ -1,10 +1,13 @@
-using Aspire.Hosting;
 using Concrete.Modeler.Extension.Registration;
 
 var builder = DistributedApplication.CreateBuilder(args);
 
 var cache = builder.AddRedis("cache");
-var db = builder.AddSqlServer("database").AddDatabase("Concrete");
+var db = builder
+	.AddSqlServer("database")
+	.WithDataVolume()
+	.AddDatabase("Concrete")
+	;
 
 
 var quiz = builder.AddProject<Projects.Concrete_Extensions_Quizes_Api>("concrete-extensions-quizes-api");

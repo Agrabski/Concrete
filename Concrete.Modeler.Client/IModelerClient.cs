@@ -1,10 +1,12 @@
 ﻿using Concrete.Core.Template;
 using Concrete.Interface;
+using Concrete.Interface.Templates;
 
 namespace Concrete.Modeler.Client;
 
 public interface IModelerClient
 {
-	Task<CourseTemplate> CreateCourseTemplateAsync(CancellationToken token);
+	Task<CourseTemplateHeader> CreateCourseTemplateAsync(CancellationToken token);
 	Task<ActivityMetadata[]> GetAllActivitiesAsync(CancellationToken token);
+	Task<CourseTemplateHeader[]> GetCoureTemplatesAsync(CancellationToken token);
 }

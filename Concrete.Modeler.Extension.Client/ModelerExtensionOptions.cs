@@ -1,6 +1,4 @@
-﻿using Concrete.Interface;
-
-namespace Concrete.Modeler.Extension.Client;
+﻿namespace Concrete.Modeler.Extension.Client;
 
 public class ModelerExtensionOptions
 {

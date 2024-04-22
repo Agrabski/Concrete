@@ -1,10 +1,6 @@
 using Concrete.Core.Data;
 using Concrete.Modeler.Extension.Client;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using Concrete.Modeler.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 

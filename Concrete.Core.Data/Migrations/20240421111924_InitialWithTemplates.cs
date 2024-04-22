@@ -1,12 +1,11 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace Concrete.Core.Data.Migrations
 {
-    /// <inheritdoc />
-    public partial class InitialWithTemplates : Migration
+	/// <inheritdoc />
+	public partial class InitialWithTemplates : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

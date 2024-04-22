@@ -1,5 +1,4 @@
 ﻿using Concrete.Interface;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Concrete.Extensions.Quizes.Api.Controllers;

@@ -1,6 +1,4 @@
-﻿using Concrete.Interface;
-
-namespace Concrete.Modeler.Extension.Registration;
+﻿namespace Concrete.Modeler.Extension.Registration;
 
 public static class ModelerExtensionRegistration
 {

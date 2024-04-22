@@ -1,5 +1,4 @@
 using Concrete.Modeler.Client;
-using Concrete.Web;
 using Concrete.Web.Components;
 
 var builder = WebApplication.CreateBuilder(args);

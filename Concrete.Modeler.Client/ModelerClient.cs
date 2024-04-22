@@ -1,5 +1,6 @@
 ﻿using Concrete.Core.Template;
 using Concrete.Interface;
+using Concrete.Interface.Templates;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Diagnostics;
@@ -9,8 +10,7 @@ namespace Concrete.Modeler.Client;
 
 internal class ModelerClient(
 	HttpClient client,
-	IOptions<ModelerClientOptions> options,
-	ILogger<ModelerClient> logger) : IModelerClient
+	IOptions<ModelerClientOptions> options) : IModelerClient
 {
 	private readonly JsonSerializerOptions _options = new(JsonSerializerOptions.Default)
 	{
@@ -22,15 +22,11 @@ internal class ModelerClient(
 	{
 		using var activity = _activitySource.StartActivity();
 		var modelerUri = options.Value.ModelerUri;
-		logger.LogDebug("Calling {Modeler endpointy} endpoint for activity metadata", modelerUri);
-		activity?.SetTag("url", modelerUri);
 
 		var response = await client.GetAsync(modelerUri + "api/activities", token);
 		if (response.IsSuccessStatusCode)
 		{
 			var stream = response.Content.ReadAsStream(token);
-			if (logger.IsEnabled(LogLevel.Debug))
-				logger.LogDebug("Recieved message: {Message}", await response.Content.ReadAsStringAsync(token));
 			return await JsonSerializer.DeserializeAsync<ActivityMetadata[]>(
 				stream,
 				_options,
@@ -40,15 +36,33 @@ internal class ModelerClient(
 		throw new NonSuccessApiResponseException(response.StatusCode);
 	}
 
-	public async Task<CourseTemplate> CreateCourseTemplateAsync(CancellationToken token)
+	public async Task<CourseTemplateHeader[]> GetCoureTemplatesAsync(CancellationToken token)
+	{
+		using var activity = _activitySource.StartActivity();
+		var modelerUri = options.Value.ModelerUri;
+
+		var response = await client.GetAsync(modelerUri + "api/CourseTemplates", token);
+		if (response.IsSuccessStatusCode)
+		{
+			var stream = response.Content.ReadAsStream(token);
+			return await JsonSerializer.DeserializeAsync<CourseTemplateHeader[]>(
+				stream,
+				_options,
+				cancellationToken: token
+			) ?? throw new InvalidOperationException("Content did not course templates");
+		}
+		throw new NonSuccessApiResponseException(response.StatusCode);
+
+	}
+
+	public async Task<CourseTemplateHeader> CreateCourseTemplateAsync(CancellationToken token)
 	{
 		using var _ = _activitySource.StartActivity();
 		var response = await client.PostAsync(options.Value.ModelerUri + $"api/CourseTemplates/", null, token);
 		if (response.IsSuccessStatusCode)
 		{
 			var stream = await response.Content.ReadAsStreamAsync(token);
-			return await JsonSerializer.DeserializeAsync<CourseTemplate>(stream, _options, cancellationToken: token)
-				?? throw new Exception();
+			return await JsonSerializer.DeserializeAsync<CourseTemplateHeader>(stream, _options, token);
 		}
 		throw new NonSuccessApiResponseException(response.StatusCode);
 	}

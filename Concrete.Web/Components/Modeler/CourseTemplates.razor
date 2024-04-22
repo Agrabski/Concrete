@@ -1,0 +1,46 @@
+﻿@rendermode InteractiveServer
+@inject Concrete.Modeler.Client.IModelerClient client
+@inherits LayoutComponentBase
+<h3>Course templates</h3>
+
+@if (_templates is null)
+{
+    <text>Loading data</text>
+}
+else
+{
+    <table class="table table-bordered table-responsive">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Number of classes</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var template in _templates)
+            {
+                <tr>
+                    <td>@template.Name</td>
+                    <td>@template.ClassCount</td>
+                    <td>
+                        <a href="/modeler/course-template/@template.Id" class="btn btn-outline-light">Edit</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <button @onclick="OnAddTemplate">Add new template</button>
+}
+@code {
+    private List<Concrete.Interface.Templates.CourseTemplateHeader>? _templates;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _templates = (await client.GetCoureTemplatesAsync(CancellationToken.None)).ToList();
+    }
+    private async Task OnAddTemplate(MouseEventArgs e)
+    {
+        _templates?.Add(await client.CreateCourseTemplateAsync(CancellationToken.None));
+    }
+}

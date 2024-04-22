@@ -1,6 +1,4 @@
-﻿using Concrete.Interface;
-
-namespace Concrete.Modeler.Client;
+﻿namespace Concrete.Modeler.Client;
 
 public class ModelerClientOptions
 {
