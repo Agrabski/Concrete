@@ -12,5 +12,6 @@ internal class ConfigureClassTemplate : IEntityTypeConfiguration<ClassTemplate>
 		builder.HasKey(t => t.Id);
 
 		builder.HasMany(t => t.ActivityTemplates).WithOne();
+		builder.Property(t => t.Name).HasMaxLength(512);
 	}
 }

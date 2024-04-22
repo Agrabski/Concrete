@@ -7,6 +7,8 @@ namespace Concrete.Core.Data;
 public class ConcreteContext(DbContextOptions<ConcreteContext> options) : DbContext(options)
 {
 	public DbSet<CourseTemplate> CourseTemplates => Set<CourseTemplate>();
+	public DbSet<ClassTemplate> ClassTemplates => Set<ClassTemplate>();
+	public DbSet<ActivityTemplate> ActivityTemplates => Set<ActivityTemplate>();
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{

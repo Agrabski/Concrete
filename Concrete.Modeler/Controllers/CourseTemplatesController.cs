@@ -20,16 +20,23 @@ public class CourseTemplatesController(ConcreteContext context) : ControllerBase
 
 	// GET: api/CourseTemplates/5
 	[HttpGet("{id}")]
-	public async Task<ActionResult<CourseTemplate>> GetCourseTemplate(Guid id)
+	public async Task<ActionResult<CourseTemplateDetails>> GetCourseTemplate(Guid id, CancellationToken token)
 	{
-		var courseTemplate = await context.CourseTemplates.FindAsync(id);
+		var courseTemplate = await context.CourseTemplates.FirstOrDefaultAsync(t => t.Id == id, token);
 
 		if (courseTemplate == null)
-		{
 			return NotFound();
-		}
-
-		return courseTemplate;
+		var classes = await context
+			.CourseTemplates
+			.Where(c=>c.Id == id)
+			.SelectMany(t=>t.ClassTemplates)
+			.Select(t=>new ClassTemplateHeader(t.Id, t.Name, t.ActivityTemplates.Count))
+			.ToArrayAsync(token);
+		return Ok(new CourseTemplateDetails(
+			courseTemplate.Id,
+			courseTemplate.Name,
+			classes
+		));
 	}
 
 	// PUT: api/CourseTemplates/5

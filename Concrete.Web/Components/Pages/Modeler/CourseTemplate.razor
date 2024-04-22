@@ -1,7 +1,24 @@
 ﻿@page "/modeler/course-template/{Id:guid}"
+@using Concrete.Interface.Templates
+@using Concrete.Modeler.Client
+@inject IModelerClient client
+
 <h3>Course template</h3>
-<span>@Id</span>
+@if (_course is null)
+{
+    <span>Loading course template @Id</span>
+}
+else
+{
+    <span>@_course.Value.Name</span>
+}
 @code {
     [Parameter]
     public Guid Id { get; set; }
+    private CourseTemplateDetails? _course;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _course = await client.GetCourseTemplateAsync(Id, CancellationToken.None);
+    }
 }

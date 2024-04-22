@@ -40,19 +40,23 @@ internal class ModelerClient(
 	{
 		using var activity = _activitySource.StartActivity();
 		var modelerUri = options.Value.ModelerUri;
+		return await GetAsync<CourseTemplateHeader[]>(client, modelerUri + "api/CourseTemplates", token);
 
-		var response = await client.GetAsync(modelerUri + "api/CourseTemplates", token);
+	}
+
+	private async Task<T> GetAsync<T>(HttpClient client, string endpoint, CancellationToken token)
+	{
+		var response = await client.GetAsync(endpoint, token);
 		if (response.IsSuccessStatusCode)
 		{
 			var stream = response.Content.ReadAsStream(token);
-			return await JsonSerializer.DeserializeAsync<CourseTemplateHeader[]>(
+			return await JsonSerializer.DeserializeAsync<T>(
 				stream,
 				_options,
 				cancellationToken: token
 			) ?? throw new InvalidOperationException("Content did not course templates");
 		}
 		throw new NonSuccessApiResponseException(response.StatusCode);
-
 	}
 
 	public async Task<CourseTemplateHeader> CreateCourseTemplateAsync(CancellationToken token)
@@ -65,6 +69,14 @@ internal class ModelerClient(
 			return await JsonSerializer.DeserializeAsync<CourseTemplateHeader>(stream, _options, token);
 		}
 		throw new NonSuccessApiResponseException(response.StatusCode);
+	}
+
+	public async Task<CourseTemplateDetails> GetCourseTemplateAsync(Guid id, CancellationToken token)
+	{
+		using var activity = _activitySource.StartActivity();
+		var modelerUri = options.Value.ModelerUri;
+		return await GetAsync<CourseTemplateDetails>(client, modelerUri + $"api/CourseTemplates/{id}", token);
+
 	}
 }
 
