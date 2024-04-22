@@ -4,7 +4,7 @@ var builder = DistributedApplication.CreateBuilder(args);
 
 var cache = builder.AddRedis("cache");
 var db = builder
-	.AddSqlServer("database")
+	.AddSqlServer("database", password: builder.AddParameter("db-password", true))
 	.WithDataVolume()
 	.AddDatabase("Concrete")
 	;
