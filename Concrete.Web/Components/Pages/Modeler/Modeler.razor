@@ -1,0 +1,21 @@
+﻿@page "/modeler"
+@rendermode InteractiveServer
+@inject Concrete.Modeler.Client.IModelerClient client
+<h3>Modeler</h3>
+
+@if (_template is null)
+{
+    <button @onclick="CreateClicked">Create new template</button>
+}
+else
+{
+    <h4>@_template.Name</h4>
+}
+@code {
+    private Concrete.Core.Template.CourseTemplate? _template;
+
+    private async Task CreateClicked()
+    {
+        _template = await client.CreateCourseTemplateAsync(CancellationToken.None);
+    }
+}

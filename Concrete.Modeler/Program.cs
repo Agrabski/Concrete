@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Concrete.Modeler.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -50,6 +51,12 @@ app
 	);
 using var scope = app.Services.CreateScope();
 await scope.ServiceProvider.GetRequiredService<ConcreteContext>().Database.MigrateAsync();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+};
 
 
 app.UseHttpsRedirection();

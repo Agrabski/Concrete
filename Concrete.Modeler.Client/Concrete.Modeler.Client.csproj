@@ -7,10 +7,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<None Remove="ModelerExtensionApi.json" />
-	</ItemGroup>
-
-	<ItemGroup>
 		<PackageReference Include="Microsoft.Extensions.Caching.Abstractions" Version="8.0.0" />
 		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="9.0.0-preview.3.24172.9" />
 		<PackageReference Include="Microsoft.Extensions.Http" Version="9.0.0-preview.3.24172.9" />
@@ -19,14 +15,8 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Concrete.Core\Concrete.Core.csproj" />
-		<ProjectReference Include="..\Concrete.Interface\Concrete.Interface.csproj" />
+	  <ProjectReference Include="..\Concrete.Core\Concrete.Core.csproj" />
+	  <ProjectReference Include="..\Concrete.Interface\Concrete.Interface.csproj" />
 	</ItemGroup>
-
-	<ProjectExtensions>
-		<VisualStudio>
-			<UserProperties modelerextensionapi_1json__JsonSchema="https://spec.openapis.org/oas/3.0/schema/2021-09-28" />
-		</VisualStudio>
-	</ProjectExtensions>
 
 </Project>
