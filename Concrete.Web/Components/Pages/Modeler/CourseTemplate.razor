@@ -2,6 +2,8 @@
 @using Concrete.Interface.Templates
 @using Concrete.Modeler.Client
 @inject IModelerClient client
+@rendermode InteractiveServer
+
 
 <h3>Course template</h3>
 @if (_course is null)
@@ -10,7 +12,28 @@
 }
 else
 {
-    <span>@_course.Value.Name</span>
+    <input value="@_course.Value.Name" />
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Classes</td>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td>Number of activities</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var courseClass in _course.Value.Classes)
+            {
+                <tr>
+                    <td>@courseClass.Name</td>
+                    <td>@courseClass.ActivityCount</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <button @onclick="AddClass">Add Class</button>
 }
 @code {
     [Parameter]
@@ -20,5 +43,17 @@ else
     protected override async Task OnInitializedAsync()
     {
         _course = await client.GetCourseTemplateAsync(Id, CancellationToken.None);
+    }
+    private async Task AddClass(MouseEventArgs e)
+    {
+        _course = _course!.Value with
+        {
+            Classes = _course!.Value.Classes.Append(
+                await client.CreateCourseClassTemplateAsync(
+                    _course.Value.Id,
+                    "New class",
+                    CancellationToken.None
+                )).ToArray()
+        };
     }
 }

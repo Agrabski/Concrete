@@ -28,9 +28,9 @@ public class CourseTemplatesController(ConcreteContext context) : ControllerBase
 			return NotFound();
 		var classes = await context
 			.CourseTemplates
-			.Where(c=>c.Id == id)
-			.SelectMany(t=>t.ClassTemplates)
-			.Select(t=>new ClassTemplateHeader(t.Id, t.Name, t.ActivityTemplates.Count))
+			.Where(c => c.Id == id)
+			.SelectMany(t => t.ClassTemplates)
+			.Select(t => new ClassTemplateHeader(t.Id, t.Name, t.ActivityTemplates.Count))
 			.ToArrayAsync(token);
 		return Ok(new CourseTemplateDetails(
 			courseTemplate.Id,
@@ -39,35 +39,26 @@ public class CourseTemplatesController(ConcreteContext context) : ControllerBase
 		));
 	}
 
-	// PUT: api/CourseTemplates/5
-	// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-	[HttpPut("{id}")]
-	public async Task<IActionResult> PutCourseTemplate(Guid id, CourseTemplate courseTemplate)
+	[HttpPut("{courseId}")]
+	public async Task<ActionResult<ClassTemplateHeader>> CreateClassTemplate(
+		Guid courseId,
+		[FromBody] string name,
+		CancellationToken token
+	)
 	{
-		if (id != courseTemplate.Id)
+		if (await context.CourseTemplates.FirstOrDefaultAsync(t => t.Id == courseId, token) is not CourseTemplate template)
+			return NotFound($"Course template {courseId} does not exists");
+		ClassTemplate result = new()
 		{
-			return BadRequest();
-		}
-
-		context.Entry(courseTemplate).State = EntityState.Modified;
-
-		try
-		{
-			await context.SaveChangesAsync();
-		}
-		catch (DbUpdateConcurrencyException)
-		{
-			if (!CourseTemplateExists(id))
-				return NotFound();
-			else
-				throw;
-		}
-
-		return NoContent();
+			Name = name,
+			ActivityTemplates = [],
+			Id = Guid.NewGuid(),
+		};
+		template.ClassTemplates.Add(result);
+		await context.SaveChangesAsync(token);
+		return Ok(new ClassTemplateHeader(result.Id, result.Name, 0));
 	}
 
-	// POST: api/CourseTemplates
-	// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
 	[HttpPost]
 	public async Task<ActionResult<CourseTemplateHeader>> CreateCourseTemplate()
 	{

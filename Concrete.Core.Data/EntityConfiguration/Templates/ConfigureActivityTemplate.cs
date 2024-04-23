@@ -12,6 +12,7 @@ internal class ConfigureActivityTemplate : IEntityTypeConfiguration<ActivityTemp
 		builder.ToTable("ACTIVITY_TEMPLATE");
 
 		builder.HasKey(t => t.Id);
+		builder.Property(t => t.Id).ValueGeneratedNever();
 
 		builder.OwnsOne(t => t.TemplateData).ToJson();
 		builder.OwnsOne(t => t.DisplayName).ToJson();
