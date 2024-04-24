@@ -39,7 +39,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Concrete.Interface.Tests", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Concrete.Core.Data", "Concrete.Core.Data\Concrete.Core.Data.csproj", "{9ADE093D-0101-4236-98D9-57DE523C8D13}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Concrete.Modeler.Client", "Concrete.Modeler.Client\Concrete.Modeler.Client.csproj", "{3AB78B10-6B3B-495C-83F8-769D2E67456A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Concrete.Modeler.Client", "Concrete.Modeler.Client\Concrete.Modeler.Client.csproj", "{3AB78B10-6B3B-495C-83F8-769D2E67456A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

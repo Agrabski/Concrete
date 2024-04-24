@@ -1,0 +1,45 @@
+﻿@page "/modeler/class-template/{Id:guid}"
+@using Concrete.Interface.Templates
+@using Concrete.Modeler.Client
+@inject IModelerClient client
+@rendermode InteractiveServer
+
+<h3>ClassTemplate</h3>
+@if(_details is ClassTemplateDetails{Name: var name, Activities: var activities })
+{
+    <input value="@name"/>
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Activities</td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td>Type</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var activity in activities)
+            {
+                <tr>
+                    <td>@activity.Name</td>
+                    <td>@activity.TypeName</td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+}
+
+@code {
+    [Parameter]
+    public Guid Id{ get; set; }
+    private ClassTemplateDetails? _details;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _details = await client.GetClassTemplateAsync(Id, CancellationToken.None);
+    }
+
+}

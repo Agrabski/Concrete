@@ -65,7 +65,6 @@ internal class ModelerClient(
 		var modelerUri = options.Value.ModelerUri;
 		var response = await client.GetAsync(modelerUri + $"api/CourseTemplates/{id}", token);
 		return await ReadResponse<CourseTemplateDetails>(response, token);
-
 	}
 
 	public Task UpdateCourseTemplateNameAsync(Guid id, string name, CancellationToken token) => throw new NotImplementedException();
@@ -83,6 +82,13 @@ internal class ModelerClient(
 		return await ReadResponse<ClassTemplateHeader>(response, token);
 	}
 
+	public async Task<ClassTemplateDetails> GetClassTemplateAsync(Guid id, CancellationToken token)
+	{
+		using var activity = _activitySource.StartActivity();
+		var modelerUri = options.Value.ModelerUri;
+		var response = await client.GetAsync(modelerUri + $"api/ClassTemplates/{id}", token);
+		return await ReadResponse<ClassTemplateDetails>(response, token);
+	}
 
 
 	private async Task<T> ReadResponse<T>(HttpResponseMessage response, CancellationToken token)
@@ -101,5 +107,6 @@ internal class ModelerClient(
 		activity?.AddTag("Result", response.StatusCode.ToString());
 		throw new NonSuccessApiResponseException(response.StatusCode);
 	}
+
 }
 

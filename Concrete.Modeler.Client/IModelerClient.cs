@@ -10,6 +10,7 @@ public interface IModelerClient
 	Task<ActivityMetadata[]> GetAllActivitiesAsync(CancellationToken token);
 	Task<CourseTemplateHeader[]> GetCoureTemplatesAsync(CancellationToken token);
 	Task<CourseTemplateDetails> GetCourseTemplateAsync(Guid id, CancellationToken token);
+	Task<ClassTemplateDetails> GetClassTemplateAsync(Guid id, CancellationToken token);
 
 	Task UpdateCourseTemplateNameAsync(Guid id, string name, CancellationToken token);
 	Task<ClassTemplateHeader> CreateCourseClassTemplateAsync(Guid courseTemplateId, string name, CancellationToken token);

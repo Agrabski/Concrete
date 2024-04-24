@@ -8,7 +8,7 @@ namespace Concrete.Extensions.Quizes;
 public class QuizTemplate : IActivityTemplate<QuizTemplateData>
 {
 	public static readonly ActivityName ActivityName = new(MetadataConsts.ExtensionName, "Quiz");
-	public ActivityName Name { get; } = ActivityName;
+	public ActivityName TypeName { get; } = ActivityName;
 	public Guid Id { get; init; } = Guid.NewGuid();
 	public LocalisedText DisplayName { get; set; } = new();
 	public QuizTemplateData TemplateData { get; set; } = new();

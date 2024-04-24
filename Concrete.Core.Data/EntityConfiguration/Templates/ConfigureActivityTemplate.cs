@@ -14,10 +14,11 @@ internal class ConfigureActivityTemplate : IEntityTypeConfiguration<ActivityTemp
 		builder.HasKey(t => t.Id);
 		builder.Property(t => t.Id).ValueGeneratedNever();
 
+		builder.Property(t => t.Name).HasMaxLength(512);
 		builder.OwnsOne(t => t.TemplateData).ToJson();
 		builder.OwnsOne(t => t.DisplayName).ToJson();
 		builder
-			.Property(t => t.Name)
+			.Property(t => t.TypeName)
 			.HasConversion(n => n.ToString(), s => ActivityName.Parse(s, null))
 			.HasMaxLength(512);
 	}
