@@ -2,29 +2,28 @@
 
 #nullable disable
 
-namespace Concrete.Core.Data.Migrations
-{
-    /// <inheritdoc />
-    public partial class AddActivityTemplateName : Migration
-    {
-        /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.AddColumn<string>(
-                name: "TypeName",
-                table: "ACTIVITY_TEMPLATE",
-                type: "nvarchar(512)",
-                maxLength: 512,
-                nullable: false,
-                defaultValue: "");
-        }
+namespace Concrete.Core.Data.Migrations;
 
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropColumn(
-                name: "TypeName",
-                table: "ACTIVITY_TEMPLATE");
-        }
-    }
+/// <inheritdoc />
+public partial class AddActivityTemplateName : Migration
+{
+	/// <inheritdoc />
+	protected override void Up(MigrationBuilder migrationBuilder)
+	{
+		migrationBuilder.AddColumn<string>(
+			name: "TypeName",
+			table: "ACTIVITY_TEMPLATE",
+			type: "nvarchar(512)",
+			maxLength: 512,
+			nullable: false,
+			defaultValue: "");
+	}
+
+	/// <inheritdoc />
+	protected override void Down(MigrationBuilder migrationBuilder)
+	{
+		migrationBuilder.DropColumn(
+			name: "TypeName",
+			table: "ACTIVITY_TEMPLATE");
+	}
 }

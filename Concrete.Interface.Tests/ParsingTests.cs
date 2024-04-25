@@ -16,10 +16,10 @@ public class ParsingTests
 	[Fact]
 	public void ActivityNameNameCanBeParsed()
 	{
-		var name = new ActivityName(new("Concrete", "Core", "Quiz"), "test");
+		var name = new ActivityTypeName(new("Concrete", "Core", "Quiz"), "test");
 		var text = name.ToString();
 
-		Assert.Equal(name, ActivityName.Parse(text, null));
+		Assert.Equal(name, ActivityTypeName.Parse(text, null));
 	}
 
 	[Fact]

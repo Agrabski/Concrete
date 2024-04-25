@@ -33,24 +33,30 @@ internal class ModelerExtensionClient(
 		.ToArray();
 	}
 
-	public async Task<ActivityTemplate> CreateTemplateAsync(ActivityName name, CancellationToken token)
+	public async Task<ActivityTemplate> CreateTemplateAsync(ActivityTypeName name, CancellationToken token)
 	{
 		using var _ = _activitySource.StartActivity();
 		var uri = await GetExtensionUriAsync(name.Extension, token);
 		return await CreateTemplateAsync(uri, name, token);
 	}
 
-	private async Task<ActivityTemplate> CreateTemplateAsync(Uri uri, ActivityName name, CancellationToken token)
+	private async Task<ActivityTemplate> CreateTemplateAsync(Uri uri, ActivityTypeName name, CancellationToken token)
 	{
 		using var _ = _activitySource.StartActivity();
 		var response = await client.GetAsync(uri + $"api/activities/instance/{name}", token);
 		if (response.IsSuccessStatusCode)
 		{
-			var stream= await response.Content.ReadAsStreamAsync(token);
-			return await JsonSerializer.DeserializeAsync<ActivityTemplate>(stream, _options, cancellationToken:token)
-				??throw new Exception();
+			var stream = await response.Content.ReadAsStreamAsync(token);
+			return await JsonSerializer.DeserializeAsync<ActivityTemplate>(stream, _options, cancellationToken: token)
+				?? throw new Exception();
 		}
 		throw new NonSuccessApiResponseException(response.StatusCode);
+	}
+
+	public async ValueTask<Uri> GetExtensionActivityEditorAsync(ActivityTypeName name, CancellationToken token)
+	{
+		var uri = await GetExtensionUriAsync(name.Extension, token);
+		var response = await client.GetAsync(uri + $"api/editor/{name}", token);
 	}
 
 	private async ValueTask<Uri> GetExtensionUriAsync(ExtensionName name, CancellationToken token)
@@ -66,7 +72,7 @@ internal class ModelerExtensionClient(
 				.Select(async uri => (await GetExtensionNameAsync(uri, token), uri))
 			);
 			_extensionUris = result.ToDictionary(kv => kv.Item1.ToString(), kv => kv.uri);
-			logger.LogDebug("Extension names resolved: {Names}", string.Join(", ", _extensionUris.Keys.Select(x=>x.ToString())));
+			logger.LogDebug("Extension names resolved: {Names}", string.Join(", ", _extensionUris.Keys.Select(x => x.ToString())));
 
 		}
 		logger.LogDebug("Looking for extension uri {ExtensionName}", name);
@@ -94,7 +100,7 @@ internal class ModelerExtensionClient(
 		if (response.IsSuccessStatusCode)
 		{
 			var stream = response.Content.ReadAsStream(token);
-			if(logger.IsEnabled(LogLevel.Debug))
+			if (logger.IsEnabled(LogLevel.Debug))
 				logger.LogDebug("Recieved message: {Message}", await response.Content.ReadAsStringAsync(token));
 			return await JsonSerializer.DeserializeAsync<ActivityMetadata[]>(
 				stream,

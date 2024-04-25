@@ -7,12 +7,28 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Components\Pages\Modeler\ActivityTemplate.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Concrete.Modeler.Client\Concrete.Modeler.Client.csproj" />
     <ProjectReference Include="..\Concrete.ServiceDefaults\Concrete.ServiceDefaults.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Aspire.StackExchange.Redis.OutputCaching" Version="9.0.0-preview.3.24210.17" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Components\Pages\Modeler\ActivityTemplate.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Components\Pages\Modeler\ActivityTemplate.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Components\Pages\Modeler\ActivityTemplate.razor" />
   </ItemGroup>
 
 </Project>

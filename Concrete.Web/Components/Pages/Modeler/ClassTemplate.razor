@@ -5,18 +5,22 @@
 @rendermode InteractiveServer
 
 <h3>ClassTemplate</h3>
-@if(_details is ClassTemplateDetails{Name: var name, Activities: var activities })
+@if (_details is ClassTemplateDetails { Name: var name, Activities: var activities })
 {
-    <input value="@name"/>
+    <input value="@name" />
     <table class="table">
         <thead>
             <tr>
+                <td></td>
                 <td>Activities</td>
                 <td></td>
             </tr>
             <tr>
                 <td>Name</td>
                 <td>Type</td>
+                <td>
+                    <button>Edit</button>
+                </td>
             </tr>
         </thead>
         <tbody>
@@ -25,6 +29,9 @@
                 <tr>
                     <td>@activity.Name</td>
                     <td>@activity.TypeName</td>
+                    <td>
+                        <a href="/modeler/course-template/@activity.Id" class="btn btn-outline-dark">Edit</a>
+                    </td>
                 </tr>
             }
         </tbody>
@@ -34,7 +41,7 @@
 
 @code {
     [Parameter]
-    public Guid Id{ get; set; }
+    public Guid Id { get; set; }
     private ClassTemplateDetails? _details;
 
     protected override async Task OnInitializedAsync()

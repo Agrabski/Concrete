@@ -19,7 +19,7 @@ internal class ConfigureActivityTemplate : IEntityTypeConfiguration<ActivityTemp
 		builder.OwnsOne(t => t.DisplayName).ToJson();
 		builder
 			.Property(t => t.TypeName)
-			.HasConversion(n => n.ToString(), s => ActivityName.Parse(s, null))
+			.HasConversion(n => n.ToString(), s => ActivityTypeName.Parse(s, null))
 			.HasMaxLength(512);
 	}
 }

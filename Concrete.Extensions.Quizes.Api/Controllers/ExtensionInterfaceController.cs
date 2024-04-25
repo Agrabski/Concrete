@@ -19,7 +19,7 @@ public class ExtensionInterfaceController : ControllerBase
 	public ExtensionName GetName() => MetadataConsts.ExtensionName;
 
 	[HttpGet("instance/{name}")]
-	public ActionResult<QuizTemplate> CreateQuizTemplate(ActivityName name)
+	public ActionResult<QuizTemplate> CreateQuizTemplate(ActivityTypeName name)
 	{
 		if (name != QuizTemplate.ActivityName)
 			return NotFound($"Activity {name} is not supported by this extension");

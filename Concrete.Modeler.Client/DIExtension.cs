@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace Concrete.Modeler.Client;
 
@@ -11,7 +12,11 @@ public static class DIExtension
 			.AddOptionsWithValidateOnStart<ModelerClientOptions>()
 			.Configure(configure)
 			.Services
-			.AddHttpClient<ModelerClient>(_ => { })
+			.AddHttpClient<ModelerClient>((sp,client) => 
+			{
+				var options = sp.GetRequiredService<IOptions<ModelerClientOptions>> ();
+				client.BaseAddress = options.Value.ModelerUri;
+			})
 			.AddDefaultLogger()
 			.UseServiceDiscovery()
 			.Services

@@ -5,7 +5,7 @@ namespace Concrete.Modeler.Extension.Client;
 
 public interface IModelerExtensionClient
 {
-	Task<ActivityTemplate> CreateTemplateAsync(ActivityName name, CancellationToken token);
+	Task<ActivityTemplate> CreateTemplateAsync(ActivityTypeName name, CancellationToken token);
 	Task<ActivityMetadata[]> GetAllActivitiesAsync(CancellationToken token);
 }
 

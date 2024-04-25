@@ -1,0 +1,15 @@
+﻿@page "/modeler/activity-template/{Type}/{Id:guid}"
+@using Concrete.Interface
+@using Microsoft.Extensions.Caching.Distributed
+@inject IDistributedCache cache
+<h3>ActivityTemplate</h3>
+
+<iframe>
+</iframe>
+
+@code {
+    [Parameter]
+    public ActivityTypeName Type {get;set;}
+    [Parameter]
+    public Guid Id { get; set; }
+}

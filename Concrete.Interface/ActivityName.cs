@@ -2,16 +2,16 @@
 using System.Text.Json.Serialization;
 
 namespace Concrete.Interface;
-[type: JsonConverter(typeof(ParsableJsonConverter<ActivityName>))]
-public record struct ActivityName(ExtensionName Extension, string Name) : IParsable<ActivityName>
+[type: JsonConverter(typeof(ParsableJsonConverter<ActivityTypeName>))]
+public record struct ActivityTypeName(ExtensionName Extension, string Name) : IParsable<ActivityTypeName>
 {
 	public override readonly string ToString() => $"{Extension}::{Name}";
-	public static ActivityName Parse(string s, IFormatProvider? provider)
+	public static ActivityTypeName Parse(string s, IFormatProvider? provider)
 	{
 		var parts = s.Split("::");
 		return new(ExtensionName.Parse(parts[0], provider), parts[1]);
 	}
-	public static bool TryParse([NotNullWhen(true)] string? s, IFormatProvider? provider, [MaybeNullWhen(false)] out ActivityName result)
+	public static bool TryParse([NotNullWhen(true)] string? s, IFormatProvider? provider, [MaybeNullWhen(false)] out ActivityTypeName result)
 	{
 		if (s?.Split("::") is [var extension, var name] && ExtensionName.TryParse(extension, provider, out var parsedExtension))
 		{

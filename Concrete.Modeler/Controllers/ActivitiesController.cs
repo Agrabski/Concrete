@@ -15,8 +15,14 @@ public class ActivitiesController(IModelerExtensionClient client) : ControllerBa
 	}
 
 	[HttpGet("instance/{name}")]
-	public Task<ActivityTemplate> CreateQuizTemplate(ActivityName name, CancellationToken token)
+	public Task<ActivityTemplate> CreateActivityTemplate(ActivityTypeName name, CancellationToken token)
 	{
 		return client.CreateTemplateAsync(name, token);
+	}
+
+	[HttpGet("editor/{name}")]
+	public ActionResult<string> GetActivityEditorUrl(ActivityTypeName name, CancellationToken token)
+	{
+		if(name != CreateQuizTemplate)
 	}
 }

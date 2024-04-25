@@ -1,3 +1,3 @@
 ﻿namespace Concrete.Interface;
 
-public record ActivityMetadata(ActivityName Name);
+public record ActivityMetadata(ActivityTypeName Name);
