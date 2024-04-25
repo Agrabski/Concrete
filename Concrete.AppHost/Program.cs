@@ -1,3 +1,4 @@
+using Aspire.Hosting;
 using Concrete.Modeler.Extension.Registration;
 
 var builder = DistributedApplication.CreateBuilder(args);
@@ -9,8 +10,8 @@ var db = builder
 	.AddDatabase("Concrete")
 	;
 
+var quiz = BuildQuizesExtension(builder);
 
-var quiz = builder.AddProject<Projects.Concrete_Extensions_Quizes_Api>("concrete-extensions-quizes-api");
 var modeler = builder
 	.AddProject<Projects.Concrete_Modeler>("concrete-modeler")
 	.WithReference(db)
@@ -23,3 +24,14 @@ builder.AddProject<Projects.Concrete_Web>("webfrontend")
 	.WithEnvironment("ModelerClient__ModelerUri", "https://concrete-modeler")
 ;
 builder.Build().Run();
+
+
+static IResourceBuilder<ProjectResource> BuildQuizesExtension(IDistributedApplicationBuilder builder)
+{
+	var quizesUi = builder.AddProject<Projects.ConcreteExtensions_Quizes_UI>("concreteextensions-quizes-ui");
+	var quiz = builder.AddProject<Projects.Concrete_Extensions_Quizes_Api>("concrete-extensions-quizes-api")
+		.WithReference(quizesUi)
+		.WithEnvironment("Quiz__ActivityEditorUri", "https://concreteextensions-quizes-ui")
+		;
+	return quiz;
+}

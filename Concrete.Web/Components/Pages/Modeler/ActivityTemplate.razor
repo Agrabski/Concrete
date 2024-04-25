@@ -1,9 +1,17 @@
 ﻿@page "/modeler/activity-template/{Type}/{Id:guid}"
 @using Concrete.Interface
-@using Microsoft.Extensions.Caching.Distributed
-@inject IDistributedCache cache
+@using Concrete.Modeler.Client
+@inject IModelerClient client
 <h3>ActivityTemplate</h3>
 
+@if(_extensionUri is null)
+{
+    <div>Looking for extension editor</div>
+}
+else
+{
+    <iframe src="@(_extensionUri + $"/{Id}")"/>
+}
 <iframe>
 </iframe>
 
@@ -12,4 +20,13 @@
     public ActivityTypeName Type {get;set;}
     [Parameter]
     public Guid Id { get; set; }
+    private Uri? _extensionUri;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _extensionUri = await client.GetExtensionEditorForActivityTypeAsync(
+            Type,
+            CancellationToken.None
+        );
+    }
 }

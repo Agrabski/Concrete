@@ -56,7 +56,14 @@ internal class ModelerExtensionClient(
 	public async ValueTask<Uri> GetExtensionActivityEditorAsync(ActivityTypeName name, CancellationToken token)
 	{
 		var uri = await GetExtensionUriAsync(name.Extension, token);
-		var response = await client.GetAsync(uri + $"api/editor/{name}", token);
+		var response = await client.GetAsync(uri + $"api/activities/editor/{name}", token);
+		if (response.IsSuccessStatusCode)
+		{
+			var stream = await response.Content.ReadAsStreamAsync(token);
+			return await JsonSerializer.DeserializeAsync<Uri>(stream, _options, cancellationToken: token)
+				?? throw new Exception();
+		}
+		throw new NonSuccessApiResponseException(response.StatusCode);
 	}
 
 	private async ValueTask<Uri> GetExtensionUriAsync(ExtensionName name, CancellationToken token)

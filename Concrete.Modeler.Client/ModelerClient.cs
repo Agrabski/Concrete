@@ -1,6 +1,7 @@
 ﻿using Concrete.Core.Template;
 using Concrete.Interface;
 using Concrete.Interface.Templates;
+using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Diagnostics;
@@ -12,7 +13,7 @@ namespace Concrete.Modeler.Client;
 
 internal class ModelerClient(
 	HttpClient client,
-	IOptions<ModelerClientOptions> options) : IModelerClient
+	IDistributedCache cache) : IModelerClient
 {
 	private readonly JsonSerializerOptions _options = new(JsonSerializerOptions.Default)
 	{
@@ -23,9 +24,8 @@ internal class ModelerClient(
 	public async Task<ActivityMetadata[]> GetAllActivitiesAsync(CancellationToken token)
 	{
 		using var activity = _activitySource.StartActivity();
-		var modelerUri = options.Value.ModelerUri;
 
-		var response = await client.GetAsync(modelerUri + "api/activities", token);
+		var response = await client.GetAsync("api/activities", token);
 		if (response.IsSuccessStatusCode)
 		{
 			var stream = response.Content.ReadAsStream(token);
@@ -41,8 +41,7 @@ internal class ModelerClient(
 	public async Task<CourseTemplateHeader[]> GetCoureTemplatesAsync(CancellationToken token)
 	{
 		using var activity = _activitySource.StartActivity();
-		var modelerUri = options.Value.ModelerUri;
-		var response = await client.GetAsync(modelerUri + "api/CourseTemplates", token);
+		var response = await client.GetAsync("api/CourseTemplates", token);
 		return await ReadResponse<CourseTemplateHeader[]>(response, token);
 	}
 
@@ -50,7 +49,7 @@ internal class ModelerClient(
 	public async Task<CourseTemplateHeader> CreateCourseTemplateAsync(CancellationToken token)
 	{
 		using var _ = _activitySource.StartActivity();
-		var response = await client.PostAsync(options.Value.ModelerUri + $"api/CourseTemplates/", null, token);
+		var response = await client.PostAsync("api/CourseTemplates/", null, token);
 		if (response.IsSuccessStatusCode)
 		{
 			var stream = await response.Content.ReadAsStreamAsync(token);
@@ -62,8 +61,7 @@ internal class ModelerClient(
 	public async Task<CourseTemplateDetails> GetCourseTemplateAsync(Guid id, CancellationToken token)
 	{
 		using var activity = _activitySource.StartActivity();
-		var modelerUri = options.Value.ModelerUri;
-		var response = await client.GetAsync(modelerUri + $"api/CourseTemplates/{id}", token);
+		var response = await client.GetAsync($"api/CourseTemplates/{id}", token);
 		return await ReadResponse<CourseTemplateDetails>(response, token);
 	}
 
@@ -72,10 +70,9 @@ internal class ModelerClient(
 	public async Task<ClassTemplateHeader> CreateCourseClassTemplateAsync(Guid courseTemplateId, string name, CancellationToken token)
 	{
 		using var activity = _activitySource.StartActivity();
-		var modelerUri = options.Value.ModelerUri;
 		using var content = JsonContent.Create(name);
 		var response = await client.PutAsync(
-			modelerUri + $"api/CourseTemplates/{courseTemplateId}",
+			$"api/CourseTemplates/{courseTemplateId}",
 			content,
 			token
 		);
@@ -85,9 +82,21 @@ internal class ModelerClient(
 	public async Task<ClassTemplateDetails> GetClassTemplateAsync(Guid id, CancellationToken token)
 	{
 		using var activity = _activitySource.StartActivity();
-		var modelerUri = options.Value.ModelerUri;
-		var response = await client.GetAsync(modelerUri + $"api/ClassTemplates/{id}", token);
+		var response = await client.GetAsync( $"api/ClassTemplates/{id}", token);
 		return await ReadResponse<ClassTemplateDetails>(response, token);
+	}
+
+	public async Task<Uri> GetExtensionEditorForActivityTypeAsync(ActivityTypeName name, CancellationToken token)
+	{
+		var cacheKey = $"Modeler-extension-activity-editor-url-{name}";
+		if(await cache.GetStringAsync(cacheKey, token) is string url)
+			return new Uri(url);
+
+		var response = await client.GetAsync($"api/activities/editor/{name}", token);
+		var result = new Uri(await ReadResponse<string>(response, token));
+		await cache.SetStringAsync(cacheKey, result.ToString(), token);
+		return result;
+
 	}
 
 

@@ -25,4 +25,12 @@ public class ExtensionInterfaceController : ControllerBase
 			return NotFound($"Activity {name} is not supported by this extension");
 		return Ok(new QuizTemplate());
 	}
+
+	[HttpGet("editor/{name}")]
+	public ActionResult<Uri> GetExtensionEditor(ActivityTypeName name)
+	{
+		if (name != QuizTemplate.ActivityName)
+			return NotFound("Unknown activity type");
+		return Ok();
+	}
 }
