@@ -45,6 +45,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConcreteExtensions.Quizes.U
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConcreteExtensions.Quizes.UI.Client", "ConcreteExtensions.Quizes.UI\ConcreteExtensions.Quizes.UI.Client\ConcreteExtensions.Quizes.UI.Client.csproj", "{35358582-2F29-4C24-8C3F-6A1FFA2AAC68}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Concrete.CrossOriginFrameConfiguration", "Concrete.CrossOriginFrameConfiguration\Concrete.CrossOriginFrameConfiguration.csproj", "{45AE284C-24DA-4796-ACE0-FCE9B02CC70A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -111,6 +113,10 @@ Global
 		{35358582-2F29-4C24-8C3F-6A1FFA2AAC68}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{35358582-2F29-4C24-8C3F-6A1FFA2AAC68}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{35358582-2F29-4C24-8C3F-6A1FFA2AAC68}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45AE284C-24DA-4796-ACE0-FCE9B02CC70A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45AE284C-24DA-4796-ACE0-FCE9B02CC70A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45AE284C-24DA-4796-ACE0-FCE9B02CC70A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45AE284C-24DA-4796-ACE0-FCE9B02CC70A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

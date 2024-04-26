@@ -10,15 +10,19 @@ var db = builder
 	.AddDatabase("Concrete")
 	;
 
-var quiz = BuildQuizesExtension(builder);
+var modelerUi = builder.AddProject<Projects.Concrete_Web>("webfrontend");
 
 var modeler = builder
 	.AddProject<Projects.Concrete_Modeler>("concrete-modeler")
-	.WithReference(db)
+	.WithReference(db);
+
+var quiz = BuildQuizesExtension(builder, modelerUi.GetEndpoint("https"));
+
+modeler
 	.AddModelerExtensions([quiz])
 	.WithEnvironment("Logging__LogLevel__Default", "Debug");
 
-builder.AddProject<Projects.Concrete_Web>("webfrontend")
+modelerUi
 	.WithReference(cache)
 	.WithReference(modeler)
 	.WithEnvironment("ModelerClient__ModelerUri", "https://concrete-modeler")
@@ -27,9 +31,12 @@ builder.AddProject<Projects.Concrete_Web>("webfrontend")
 builder.Build().Run();
 
 
-static IResourceBuilder<ProjectResource> BuildQuizesExtension(IDistributedApplicationBuilder builder)
+static IResourceBuilder<ProjectResource> BuildQuizesExtension(IDistributedApplicationBuilder builder, EndpointReference modelerUri)
 {
-	var quizesUi = builder.AddProject<Projects.ConcreteExtensions_Quizes_UI>("concreteextensions-quizes-ui");
+	var quizesUi = builder.AddProject<Projects.ConcreteExtensions_Quizes_UI>("concreteextensions-quizes-ui")
+		.WithEnvironment("CrossOrigin__AllowedUrls__0", modelerUri)
+		.WithEnvironment("Logging__LogLevel__Default", "Debug")
+	;
 	var quiz = builder.AddProject<Projects.Concrete_Extensions_Quizes_Api>("concrete-extensions-quizes-api")
 		.WithReference(quizesUi)
 		.WithEnvironment("Quiz__ActivityEditorUri", quizesUi.GetEndpoint("https"))
