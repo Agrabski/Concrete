@@ -32,7 +32,7 @@ static IResourceBuilder<ProjectResource> BuildQuizesExtension(IDistributedApplic
 	var quizesUi = builder.AddProject<Projects.ConcreteExtensions_Quizes_UI>("concreteextensions-quizes-ui");
 	var quiz = builder.AddProject<Projects.Concrete_Extensions_Quizes_Api>("concrete-extensions-quizes-api")
 		.WithReference(quizesUi)
-		.WithEnvironment("Quiz__ActivityEditorUri", "https://concreteextensions-quizes-ui")
+		.WithEnvironment("Quiz__ActivityEditorUri", quizesUi.GetEndpoint("https"))
 		;
 	return quiz;
 }
