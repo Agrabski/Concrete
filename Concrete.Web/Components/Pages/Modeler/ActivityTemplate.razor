@@ -1,23 +1,26 @@
-﻿@page "/modeler/activity-template/{Type}/{Id:guid}"
+﻿@page "/modeler/activity-template/{TypeName}/{Id:guid}"
+@rendermode InteractiveServer
 @using Concrete.Interface
 @using Concrete.Modeler.Client
 @inject IModelerClient client
 <h3>ActivityTemplate</h3>
 
-@if(_extensionUri is null)
+@if (_extensionUri is null)
 {
     <div>Looking for extension editor</div>
 }
 else
 {
-    <iframe src="@(_extensionUri + $"/{Id}")"/>
+    // todo: dns fucks up here. we get served an internal url
+    <iframe src="@(_extensionUri + $"/{Id}")" />
 }
 <iframe>
 </iframe>
 
 @code {
     [Parameter]
-    public ActivityTypeName Type {get;set;}
+    public required string TypeName { get; set; }
+    private ActivityTypeName Type => ActivityTypeName.Parse(TypeName, null);
     [Parameter]
     public Guid Id { get; set; }
     private Uri? _extensionUri;

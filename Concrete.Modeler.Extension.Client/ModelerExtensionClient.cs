@@ -59,6 +59,8 @@ internal class ModelerExtensionClient(
 		var response = await client.GetAsync(uri + $"api/activities/editor/{name}", token);
 		if (response.IsSuccessStatusCode)
 		{
+			if (logger.IsEnabled(LogLevel.Debug))
+				logger.LogDebug("Response was: {Content}", await response.Content.ReadAsStringAsync(token));
 			var stream = await response.Content.ReadAsStreamAsync(token);
 			return await JsonSerializer.DeserializeAsync<Uri>(stream, _options, cancellationToken: token)
 				?? throw new Exception();

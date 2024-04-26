@@ -2,6 +2,7 @@
 using Concrete.Interface;
 using Concrete.Interface.Templates;
 using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Diagnostics;
@@ -13,7 +14,8 @@ namespace Concrete.Modeler.Client;
 
 internal class ModelerClient(
 	HttpClient client,
-	IDistributedCache cache) : IModelerClient
+	IDistributedCache cache,
+	IMemoryCache memoryCache) : IModelerClient
 {
 	private readonly JsonSerializerOptions _options = new(JsonSerializerOptions.Default)
 	{
@@ -23,17 +25,41 @@ internal class ModelerClient(
 	private static readonly ActivitySource _activitySource = new("Concrete.Modeler.Extension.Client");
 	public async Task<ActivityMetadata[]> GetAllActivitiesAsync(CancellationToken token)
 	{
+		return await memoryCache.GetOrCreateAsync("all-activity-type-names", async entry =>
+		{
+			entry.SetPriority(CacheItemPriority.High);
+			entry.SetSlidingExpiration(TimeSpan.FromMinutes(30));
+			using var activity = _activitySource.StartActivity();
+
+			var response = await client.GetAsync("api/activities", token);
+			if (response.IsSuccessStatusCode)
+			{
+				var stream = response.Content.ReadAsStream(token);
+				var result = await JsonSerializer.DeserializeAsync<ActivityMetadata[]>(
+					stream,
+					_options,
+					cancellationToken: token
+				) ?? throw new InvalidOperationException("Content did not contain activity metadata");
+				return result;
+			}
+			throw new NonSuccessApiResponseException(response.StatusCode);
+		}) ?? throw new Exception();
+	}
+
+	public async Task<ActivityTemplate> CreateActivityTemplate(Guid classId, ActivityTypeName name, CancellationToken token)
+	{
 		using var activity = _activitySource.StartActivity();
 
-		var response = await client.GetAsync("api/activities", token);
+		var response = await client.PostAsJsonAsync($"api/activities/instance/{name}", classId, token);
 		if (response.IsSuccessStatusCode)
 		{
 			var stream = response.Content.ReadAsStream(token);
-			return await JsonSerializer.DeserializeAsync<ActivityMetadata[]>(
+			var result = await JsonSerializer.DeserializeAsync<ActivityTemplate>(
 				stream,
 				_options,
 				cancellationToken: token
 			) ?? throw new InvalidOperationException("Content did not contain activity metadata");
+			return result;
 		}
 		throw new NonSuccessApiResponseException(response.StatusCode);
 	}
@@ -66,7 +92,7 @@ internal class ModelerClient(
 	}
 
 	public Task UpdateCourseTemplateNameAsync(Guid id, string name, CancellationToken token) => throw new NotImplementedException();
-	
+
 	public async Task<ClassTemplateHeader> CreateCourseClassTemplateAsync(Guid courseTemplateId, string name, CancellationToken token)
 	{
 		using var activity = _activitySource.StartActivity();
@@ -82,14 +108,14 @@ internal class ModelerClient(
 	public async Task<ClassTemplateDetails> GetClassTemplateAsync(Guid id, CancellationToken token)
 	{
 		using var activity = _activitySource.StartActivity();
-		var response = await client.GetAsync( $"api/ClassTemplates/{id}", token);
+		var response = await client.GetAsync($"api/ClassTemplates/{id}", token);
 		return await ReadResponse<ClassTemplateDetails>(response, token);
 	}
 
 	public async Task<Uri> GetExtensionEditorForActivityTypeAsync(ActivityTypeName name, CancellationToken token)
 	{
 		var cacheKey = $"Modeler-extension-activity-editor-url-{name}";
-		if(await cache.GetStringAsync(cacheKey, token) is string url)
+		if (await cache.GetStringAsync(cacheKey, token) is string url)
 			return new Uri(url);
 
 		var response = await client.GetAsync($"api/activities/editor/{name}", token);

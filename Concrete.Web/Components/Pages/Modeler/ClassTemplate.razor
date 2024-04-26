@@ -1,7 +1,9 @@
 ﻿@page "/modeler/class-template/{Id:guid}"
+@using Concrete.Interface
 @using Concrete.Interface.Templates
 @using Concrete.Modeler.Client
 @inject IModelerClient client
+@inject ILogger<ClassTemplate> logger
 @rendermode InteractiveServer
 
 <h3>ClassTemplate</h3>
@@ -19,7 +21,6 @@
                 <td>Name</td>
                 <td>Type</td>
                 <td>
-                    <button>Edit</button>
                 </td>
             </tr>
         </thead>
@@ -30,12 +31,21 @@
                     <td>@activity.Name</td>
                     <td>@activity.TypeName</td>
                     <td>
-                        <a href="/modeler/course-template/@activity.Id" class="btn btn-outline-dark">Edit</a>
+                        <a href="/modeler/activity-template/@activity.TypeName/@activity.Id" class="btn btn-outline-dark">Edit</a>
                     </td>
                 </tr>
             }
         </tbody>
-
+        @if (_activityTypeNames is ActivityMetadata[] types)
+        {
+            <InputSelect TValue="ActivityTypeName?" @bind-Value="_selectedType">
+                @foreach (var activityType in types)
+                {
+                    <option value="@activityType.Name">@activityType.Name</option>
+                }
+            </InputSelect>
+            <button @onclick="AddActivity">Add activity</button>
+        }
     </table>
 }
 
@@ -43,10 +53,25 @@
     [Parameter]
     public Guid Id { get; set; }
     private ClassTemplateDetails? _details;
+    private ActivityMetadata[]? _activityTypeNames;
+    private ActivityTypeName? _selectedType;
 
     protected override async Task OnInitializedAsync()
     {
-        _details = await client.GetClassTemplateAsync(Id, CancellationToken.None);
+        var details = client.GetClassTemplateAsync(Id, CancellationToken.None);
+        var types = client.GetAllActivitiesAsync(CancellationToken.None);
+        _details = await details;
+        _activityTypeNames = await types;
+        _selectedType = _activityTypeNames.FirstOrDefault()?.Name;
     }
 
+    private async Task AddActivity()
+    {
+        if (_selectedType is ActivityTypeName typeName)
+        {
+            var activity = await client.CreateActivityTemplate(Id, typeName, CancellationToken.None);
+        }
+        else
+            logger.LogDebug("Adding activity was ignored. Activity type name was {TypeName}", _selectedType);
+    }
 }

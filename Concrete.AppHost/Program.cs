@@ -22,6 +22,7 @@ builder.AddProject<Projects.Concrete_Web>("webfrontend")
 	.WithReference(cache)
 	.WithReference(modeler)
 	.WithEnvironment("ModelerClient__ModelerUri", "https://concrete-modeler")
+	.WithEnvironment("Logging__LogLevel__Default", "Debug")
 ;
 builder.Build().Run();
 

@@ -1,22 +1,23 @@
 ﻿using Concrete.Interface;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 
 namespace Concrete.Extensions.Quizes.Api.Controllers;
 [Route("api/activities")]
 [ApiController]
-public class ExtensionInterfaceController : ControllerBase
+public class ExtensionInterfaceController(IOptions<QuizesConfiguration> options) : ControllerBase
 {
 	[HttpGet]
-	public Task<ActivityMetadata[]> GetActivityMetadata(CancellationToken cancellationToken)
+	public ActivityMetadata[] GetActivityMetadata()
 	{
-		return Task.FromResult(new ActivityMetadata[]
-		{
-			new(new(MetadataConsts.ExtensionName, "Quiz"))
-		});
+		return
+		[
+			new(new(MetadataConsts.ExtensionName(), "Quiz"))
+		];
 	}
 
 	[HttpGet("name")]
-	public ExtensionName GetName() => MetadataConsts.ExtensionName;
+	public ExtensionName GetName() => MetadataConsts.ExtensionName();
 
 	[HttpGet("instance/{name}")]
 	public ActionResult<QuizTemplate> CreateQuizTemplate(ActivityTypeName name)
@@ -31,6 +32,6 @@ public class ExtensionInterfaceController : ControllerBase
 	{
 		if (name != QuizTemplate.ActivityName)
 			return NotFound("Unknown activity type");
-		return Ok();
+		return Ok(options.Value.ActivityEditorUri);
 	}
 }

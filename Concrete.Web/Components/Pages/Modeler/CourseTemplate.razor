@@ -16,11 +16,14 @@ else
     <table class="table">
         <thead>
             <tr>
+                <td></td>
                 <td>Classes</td>
+                <td></td>
             </tr>
             <tr>
                 <td>Name</td>
                 <td>Number of activities</td>
+                <td></td>
             </tr>
         </thead>
         <tbody>
@@ -29,6 +32,9 @@ else
                 <tr>
                     <td>@courseClass.Name</td>
                     <td>@courseClass.ActivityCount</td>
+                    <td>
+                        <a class="btn btn-dark" href="/modeler/class-template/@courseClass.Id">Edit</a>
+                    </td>
                 </tr>
             }
         </tbody>

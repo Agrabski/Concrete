@@ -6,9 +6,6 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Content Remove="Components\Pages\Modeler\ActivityTemplate.razor" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Concrete.Modeler.Client\Concrete.Modeler.Client.csproj" />
@@ -16,15 +13,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Aspire.StackExchange.Redis.DistributedCaching" Version="8.0.0-preview.6.24214.1" />
     <PackageReference Include="Aspire.StackExchange.Redis.OutputCaching" Version="9.0.0-preview.3.24210.17" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <UpToDateCheckInput Remove="Components\Pages\Modeler\ActivityTemplate.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="Components\Pages\Modeler\ActivityTemplate.razor" />
   </ItemGroup>
 
   <ItemGroup>

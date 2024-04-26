@@ -15,4 +15,5 @@ public interface IModelerClient
 	Task UpdateCourseTemplateNameAsync(Guid id, string name, CancellationToken token);
 	Task<ClassTemplateHeader> CreateCourseClassTemplateAsync(Guid courseTemplateId, string name, CancellationToken token);
 	Task<Uri> GetExtensionEditorForActivityTypeAsync(ActivityTypeName name, CancellationToken token);
+	Task<ActivityTemplate> CreateActivityTemplate(Guid classId, ActivityTypeName name, CancellationToken token);
 }
