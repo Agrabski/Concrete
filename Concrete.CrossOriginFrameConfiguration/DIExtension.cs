@@ -26,8 +26,10 @@ public static class DIExtension
 				var looger = context.RequestServices.GetRequiredService<ILogger<CrossOriginConfig>>();
 				var csp = context.Response.Headers.ContentSecurityPolicy;
 				var value = $"frame-ancestors {string.Join(' ', options.Value.AllowedUrls)}";
-				looger.LogDebug("Setting csp {CSP}", value);
-				context.Response.Headers.ContentSecurityPolicy = new StringValues(value);
+				looger.LogDebug("Setting frame ancestor csp {CSP}", value);
+				var additionalCspDirectives = options.Value.AdditionalCspDirectives;
+				looger.LogDebug("Setting additional csp directives: {Csp Directives Count}", additionalCspDirectives.Count);
+				context.Response.Headers.ContentSecurityPolicy = new StringValues([value, .. additionalCspDirectives]);
 				return Task.CompletedTask;
 			});
 			return next();
