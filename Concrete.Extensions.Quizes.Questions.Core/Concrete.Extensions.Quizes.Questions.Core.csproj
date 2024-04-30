@@ -16,4 +16,9 @@
     <ContainerPort Include="443" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Concrete.Extensions.Quizes.Questions.Client\Concrete.Extensions.Quizes.Questions.Client.csproj" />
+    <ProjectReference Include="..\Concrete.Extensions.Quizes\Concrete.Extensions.Quizes.csproj" />
+  </ItemGroup>
+
 </Project>

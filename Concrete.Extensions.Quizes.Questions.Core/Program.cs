@@ -1,13 +1,20 @@
-using Concrete.Extension.Quizes.Questions.Core.Data;
-using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
+
+using Concrete.Extensions.Quizes.Questions;
+using Concrete.Extensions.Quizes.Questions.Client;
+using Concrete.Extensions.Quizes.Questions.Core.Data;
+using Concrete.Extensions.Quizes.Questions.Template;
+using Concrete.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton<WeatherForecastService>();
+builder.Services
+	.AddQuestionsClient(builder.Configuration.GetSection("QuestionsClient").Bind)
+	.AddConcreteSerialization<ICoreQuestion, QuestionTypeName>()
+	.AddSerializableType<ICoreQuestion, QuestionTypeName, MultipleChoiceQuestion>(MultipleChoiceQuestion.TypeName)
+	;
 
 var app = builder.Build();
 

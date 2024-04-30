@@ -28,11 +28,13 @@ modelerUi
 	.WithEnvironment("ModelerClient__ModelerUri", "https://concrete-modeler")
 	.WithEnvironment("Logging__LogLevel__Default", "Debug")
 ;
+builder.AddProject<Projects.Concrete_Core_Data_Api>("concrete-core-data-api");
 builder.Build().Run();
 
 
 static IResourceBuilder<ProjectResource> BuildQuizesExtension(IDistributedApplicationBuilder builder, EndpointReference modelerUri)
 {
+	var _ = builder.AddProject<Projects.Concrete_Extensions_Quizes_Questions_Core>("concreteextensions-quizes-questions");
 	var quizesUi = builder.AddProject<Projects.ConcreteExtensions_Quizes_UI>("concreteextensions-quizes-ui")
 		.WithEnvironment("CrossOrigin__AllowedUrls__0", modelerUri)
 		.WithEnvironment("Logging__LogLevel__Default", "Debug")

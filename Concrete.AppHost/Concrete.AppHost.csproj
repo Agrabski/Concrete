@@ -9,7 +9,9 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\Concrete.Core.Data.Api\Concrete.Core.Data.Api.csproj" />
 		<ProjectReference Include="..\Concrete.Extensions.Quizes.Api\Concrete.Extensions.Quizes.Api.csproj" />
+		<ProjectReference Include="..\Concrete.Extensions.Quizes.Questions.Core\Concrete.Extensions.Quizes.Questions.Core.csproj" />
 		<ProjectReference Include="..\Concrete.Interface\Concrete.Interface.csproj" IsAspireProjectResource="false">
 			<ReferenceOutputAssembly>true</ReferenceOutputAssembly>
 			<ExcludeAssets></ExcludeAssets>

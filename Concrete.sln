@@ -45,13 +45,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConcreteExtensions.Quizes.U
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConcreteExtensions.Quizes.UI.Client", "ConcreteExtensions.Quizes.UI\ConcreteExtensions.Quizes.UI.Client\ConcreteExtensions.Quizes.UI.Client.csproj", "{35358582-2F29-4C24-8C3F-6A1FFA2AAC68}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Concrete.CrossOriginFrameConfiguration", "Concrete.CrossOriginFrameConfiguration\Concrete.CrossOriginFrameConfiguration.csproj", "{45AE284C-24DA-4796-ACE0-FCE9B02CC70A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Concrete.CrossOriginFrameConfiguration", "Concrete.CrossOriginFrameConfiguration\Concrete.CrossOriginFrameConfiguration.csproj", "{45AE284C-24DA-4796-ACE0-FCE9B02CC70A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Questions", "Questions", "{A97C7E9F-9BC4-4957-8841-8087AFBE406E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Concrete.Extensions.Quizes.Questions.Client", "Concrete.Extensions.Quizes.Questions.Client\Concrete.Extensions.Quizes.Questions.Client.csproj", "{00F3E530-73D8-4E99-9771-F3AE66300123}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Concrete.Extensions.Quizes.Questions.Core", "Concrete.Extensions.Quizes.Questions.Core\Concrete.Extensions.Quizes.Questions.Core.csproj", "{DA9F0995-6B63-426A-A7FB-8A75BAF786BC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Concrete.Core.Data.Api", "Concrete.Core.Data.Api\Concrete.Core.Data.Api.csproj", "{095F9901-6020-466E-98C0-75C1BD0307FB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Concrete.Core.Data.Api.Client", "Concrete.Core.Data.Api.Client\Concrete.Core.Data.Api.Client.csproj", "{A317AD9D-44E4-433F-B1C5-CC64D6BCD54B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Concrete.Serialization", "Concrete.Serialization\Concrete.Serialization.csproj", "{0683A4E3-6A29-4D26-9948-26CF9F7B212F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -131,6 +137,18 @@ Global
 		{DA9F0995-6B63-426A-A7FB-8A75BAF786BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA9F0995-6B63-426A-A7FB-8A75BAF786BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA9F0995-6B63-426A-A7FB-8A75BAF786BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{095F9901-6020-466E-98C0-75C1BD0307FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{095F9901-6020-466E-98C0-75C1BD0307FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{095F9901-6020-466E-98C0-75C1BD0307FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{095F9901-6020-466E-98C0-75C1BD0307FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A317AD9D-44E4-433F-B1C5-CC64D6BCD54B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A317AD9D-44E4-433F-B1C5-CC64D6BCD54B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A317AD9D-44E4-433F-B1C5-CC64D6BCD54B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A317AD9D-44E4-433F-B1C5-CC64D6BCD54B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0683A4E3-6A29-4D26-9948-26CF9F7B212F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0683A4E3-6A29-4D26-9948-26CF9F7B212F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0683A4E3-6A29-4D26-9948-26CF9F7B212F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0683A4E3-6A29-4D26-9948-26CF9F7B212F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -152,6 +170,8 @@ Global
 		{A97C7E9F-9BC4-4957-8841-8087AFBE406E} = {DFA03DC8-CF49-4144-A887-108D664E16C2}
 		{00F3E530-73D8-4E99-9771-F3AE66300123} = {A97C7E9F-9BC4-4957-8841-8087AFBE406E}
 		{DA9F0995-6B63-426A-A7FB-8A75BAF786BC} = {A97C7E9F-9BC4-4957-8841-8087AFBE406E}
+		{095F9901-6020-466E-98C0-75C1BD0307FB} = {40EFC39A-B9D7-4E53-9CA3-9D7D7FF50927}
+		{A317AD9D-44E4-433F-B1C5-CC64D6BCD54B} = {40EFC39A-B9D7-4E53-9CA3-9D7D7FF50927}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {790291DF-70FF-4A26-B4FC-EB774D06757B}
