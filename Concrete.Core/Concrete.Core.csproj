@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Concrete.Interface\Concrete.Interface.csproj" />
+    <ProjectReference Include="..\Concrete.Serialization\Concrete.Serialization.csproj" />
   </ItemGroup>
 
 </Project>

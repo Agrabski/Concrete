@@ -12,7 +12,7 @@
 else
 {
     // todo: dns fucks up here. we get served an internal url
-    <iframe style="height:100%;width:100%" src="@(new Uri(_extensionUri, $"/{Id}"))" />
+    <iframe style="height:100%;width:100%" src="@(new Uri(_extensionUri, $"/{Type.Name}/{Id}"))" />
 }
 <iframe>
 </iframe>

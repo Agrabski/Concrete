@@ -12,4 +12,7 @@
 		<PackageReference Include="Microsoft.Extensions.Options" Version="9.0.0-preview.3.24172.9" />
 		<PackageReference Include="Microsoft.Extensions.ServiceDiscovery" Version="9.0.0-preview.3.24210.17" />
 	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\Concrete.Core\Concrete.Core.csproj" />
+	</ItemGroup>
 </Project>

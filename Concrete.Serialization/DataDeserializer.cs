@@ -6,13 +6,13 @@ internal class DataDeserializer<TDataInterface, TDiscriminator, TConcrete> : IDa
 {
 	public required TDiscriminator SupportedDiscriminator { get; init; }
 
-	public TDataInterface? Deserialize(JsonElement data)
+	public TDataInterface? Deserialize(JsonDocument data)
 	{
 		return JsonSerializer.Deserialize<TConcrete>(data);
 	}
 
-	public JsonElement Serialize(TDataInterface data)
+	public JsonDocument Serialize(TDataInterface data)
 	{
-		return JsonSerializer.SerializeToElement(data);
+		return JsonSerializer.SerializeToDocument(data);
 	}
 }

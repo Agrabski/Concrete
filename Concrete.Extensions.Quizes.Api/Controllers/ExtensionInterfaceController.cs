@@ -1,6 +1,8 @@
-﻿using Concrete.Interface;
+﻿using Concrete.Core.Template;
+using Concrete.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using System.Text.Json;
 
 namespace Concrete.Extensions.Quizes.Api.Controllers;
 [Route("api/activities")]
@@ -20,17 +22,24 @@ public class ExtensionInterfaceController(IOptions<QuizesConfiguration> options)
 	public ExtensionName GetName() => MetadataConsts.ExtensionName();
 
 	[HttpGet("instance/{name}")]
-	public ActionResult<QuizTemplate> CreateQuizTemplate(ActivityTypeName name)
+	public ActionResult<ActivityTemplate> CreateQuizTemplate(ActivityTypeName name)
 	{
-		if (name != QuizTemplate.ActivityName)
+		if (name != MetadataConsts.QuizActivityName())
 			return NotFound($"Activity {name} is not supported by this extension");
-		return Ok(new QuizTemplate());
+		return Ok(new ActivityTemplate()
+		{
+			Discriminator = MetadataConsts.QuizActivityName(),
+			Name = "New quiz",
+			Id = Guid.NewGuid(),
+			DisplayName = new(),
+			Data = JsonDocument.Parse("{}")
+		});
 	}
 
 	[HttpGet("editor/{name}")]
 	public ActionResult<Uri> GetExtensionEditor(ActivityTypeName name)
 	{
-		if (name != QuizTemplate.ActivityName)
+		if (name != MetadataConsts.QuizActivityName())
 			return NotFound("Unknown activity type");
 		return Ok(options.Value.ActivityEditorUri);
 	}

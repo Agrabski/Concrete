@@ -17,7 +17,7 @@ public class ClassTemplatesController(ConcreteContext dbContext) : ControllerBas
 		return Ok(new ClassTemplateDetails(
 			result.Id,
 			result.Name,
-			result.ActivityTemplates.Select(a=>new ActivityTemplateHeader(a.Id, a.TypeName, a.Name)).ToArray()
+			result.ActivityTemplates.Select(a=>new ActivityTemplateHeader(a.Id, a.Discriminator, a.Name)).ToArray()
 		));
 	}
 }

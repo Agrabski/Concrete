@@ -1,3 +1,4 @@
+using Concrete.Core.Data.Api.Client;
 using Concrete.CrossOriginFrameConfiguration;
 using ConcreteExtensions.Quizes.UI.Client.Pages;
 using ConcreteExtensions.Quizes.UI.Components;
@@ -6,6 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services
+	.AddDataApiClient(builder.Configuration.GetSection("Data").Bind)
 	.AddCrossOriginFrameConfiguration(builder.Configuration.GetSection("CrossOrigin").Bind)
 	.AddRazorComponents()
 	.AddInteractiveServerComponents()

@@ -5,5 +5,5 @@ namespace Concrete.Serialization;
 public interface IPolymorphicDataHolder<TDiscriminator>
 {
 	public TDiscriminator Discriminator { get; }
-	public JsonElement Data { get; set; }
+	public JsonDocument Data { get; set; }
 }
