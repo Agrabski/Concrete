@@ -1,14 +1,26 @@
 ﻿@page "/Quiz/{ActivityId:guid}"
 @using Concrete.Core.Data.Api.Client
+@using Concrete.Core.Template
 @inject IDataClient client
 
-<PageTitle>Home</PageTitle>
+<PageTitle>Quiz editor</PageTitle>
 
-<h1>Hello, world!</h1>
+@if(_activityTemplate is null)
+{
+    <span>loading</span>
+}
+else
+{
+    <span>@_activityTemplate.Name</span>
+}
 
-Welcome to your new app.
-
-@code{
+@code {
     [Parameter]
-    public Guid ActivityId{ get; set; }
+    public Guid ActivityId { get; set; }
+    private ActivityTemplate? _activityTemplate;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _activityTemplate = await client.GetActivityTemplate(ActivityId, CancellationToken.None);
+    }
 }

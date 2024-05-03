@@ -14,6 +14,7 @@
 
 	<ItemGroup>
 		<ProjectReference Include="..\Concrete.Core.Data\Concrete.Core.Data.csproj" />
+		<ProjectReference Include="..\Concrete.ServiceDefaults\Concrete.ServiceDefaults.csproj" />
 	</ItemGroup>
 
 </Project>

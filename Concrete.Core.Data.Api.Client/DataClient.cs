@@ -8,7 +8,7 @@ internal sealed class DataClient(HttpClient client) : IDataClient
 {
 	public async Task<ActivityTemplate> GetActivityTemplate(Guid actityId, CancellationToken token)
 	{
-		var result = await client.GetFromJsonAsync<ActivityTemplate>(new Uri($"api/activitytemplate/{actityId}", UriKind.Relative), token);
+		var result = await client.GetFromJsonAsync<ActivityTemplate>($"api/ActivityTemplates/{actityId}", token);
 		return result ?? throw new Exception("No data in response");
 	}
 

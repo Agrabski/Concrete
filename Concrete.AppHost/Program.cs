@@ -10,7 +10,9 @@ var db = builder
 	.AddDatabase("Concrete")
 	;
 
-var data = builder.AddProject<Projects.Concrete_Core_Data_Api>("data");
+var data = builder.AddProject<Projects.Concrete_Core_Data_Api>("data")
+	.WithReference(db)
+	;
 
 var modelerUi = builder.AddProject<Projects.Concrete_Web>("webfrontend");
 
@@ -35,13 +37,16 @@ modelerUi
 builder.Build().Run();
 
 
-static IResourceBuilder<ProjectResource> BuildQuizesExtension(IDistributedApplicationBuilder builder, EndpointReference modelerUri, EndpointReference dataUri)
+IResourceBuilder<ProjectResource> BuildQuizesExtension(IDistributedApplicationBuilder builder, EndpointReference modelerUri, EndpointReference dataUri)
 {
-	var _ = builder.AddProject<Projects.Concrete_Extensions_Quizes_Questions_Core>("concreteextensions-quizes-questions");
+	var _ = builder.AddProject<Projects.Concrete_Extensions_Quizes_Questions_Core>("concreteextensions-quizes-questions")
+		.WithReference(dataUri);
+
 	var quizesUi = builder.AddProject<Projects.ConcreteExtensions_Quizes_UI>("concreteextensions-quizes-ui")
+		.WithReference(data)
 		.WithEnvironment("CrossOrigin__AllowedUrls__0", modelerUri)
 		.WithEnvironment("Logging__LogLevel__Default", "Debug")
-		.WithEnvironment("Data__DataApiUri", dataUri)
+		.WithEnvironment("Data__DataApiUri", "https://data")
 	;
 	var quiz = builder.AddProject<Projects.Concrete_Extensions_Quizes_Api>("concrete-extensions-quizes-api")
 		.WithReference(quizesUi)
@@ -49,3 +54,4 @@ static IResourceBuilder<ProjectResource> BuildQuizesExtension(IDistributedApplic
 		;
 	return quiz;
 }
+

@@ -2,11 +2,15 @@ using Concrete.Core.Data.Api.Client;
 using Concrete.CrossOriginFrameConfiguration;
 using ConcreteExtensions.Quizes.UI.Client.Pages;
 using ConcreteExtensions.Quizes.UI.Components;
+using Concrete.Extensions.Quizes.Questions.Client;
+using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.AddServiceDefaults();
 builder.Services
+	.AddQuestionsClient(builder.Configuration.GetSection("QuestionsClient").Bind)
 	.AddDataApiClient(builder.Configuration.GetSection("Data").Bind)
 	.AddCrossOriginFrameConfiguration(builder.Configuration.GetSection("CrossOrigin").Bind)
 	.AddRazorComponents()

@@ -4,14 +4,15 @@ using Concrete.Extensions.Quizes.Questions.Client;
 using Concrete.Extensions.Quizes.Questions.Core.Data;
 using Concrete.Extensions.Quizes.Questions.Template;
 using Concrete.Serialization;
+using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.AddServiceDefaults();
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services
-	.AddQuestionsClient(builder.Configuration.GetSection("QuestionsClient").Bind)
 	.AddConcreteSerialization<ICoreQuestion, QuestionTypeName>()
 	.AddSerializableType<ICoreQuestion, QuestionTypeName, MultipleChoiceQuestion>(MultipleChoiceQuestion.TypeName)
 	;

@@ -8,6 +8,8 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Concrete.Core.Data.Api.Client\Concrete.Core.Data.Api.Client.csproj" />
     <ProjectReference Include="..\..\Concrete.CrossOriginFrameConfiguration\Concrete.CrossOriginFrameConfiguration.csproj" />
+    <ProjectReference Include="..\..\Concrete.Extensions.Quizes.Questions.Client\Concrete.Extensions.Quizes.Questions.Client.csproj" />
+    <ProjectReference Include="..\..\Concrete.ServiceDefaults\Concrete.ServiceDefaults.csproj" />
     <ProjectReference Include="..\ConcreteExtensions.Quizes.UI.Client\ConcreteExtensions.Quizes.UI.Client.csproj" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="9.0.0-preview.3.24172.13" />
   </ItemGroup>

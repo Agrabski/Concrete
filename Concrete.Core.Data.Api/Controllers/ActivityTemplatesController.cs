@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Concrete.Core.Template;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json;
@@ -23,5 +24,13 @@ public class ActivityTemplatesController(ConcreteContext context) : ControllerBa
 			return Ok();
 		else
 			return NotFound();
+	}
+
+	[HttpGet("{activityId}")]
+	public async Task<ActionResult<ActivityTemplate>> GetActivityTemplate(Guid activityId, CancellationToken token)
+	{
+		if (await context.ActivityTemplates.FirstOrDefaultAsync(a => a.Id == activityId, token) is ActivityTemplate template)
+			return Ok(template);
+		return NotFound();
 	}
 }

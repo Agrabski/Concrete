@@ -10,15 +10,18 @@ public static class DIExtension
 		return services
 			.AddOptions<DataClientConfiguration>()
 			.Configure(configure)
+			.Validate(o => o.DataApiUri is not null and { Host: not null })
+			.ValidateOnStart()
 			.Services
+			.AddTransient<IDataClient, DataClient>()
 			.AddHttpClient<IDataClient, DataClient>((sp, c) =>
 			{
 				var o = sp.GetRequiredService<IOptions<DataClientConfiguration>>();
 				c.BaseAddress = o.Value.DataApiUri;
 			})
+			.AddDefaultLogger()
 			.UseServiceDiscovery()
 			.Services
-			.AddTransient<IDataClient, DataClient>()
 			;
 	}
 }

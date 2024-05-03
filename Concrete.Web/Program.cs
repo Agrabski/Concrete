@@ -5,7 +5,14 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add service defaults & Aspire components.
 builder.AddServiceDefaults();
-builder.AddRedisDistributedCache("cache");
+builder.AddRedisDistributedCache(
+	"cache",
+	s=>
+	{
+		s.Tracing = true;
+		s.HealthChecks = true;
+	}
+);
 builder.AddRedisOutputCache("cache");
 builder.Services.AddMemoryCache();
 
