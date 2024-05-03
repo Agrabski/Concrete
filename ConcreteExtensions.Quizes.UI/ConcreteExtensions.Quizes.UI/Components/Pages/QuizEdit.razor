@@ -1,0 +1,31 @@
+﻿@page "/Quiz/{ActivityId:guid}"
+@using Concrete.Core.Data.Api.Client
+@using Concrete.Core.Template
+@using Concrete.Extensions.Quizes
+@using Concrete.Serialization
+@using Microsoft.AspNetCore.Authentication
+@using System.Text.Json
+@inject IDataClient client
+
+<PageTitle>Quiz editor</PageTitle>
+
+@if (_templateData is null)
+{
+    <span>loading</span>
+}
+else
+{
+}
+
+@code {
+    [Parameter]
+    public Guid ActivityId { get; set; }
+    private QuizTemplateData? _templateData;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var template = await client.GetActivityTemplate(ActivityId, CancellationToken.None);
+        _templateData = JsonSerializer.Deserialize<QuizTemplateData>(template.Data) 
+            ?? throw new Exception();
+    }
+}

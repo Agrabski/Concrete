@@ -1,9 +1,22 @@
 ﻿@page "/modeler/activity-template/{TypeName}/{Id:guid}"
 @rendermode InteractiveServer
+@using Concrete.Core.Data.Api.Client
 @using Concrete.Interface
 @using Concrete.Modeler.Client
+@using Template = Concrete.Core.Template.ActivityTemplate;
 @inject IModelerClient client
+@inject IDataClient dataClient
+
 <h3>ActivityTemplate</h3>
+
+@if(_template is not null)
+{
+    <form>
+        <InputText @Value="@_template.Name" />
+        <!--todo: localised name-->
+    </form>
+
+}
 
 @if (_extensionUri is null)
 {
@@ -22,12 +35,15 @@ else
     [Parameter]
     public Guid Id { get; set; }
     private Uri? _extensionUri;
+    private Template? _template;
 
     protected override async Task OnInitializedAsync()
     {
+        var templateTask = dataClient.GetActivityTemplate(Id, CancellationToken.None);
         _extensionUri = await client.GetExtensionEditorForActivityTypeAsync(
             Type,
             CancellationToken.None
         );
+        _template = await templateTask;
     }
 }
