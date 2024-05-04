@@ -2,6 +2,9 @@
 @using Concrete.Core.Data.Api.Client
 @using Concrete.Core.Template
 @using Concrete.Extensions.Quizes
+@using Concrete.Extensions.Quizes.Api
+@using Concrete.Extensions.Quizes.Questions
+@using Concrete.Interface
 @using Concrete.Serialization
 @using Microsoft.AspNetCore.Authentication
 @using System.Text.Json
@@ -15,17 +18,78 @@
 }
 else
 {
+    <table class="table table-bordered table-responsive">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Configuration</th>
+                <th>Score</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var question in _templateData.Questions)
+            {
+                <tr>
+                    @if (question is AnyQuestionWithTag tag)
+                    {
+                        <td>Any question in category @tag.Tag.Value</td>
+                        <td>
+                            <InputSelect TValue="@QuestionTag" @bind-Value="@tag.Tag">
+                                @foreach (var tag in _tags)
+                                {
+                                    <option value="@tag">@tag.Value</option>
+                                }
+                            </InputSelect>
+                        </td>
+                    }
+                    <td>@question.MaxScore</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <InputSelect TValue="@QuestionReferenceType" @bind-Value="_selectedReferenceType">
+        <option value="@(QuestionReferenceType.AnyQuestionWithTag)">Any question with tag</option>
+        <option value="@(QuestionReferenceType.SpecificQuestion)">Specific question</option>
+    </InputSelect>
+    <button @onclick="AddQuestionReference">Add</button>
+
 }
 
 @code {
     [Parameter]
     public Guid ActivityId { get; set; }
+    private QuestionReferenceType _selectedReferenceType;
     private QuizTemplateData? _templateData;
+    private QuestionTag[] _tags = [];
 
     protected override async Task OnInitializedAsync()
     {
-        var template = await client.GetActivityTemplate(ActivityId, CancellationToken.None);
-        _templateData = JsonSerializer.Deserialize<QuizTemplateData>(template.Data) 
+        var template = client.GetActivityTemplate(ActivityId, CancellationToken.None);
+        _templateData = JsonSerializer.Deserialize<QuizTemplateData>((await template).Data)
             ?? throw new Exception();
+        var tags = client.GetExtensionData(MetadataConsts.ExtensionName(), "Tags", CancellationToken.None);
+        _tags = JsonSerializer.Deserialize<QuestionTag[]>(await tags)
+            ?? throw new Exception();
+
+    }
+
+    private enum QuestionReferenceType
+    {
+        AnyQuestionWithTag,
+        SpecificQuestion
+    }
+
+    private void AddQuestionReference(MouseEventArgs e)
+    {
+        _templateData?.Questions.Add(_selectedReferenceType switch
+        {
+            QuestionReferenceType.AnyQuestionWithTag => new AnyQuestionWithTag()
+                {
+                    Tag = new(string.Empty),
+                },
+            QuestionReferenceType.SpecificQuestion => new SpecificQuestion(),
+            _ => throw new NotImplementedException()
+        });
     }
 }
