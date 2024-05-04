@@ -12,7 +12,7 @@
 @if(_template is not null)
 {
     <form>
-        <InputText @Value="@_template.Name" />
+        <InputText @bind-Value="@_template.Name"/>
         <!--todo: localised name-->
     </form>
 

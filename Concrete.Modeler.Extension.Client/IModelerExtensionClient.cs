@@ -8,5 +8,6 @@ public interface IModelerExtensionClient
 	Task<ActivityTemplate> CreateTemplateAsync(ActivityTypeName name, CancellationToken token);
 	Task<ActivityMetadata[]> GetAllActivitiesAsync(CancellationToken token);
 	ValueTask<Uri> GetExtensionActivityEditorAsync(ActivityTypeName name, CancellationToken token);
+	Task<MenuMetadata[]> GetMenuMetadataAsync(CancellationToken token);
 }
 

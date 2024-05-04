@@ -3,6 +3,7 @@ using Concrete.Interface;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Diagnostics;
+using System.Net.Http.Json;
 using System.Text.Json;
 
 namespace Concrete.Modeler.Extension.Client;
@@ -118,6 +119,29 @@ internal class ModelerExtensionClient(
 			) ?? throw new InvalidOperationException("Content did not contain activity metadata");
 		}
 		throw new NonSuccessApiResponseException(response.StatusCode);
+	}
+
+	private async Task<MenuMetadata[]> GetMenuMetadataFromExtensionAsync(Uri extensionUri, CancellationToken token)
+	{
+		using var activity = _activitySource.StartActivity();
+		activity?.SetTag("url", extensionUri);
+		var response = await client.GetFromJsonAsync<MenuMetadata[]>(extensionUri + "api/menus", token);
+		return response ?? throw new Exception("No content in response");
+	}
+
+	public async Task<MenuMetadata[]> GetMenuMetadataAsync(CancellationToken token)
+	{
+		using var _ = _activitySource.StartActivity();
+		var config = options.Value;
+		logger.LogDebug("Calling {Extension Endpoint Count} extension endpoints for menu metadata", config.ExtensionAddresses.Count);
+		return (await Task.WhenAll(
+			config
+				.ExtensionAddresses
+				.Select(uri => GetMenuMetadataFromExtensionAsync(uri, token)))
+		)
+		.SelectMany(x => x)
+		.ToArray();
+
 	}
 }
 

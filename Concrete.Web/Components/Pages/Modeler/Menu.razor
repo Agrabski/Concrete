@@ -1,0 +1,19 @@
+﻿@page "/menu/{MenuName}"
+
+<PageTitle>@MenuName</PageTitle>
+
+@if(MenuUri is not null)
+{
+    <iframe src="@MenuUri" style="width:100%;height=80vh"/>
+}
+else
+{
+    <span>No menu uri supplied in query. Reading it at hoc is not implemented</span>
+}
+
+@code {
+    [Parameter]
+    public required string MenuName { get; set; }
+    [SupplyParameterFromQuery(Name = "uri")]
+    public Uri? MenuUri { get; set; }
+}

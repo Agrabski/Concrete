@@ -14,7 +14,8 @@ var data = builder.AddProject<Projects.Concrete_Core_Data_Api>("data")
 	.WithReference(db)
 	;
 
-var modelerUi = builder.AddProject<Projects.Concrete_Web>("webfrontend");
+var modelerUi = builder.AddProject<Projects.Concrete_Web>("webfrontend")
+	;
 
 
 var modeler = builder
@@ -30,7 +31,9 @@ modeler
 modelerUi
 	.WithReference(cache)
 	.WithReference(modeler)
+	.WithReference(data)
 	.WithEnvironment("ModelerClient__ModelerUri", "https://concrete-modeler")
+	.WithEnvironment("DataClient__DataApiUri", "https://data")
 	.WithEnvironment("Logging__LogLevel__Default", "Debug")
 ;
 

@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.Net;
 using System.Net.Http.Json;
 using System.Text.Json;
+using System.Xml.Linq;
 
 namespace Concrete.Modeler.Client;
 
@@ -141,6 +142,19 @@ internal class ModelerClient(
 		}
 		activity?.AddTag("Result", response.StatusCode.ToString());
 		throw new NonSuccessApiResponseException(response.StatusCode);
+	}
+
+	public async Task<MenuMetadata[]> GetMenuMetadataAsync(CancellationToken token)
+	{
+		return await memoryCache.GetOrCreateAsync("all-activity-menu-metadata", async entry =>
+		{
+			entry.SetPriority(CacheItemPriority.High);
+			entry.SetSlidingExpiration(TimeSpan.FromMinutes(30));
+			using var activity = _activitySource.StartActivity();
+
+			return await client.GetFromJsonAsync<MenuMetadata[]>("api/menus", token);
+		}) ?? throw new Exception();
+
 	}
 
 }

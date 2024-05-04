@@ -1,3 +1,4 @@
+using Concrete.Core.Data.Api.Client;
 using Concrete.Modeler.Client;
 using Concrete.Web.Components;
 
@@ -22,6 +23,7 @@ builder.Services.AddRazorComponents()
 
 builder
 	.Services
+	.AddDataApiClient(builder.Configuration.GetSection("DataClient").Bind)
 	.AddModelerClient(builder.Configuration.GetSection("ModelerClient").Bind);
 
 var app = builder.Build();

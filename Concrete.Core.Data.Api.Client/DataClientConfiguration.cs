@@ -1,4 +1,6 @@
-﻿namespace Concrete.Core.Data.Api.Client;
+﻿using Concrete.Interface;
+
+namespace Concrete.Core.Data.Api.Client;
 
 public class DataClientConfiguration
 {

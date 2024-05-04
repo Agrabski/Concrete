@@ -1,4 +1,7 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
+﻿@using Concrete.Interface
+@using Concrete.Modeler.Client
+@inject IModelerClient client
+<div class="top-row ps-3 navbar navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="">Concrete</a>
     </div>
@@ -19,6 +22,23 @@
                 <span class="bi bi-plus-square-fill" aria-hidden="true"></span> Modeler
             </NavLink>
         </div>
-
+        <!--todo: group menu items by extension name + add api for nesting-->
+        @foreach (var menuItem in _menus)
+        {
+            <div class="nav-item px-3">
+                <NavLink class="nav-link" href="@($"menu/{menuItem.MenuName}?uri={menuItem.MenuUri}")">
+                    <span class="bi bi-plus-square-fill" aria-hidden="true"></span> @menuItem.MenuName
+                </NavLink>
+            </div>
+        }
     </nav>
 </div>
+
+@code {
+    private MenuMetadata[] _menus = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        _menus = await client.GetMenuMetadataAsync(CancellationToken.None);
+    }
+}
