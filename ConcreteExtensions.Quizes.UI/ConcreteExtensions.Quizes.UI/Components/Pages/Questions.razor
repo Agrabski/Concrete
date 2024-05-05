@@ -1,0 +1,34 @@
+﻿@page "/questions"
+@using Concrete.Core.Data.Api.Client
+@using Concrete.Extensions.Quizes.Questions.Template
+@inject IDataClient client
+
+<table class="table table-bordered table-responsive">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Tags</th>
+            <th>Category</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var template in _questions)
+        {
+            <tr>
+                <td>@template.Name</td>
+                <td>@template.Discriminator</td>
+                <td>@(string.Join(" ", template.Tags.Take(5)))</td>
+                <td>@template.Category?.Name</td>
+                <td>
+                    <a href="/questions/@template.Discriminator/@template.Id" class="btn btn-outline-dark">Edit</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code{
+    private List<QuestionTemplate> _questions = [];
+}

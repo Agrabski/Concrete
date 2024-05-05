@@ -9,7 +9,7 @@ namespace Concrete.Core.Data.Api.Controllers;
 [ApiController]
 public class ActivityTemplatesController(ConcreteContext context) : ControllerBase
 {
-	[HttpPost("{activityId:guid}")]
+	[HttpPost("{activityId:guid}/data")]
 	public async Task<ActionResult> UpdateActivityTemplateContentAsync(
 		Guid activityId,
 		[FromBody] JsonDocument content,

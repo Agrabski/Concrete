@@ -6,8 +6,8 @@ namespace Concrete.Core.Data.Api.Client;
 
 public interface IDataClient
 {
-	public Task UpdateActivityTemplateContent(Guid activityId, JsonElement data, CancellationToken token);
+	public Task UpdateActivityTemplateContent(Guid activityId, JsonDocument data, CancellationToken token);
 	public Task<ActivityTemplate> GetActivityTemplate(Guid actityId, CancellationToken token);
-	Task<JsonDocument> GetExtensionData(ExtensionName extensionName, string key, CancellationToken token);
+	Task<JsonDocument?> GetExtensionData(ExtensionName extensionName, string key, CancellationToken token);
 	IAsyncEnumerable<string> GetKeysInExtensionDataCategoryAsync(ExtensionName extensionName, string category, CancellationToken token);
 }

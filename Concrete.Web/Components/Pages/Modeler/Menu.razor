@@ -15,5 +15,5 @@ else
     [Parameter]
     public required string MenuName { get; set; }
     [SupplyParameterFromQuery(Name = "uri")]
-    public Uri? MenuUri { get; set; }
+    public string? MenuUri { get; set; }
 }

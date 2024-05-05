@@ -9,6 +9,7 @@
 @using Microsoft.AspNetCore.Authentication
 @using System.Text.Json
 @inject IDataClient client
+@rendermode InteractiveServer
 
 <PageTitle>Quiz editor</PageTitle>
 
@@ -35,6 +36,7 @@ else
                     {
                         <td>Any question in category @tag.Tag.Value</td>
                         <td>
+                            <span>Tag:</span>
                             <InputSelect TValue="@QuestionTag" @bind-Value="@tag.Tag">
                                 @foreach (var tag in _tags)
                                 {
@@ -53,6 +55,7 @@ else
         <option value="@(QuestionReferenceType.SpecificQuestion)">Specific question</option>
     </InputSelect>
     <button @onclick="AddQuestionReference">Add</button>
+    <button @onclick="Save">Save</button>
 
 }
 
@@ -69,8 +72,9 @@ else
         _templateData = JsonSerializer.Deserialize<QuizTemplateData>((await template).Data)
             ?? throw new Exception();
         var tags = client.GetExtensionData(MetadataConsts.ExtensionName(), "Tags", CancellationToken.None);
-        _tags = JsonSerializer.Deserialize<QuestionTag[]>(await tags)
-            ?? throw new Exception();
+        if (await tags is JsonDocument doc)
+            _tags = JsonSerializer.Deserialize<QuestionTag[]>(doc)
+                ?? throw new Exception();
 
     }
 
@@ -89,7 +93,12 @@ else
                     Tag = new(string.Empty),
                 },
             QuestionReferenceType.SpecificQuestion => new SpecificQuestion(),
-            _ => throw new NotImplementedException()
+            _ => throw new NotImplementedException() 
         });
+    }
+
+    private Task Save(MouseEventArgs e)
+    {
+        return client.UpdateActivityTemplateContent(ActivityId, JsonSerializer.SerializeToDocument(_templateData), CancellationToken.None);
     }
 }

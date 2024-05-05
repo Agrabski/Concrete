@@ -7,6 +7,8 @@ public sealed class QuestionTemplate : IPolymorphicDataHolder<QuestionTypeName>
 	public required string Name { get; set; }
 	public Guid Id { get; init; } 
 	public QuestionTypeName Discriminator { get; set; }
+	public QuestionTag[] Tags { get; set; } = [];
+	public QuestionCategory? Category { get; set; }
 	public required JsonDocument Data { get; set; }
 }
 

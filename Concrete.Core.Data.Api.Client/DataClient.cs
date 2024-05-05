@@ -13,12 +13,18 @@ internal sealed class DataClient(HttpClient client) : IDataClient
 		return result ?? throw new Exception("No data in response");
 	}
 
-	public Task UpdateActivityTemplateContent(Guid activityId, JsonElement data, CancellationToken token) => throw new NotImplementedException();
-
-	public async Task<JsonDocument> GetExtensionData(ExtensionName extensionName, string key, CancellationToken token)
+	public Task UpdateActivityTemplateContent(Guid activityId, JsonDocument data, CancellationToken token)
 	{
-		var result = await client.GetFromJsonAsync<JsonDocument>($"api/ExtensionData/{extensionName}/{key}", token);
-		return result ?? throw new Exception("No data in response");
+		return client.PostAsJsonAsync($"api/activitytemplates/{activityId}/data", data, token);
+	}
+
+	public async Task<JsonDocument?> GetExtensionData(ExtensionName extensionName, string key, CancellationToken token)
+	{
+		var result = await client.GetAsync($"api/ExtensionData/{extensionName}/{key}", token);
+		if (result.StatusCode == System.Net.HttpStatusCode.NotFound)
+			return null;
+		return await result.Content.ReadFromJsonAsync<JsonDocument>(token)
+			?? throw new Exception("No data in response");
 	}
 
 	public IAsyncEnumerable<string> GetKeysInExtensionDataCategoryAsync(ExtensionName extensionName, string category, CancellationToken token)
