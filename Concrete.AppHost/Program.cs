@@ -42,14 +42,16 @@ builder.Build().Run();
 
 IResourceBuilder<ProjectResource> BuildQuizesExtension(IDistributedApplicationBuilder builder, EndpointReference modelerUri, EndpointReference dataUri)
 {
-	var _ = builder.AddProject<Projects.Concrete_Extensions_Quizes_Questions_Core>("concreteextensions-quizes-questions")
+	var coreQuestions = builder.AddProject<Projects.Concrete_Extensions_Quizes_Questions_Core>("concreteextensions-quizes-questions")
 		.WithReference(dataUri);
 
 	var quizesUi = builder.AddProject<Projects.ConcreteExtensions_Quizes_UI>("concreteextensions-quizes-ui")
 		.WithReference(data)
+		.WithReference(coreQuestions)
 		.WithEnvironment("CrossOrigin__AllowedUrls__0", modelerUri)
 		.WithEnvironment("Logging__LogLevel__Default", "Debug")
 		.WithEnvironment("Data__DataApiUri", "https://data")
+		.WithEnvironment("QuestionsClient__ExtensionUris__0", "https://concreteextensions-quizes-questions")
 	;
 	var quiz = builder.AddProject<Projects.Concrete_Extensions_Quizes_Api>("concrete-extensions-quizes-api")
 		.WithReference(quizesUi)

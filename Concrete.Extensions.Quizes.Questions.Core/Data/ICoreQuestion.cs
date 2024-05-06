@@ -3,8 +3,3 @@
 public interface ICoreQuestion
 {
 }
-
-public class MultipleChoiceQuestion : ICoreQuestion
-{
-	public static QuestionTypeName TypeName { get; } = new(new("Concrete", "Quizes", "Questions", "Core"), "MultipleChoice");
-}

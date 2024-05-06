@@ -19,17 +19,34 @@ public class ExtensionDataController(ConcreteContext context) : ControllerBase
 				e.Key == key
 			) is ExtensionData data
 		)
-			return Ok(data);
+			return Ok(data.Value.RootElement);
 		return NotFound("The given key does not exist for this extension");
 	}
 
+	[HttpPost("{extensionName}/{category}/{key}")]
+	public async Task InsertAsync(ExtensionName extensionName, string category, string key, [FromBody] JsonDocument data)
+	{
+		await context.ExtensionData.AddAsync(new()
+		{
+			Category = category,
+			ExtensionName = extensionName,
+			Key = key,
+			Value = data,
+			Modified = DateTime.UtcNow
+		});
+		await context.SaveChangesAsync();
+	}
+
 	[HttpGet("{extensionName}/list/{category}")]
-	public IAsyncEnumerable<string> GetKeysInExtensionDataCategoryAsync(ExtensionName extensionName, string category)
+	public IAsyncEnumerable<string> GetKeysInExtensionDataCategoryAsync(ExtensionName extensionName, string category, [FromQuery] int skip, [FromQuery] int take)
 	{
 		return context
 			.ExtensionData
+			.OrderBy(e => e.Modified)
 			.Where(e => e.ExtensionName == extensionName && e.Category == category)
 			.Select(e => e.Key)
+			.Skip(skip)
+			.Take(take)
 			.AsAsyncEnumerable()
 			;
 	}

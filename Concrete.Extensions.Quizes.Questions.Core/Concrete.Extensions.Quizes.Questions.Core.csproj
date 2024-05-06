@@ -1,25 +1,26 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
-  <PropertyGroup>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <RuntimeIdentifiers>linux-x64</RuntimeIdentifiers>
-    <EnableSdkContainerDebugging>True</EnableSdkContainerDebugging>
-    <UserSecretsId>2b4b6a87-2717-420a-bf80-9c853b3d0484</UserSecretsId>
-    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-  </PropertyGroup>
+	<PropertyGroup>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<RuntimeIdentifiers>linux-x64</RuntimeIdentifiers>
+		<EnableSdkContainerDebugging>True</EnableSdkContainerDebugging>
+		<UserSecretsId>2b4b6a87-2717-420a-bf80-9c853b3d0484</UserSecretsId>
+		<DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <ContainerEnvironmentVariable Include="ASPNETCORE_HTTPS_PORTS">
-      <Value>443</Value>
-    </ContainerEnvironmentVariable>
-    <ContainerPort Include="443" />
-  </ItemGroup>
+	<ItemGroup>
+		<ContainerEnvironmentVariable Include="ASPNETCORE_HTTPS_PORTS">
+			<Value>443</Value>
+		</ContainerEnvironmentVariable>
+		<ContainerPort Include="443" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Concrete.Extensions.Quizes.Questions.Client\Concrete.Extensions.Quizes.Questions.Client.csproj" />
-    <ProjectReference Include="..\Concrete.Extensions.Quizes\Concrete.Extensions.Quizes.csproj" />
-    <ProjectReference Include="..\Concrete.ServiceDefaults\Concrete.ServiceDefaults.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+
+		<ProjectReference Include="..\Concrete.Extensions.Quizes.Questions.Client\Concrete.Extensions.Quizes.Questions.Client.csproj" />
+		<ProjectReference Include="..\Concrete.Extensions.Quizes\Concrete.Extensions.Quizes.csproj" />
+		<ProjectReference Include="..\Concrete.ServiceDefaults\Concrete.ServiceDefaults.csproj" />
+	</ItemGroup>
 
 </Project>

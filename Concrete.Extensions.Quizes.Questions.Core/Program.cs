@@ -1,15 +1,13 @@
-
 using Concrete.Extensions.Quizes.Questions;
-using Concrete.Extensions.Quizes.Questions.Client;
 using Concrete.Extensions.Quizes.Questions.Core.Data;
-using Concrete.Extensions.Quizes.Questions.Template;
 using Concrete.Serialization;
-using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
 
 // Add services to the container.
+builder.Services.AddControllers();
+
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services
@@ -27,6 +25,7 @@ if (!app.Environment.IsDevelopment())
 	app.UseHsts();
 }
 
+app.MapControllers();
 app.UseHttpsRedirection();
 
 app.UseStaticFiles();

@@ -1,10 +1,12 @@
 ﻿using Concrete.Interface;
 using System.Diagnostics.CodeAnalysis;
+using System.Text.Json.Serialization;
 
 namespace Concrete.Extensions.Quizes.Questions;
+[JsonConverter(typeof(ParsableJsonConverter<QuestionTypeName>))]
 public record struct QuestionTypeName(ExtensionName Extension, string Name) : IParsable<QuestionTypeName>
 {
-	public override string ToString() => $"{Extension}::{Name}";
+	public readonly override string ToString() => $"{Extension}::{Name}";
 	public static QuestionTypeName Parse(string s, IFormatProvider? provider)
 	{
 		var parts = s.Split("::");

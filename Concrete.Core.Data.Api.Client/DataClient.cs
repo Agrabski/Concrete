@@ -27,8 +27,13 @@ internal sealed class DataClient(HttpClient client) : IDataClient
 			?? throw new Exception("No data in response");
 	}
 
-	public IAsyncEnumerable<string> GetKeysInExtensionDataCategoryAsync(ExtensionName extensionName, string category, CancellationToken token)
+	public IAsyncEnumerable<string> GetKeysInExtensionDataCategoryAsync(ExtensionName extensionName, string category, int skip, int takeCount, CancellationToken token)
 	{
-		return client.GetFromJsonAsAsyncEnumerable<string>($"api/ExtensionData/{extensionName}/list/{category}", token)!;
+		return client.GetFromJsonAsAsyncEnumerable<string>($"api/ExtensionData/{extensionName}/list/{category}?skip={skip}&take={takeCount}", token)!;
+	}
+
+	public Task InsertExtensionDataAsync(ExtensionName extensionName, string category, string id, JsonDocument data, CancellationToken token)
+	{
+		return client.PostAsJsonAsync($"api/ExtensionData/{extensionName}/{category}/{id}", data, token);
 	}
 }

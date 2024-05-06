@@ -10,8 +10,8 @@ public static class DIExtension
 			.AddOptions<QuestionsClientConfiguration>()
 			.Configure(configure)
 			.Services
-			.AddTransient<IQuestionsClient, QuestionsClient>()
-			.AddHttpClient<IQuestionsClient, QuestionsClient>()
+			.AddTransient<IQuestionExtenionsClient, QuestionsClient>()
+			.AddHttpClient<IQuestionExtenionsClient, QuestionsClient>()
 			.Services
 			;
 	}

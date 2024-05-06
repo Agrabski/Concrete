@@ -1,7 +1,13 @@
 ﻿@page "/questions"
 @using Concrete.Core.Data.Api.Client
+@using Concrete.Extensions.Quizes.Api
+@using Concrete.Extensions.Quizes.Questions
+@using Concrete.Extensions.Quizes.Questions.Client
 @using Concrete.Extensions.Quizes.Questions.Template
+@using System.Text.Json
 @inject IDataClient client
+@inject IQuestionExtenionsClient extensionsClient
+@rendermode InteractiveServer
 
 <table class="table table-bordered table-responsive">
     <thead>
@@ -17,18 +23,81 @@
         @foreach (var template in _questions)
         {
             <tr>
-                <td>@template.Name</td>
-                <td>@template.Discriminator</td>
-                <td>@(string.Join(" ", template.Tags.Take(5)))</td>
-                <td>@template.Category?.Name</td>
+                <td>@template.Template.Name</td>
+                <td>@template.Template.Discriminator</td>
+                <td>@(string.Join(" ", template.Template.Tags.Take(5)))</td>
+                <td>@template.Template.Category?.Name</td>
                 <td>
-                    <a href="/questions/@template.Discriminator/@template.Id" class="btn btn-outline-dark">Edit</a>
+                    <a href="/questions/@template.Template.Discriminator/@template.Id" class="btn btn-outline-dark">Edit</a>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+<InputSelect @bind-Value="_selectedType">
+    @foreach (var type in _availableTypeNames)
+    {
+        <option value="@type">@type</option>
+    }
+</InputSelect>
+<button @onclick="AddNewQuestionTemplateAsync">Add new</button>
+<dialog open="">
 
-@code{
-    private List<QuestionTemplate> _questions = [];
+</dialog>
+
+@code {
+    [SupplyParameterFromQuery]
+    public int QuestionsStartIndex { get; set; } = 0;
+    [SupplyParameterFromQuery]
+    public int PageSize { get; set; } = 30;
+    private const string QuestionTemplatesCategory = "question-templates";
+    private List<string> _questionIds = [];
+    private List<(string Id, QuestionTemplate Template)> _questions = [];
+    private QuestionTypeName[] _availableTypeNames = [];
+    private QuestionTypeName _selectedType = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (PageSize == 0)
+            PageSize = 30;
+        var typeNames = extensionsClient.GetAllAvailableQuestionTypesAsync(CancellationToken.None);
+        _questionIds = await client
+            .GetKeysInExtensionDataCategoryAsync(MetadataConsts.ExtensionName(), QuestionTemplatesCategory, QuestionsStartIndex, PageSize, CancellationToken.None)
+            .ToListAsync();
+        await LoadQuestionTemplatesAsync();
+        _availableTypeNames = await typeNames;
+        _selectedType = _availableTypeNames.FirstOrDefault();
+    }
+
+    private async Task LoadQuestionTemplatesAsync()
+    {
+        _questions = (await Task.WhenAll(
+            _questionIds
+                .Skip(QuestionsStartIndex)
+                .Take(PageSize)
+                .Select(async id =>
+                {
+                    var data = await client.GetExtensionData(MetadataConsts.ExtensionName(), id, CancellationToken.None)
+                        ?? throw new Exception();
+                    return (id, JsonSerializer.Deserialize<QuestionTemplate>(data) ?? throw new Exception());
+                })
+        ))
+        .ToList();
+    }
+
+    private async Task AddNewQuestionTemplateAsync()
+    {
+        var id = Guid.NewGuid().ToString();
+        var templateData = await extensionsClient.CreateQuestionTypeAsync(_selectedType, CancellationToken.None);
+        var template = JsonSerializer.SerializeToDocument(new QuestionTemplate()
+            {
+                Category = null,
+                Discriminator = _selectedType,
+                Data = templateData,
+                Name = "New question",
+                Tags = []
+            });
+        await client.InsertExtensionDataAsync(MetadataConsts.ExtensionName(), QuestionTemplatesCategory, id, template, CancellationToken.None);
+        _questionIds.Add(id);
+    }
 }

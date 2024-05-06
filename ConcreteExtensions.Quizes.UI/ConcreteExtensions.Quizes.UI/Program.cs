@@ -10,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.AddServiceDefaults();
 builder.Services
+	.AddMemoryCache(e => e.TrackStatistics = true)
 	.AddQuestionsClient(builder.Configuration.GetSection("QuestionsClient").Bind)
 	.AddDataApiClient(builder.Configuration.GetSection("Data").Bind)
 	.AddCrossOriginFrameConfiguration(builder.Configuration.GetSection("CrossOrigin").Bind)

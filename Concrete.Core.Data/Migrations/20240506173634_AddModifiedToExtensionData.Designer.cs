@@ -4,6 +4,7 @@ using Concrete.Core.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Concrete.Core.Data.Migrations
 {
     [DbContext(typeof(ConcreteContext))]
-    partial class ConcreteContextModelSnapshot : ModelSnapshot
+    [Migration("20240506173634_AddModifiedToExtensionData")]
+    partial class AddModifiedToExtensionData
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
