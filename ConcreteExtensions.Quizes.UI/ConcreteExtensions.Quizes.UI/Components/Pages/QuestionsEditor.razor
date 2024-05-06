@@ -1,0 +1,56 @@
+﻿@page "/questions/{TypeName}/{Id}"
+@using Concrete.Extensions.Quizes.Questions
+@using Concrete.Extensions.Quizes.Questions.Client
+@inject IQuestionExtenionsClient client
+@rendermode InteractiveServer
+
+@if (_editorUri is null)
+{
+    <span>Looking for  question editor. Hold on</span>
+}
+else
+{
+    <style>
+        body, html {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0
+        }
+
+        .row-container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .frame {
+            flex-grow: 1;
+            border: none;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    <div class="row-container">
+        <div class="first-row">
+            <p>Some text</p>
+            <p>And some more text</p>
+        </div>
+        <iframe src="@($"{_editorUri}/{Id}")" class="frame" />
+    </div>
+}
+
+@code {
+    [Parameter]
+    public required string TypeName { get; set; }
+    [Parameter]
+    public required string Id { get; set; }
+    private Uri? _editorUri;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _editorUri = await client.GetEditorUriAsync(QuestionTypeName.Parse(TypeName, null), CancellationToken.None);
+    }
+}

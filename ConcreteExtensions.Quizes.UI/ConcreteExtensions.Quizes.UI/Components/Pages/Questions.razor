@@ -41,9 +41,6 @@
     }
 </InputSelect>
 <button @onclick="AddNewQuestionTemplateAsync">Add new</button>
-<dialog open="">
-
-</dialog>
 
 @code {
     [SupplyParameterFromQuery]
@@ -89,15 +86,17 @@
     {
         var id = Guid.NewGuid().ToString();
         var templateData = await extensionsClient.CreateQuestionTypeAsync(_selectedType, CancellationToken.None);
-        var template = JsonSerializer.SerializeToDocument(new QuestionTemplate()
+        var value = new QuestionTemplate()
             {
                 Category = null,
                 Discriminator = _selectedType,
                 Data = templateData,
                 Name = "New question",
                 Tags = []
-            });
+            };
+        var template = JsonSerializer.SerializeToDocument(value);
         await client.InsertExtensionDataAsync(MetadataConsts.ExtensionName(), QuestionTemplatesCategory, id, template, CancellationToken.None);
         _questionIds.Add(id);
+        _questions.Add((id, value));
     }
 }

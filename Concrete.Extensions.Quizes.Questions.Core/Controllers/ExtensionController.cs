@@ -7,6 +7,15 @@ namespace Concrete.Extensions.Quizes.Questions.Core.Controllers;
 [ApiController]
 public class ExtensionController : ControllerBase
 {
+	[HttpGet("question-editor/{questionTypeName}")]
+	public ActionResult<Uri> GetExtensionEditorUri(QuestionTypeName questionTypeName)
+	{
+		var url = $"{Request.Scheme}://{Request.Host}";
+		if (questionTypeName == MultipleChoiceQuestion.TypeName)
+			return Ok(new Uri(url + "/editor/multiple-choice-question"));
+		return NotFound();
+	}
+
 	[HttpGet("question-types")]
 	public QuestionTypeName[] GetQuestionTypeNames()
 	{

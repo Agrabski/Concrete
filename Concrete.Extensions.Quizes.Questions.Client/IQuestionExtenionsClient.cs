@@ -6,4 +6,5 @@ public interface IQuestionExtenionsClient
 {
 	Task<JsonDocument> CreateQuestionTypeAsync(QuestionTypeName type, CancellationToken token);
 	public Task<QuestionTypeName[]> GetAllAvailableQuestionTypesAsync(CancellationToken token);
+	public Task<Uri> GetEditorUriAsync(QuestionTypeName questionTypeName, CancellationToken token);
 }

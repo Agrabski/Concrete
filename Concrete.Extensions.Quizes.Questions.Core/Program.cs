@@ -1,4 +1,6 @@
+using Concrete.CrossOriginFrameConfiguration;
 using Concrete.Extensions.Quizes.Questions;
+using Concrete.Extensions.Quizes.Questions.Core.Components;
 using Concrete.Extensions.Quizes.Questions.Core.Data;
 using Concrete.Serialization;
 
@@ -8,8 +10,11 @@ builder.AddServiceDefaults();
 // Add services to the container.
 builder.Services.AddControllers();
 
+builder.Services
+	.AddRazorComponents()
+	.AddInteractiveServerComponents();
 builder.Services.AddRazorPages();
-builder.Services.AddServerSideBlazor();
+builder.Services.AddCrossOriginFrameConfiguration(builder.Configuration.GetSection("CrossOrigin").Bind);
 builder.Services
 	.AddConcreteSerialization<ICoreQuestion, QuestionTypeName>()
 	.AddSerializableType<ICoreQuestion, QuestionTypeName, MultipleChoiceQuestion>(MultipleChoiceQuestion.TypeName)
@@ -25,14 +30,18 @@ if (!app.Environment.IsDevelopment())
 	app.UseHsts();
 }
 
-app.MapControllers();
-app.UseHttpsRedirection();
+
+app
+	.ConfigureFrameOriginPolicy()
+	.UseHttpsRedirection();
 
 app.UseStaticFiles();
+app.UseAntiforgery();
 
-app.UseRouting();
+app.MapRazorComponents<App>()
+	.AddInteractiveServerRenderMode()
+	;
 
-app.MapBlazorHub();
-app.MapFallbackToPage("/_Host");
+//app.MapControllers();
 
 app.Run();

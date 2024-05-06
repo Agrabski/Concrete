@@ -39,4 +39,12 @@ internal class QuestionsClient(
 		return await client.GetFromJsonAsync<JsonDocument>(new Uri(uri, $"api/extension/{type}"), token)
 			?? throw new Exception();
 	}
+
+	public async Task<Uri> GetEditorUriAsync(QuestionTypeName questionTypeName, CancellationToken token)
+	{
+		var typeNames = await GetTypeNamesByUriAsync();
+		var uri = typeNames[questionTypeName];
+		return await client.GetFromJsonAsync<Uri>(new Uri(uri, $"api/extension/question-editor/{questionTypeName}"), token)
+			?? throw new Exception();
+	}
 }

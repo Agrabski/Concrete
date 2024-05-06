@@ -53,6 +53,10 @@ IResourceBuilder<ProjectResource> BuildQuizesExtension(IDistributedApplicationBu
 		.WithEnvironment("Data__DataApiUri", "https://data")
 		.WithEnvironment("QuestionsClient__ExtensionUris__0", "https://concreteextensions-quizes-questions")
 	;
+	coreQuestions
+		.WithEnvironment("CrossOrigin__AllowedUrls__0", quizesUi.GetEndpoint("https"))
+		.WithEnvironment("CrossOrigin__AllowedUrls__1", modelerUri)
+		;
 	var quiz = builder.AddProject<Projects.Concrete_Extensions_Quizes_Api>("concrete-extensions-quizes-api")
 		.WithReference(quizesUi)
 		.WithEnvironment("Quiz__ActivityEditorUri", quizesUi.GetEndpoint("https"))
