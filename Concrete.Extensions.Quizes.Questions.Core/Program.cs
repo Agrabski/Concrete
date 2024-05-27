@@ -1,3 +1,4 @@
+using Concrete.Core.Data.Api.Client;
 using Concrete.CrossOriginFrameConfiguration;
 using Concrete.Extensions.Quizes.Questions;
 using Concrete.Extensions.Quizes.Questions.Core.Components;
@@ -16,6 +17,7 @@ builder.Services
 builder.Services.AddRazorPages();
 builder.Services.AddCrossOriginFrameConfiguration(builder.Configuration.GetSection("CrossOrigin").Bind);
 builder.Services
+	.AddDataApiClient(builder.Configuration.GetSection("Data").Bind)
 	.AddConcreteSerialization<ICoreQuestion, QuestionTypeName>()
 	.AddSerializableType<ICoreQuestion, QuestionTypeName, MultipleChoiceQuestion>(MultipleChoiceQuestion.TypeName)
 	;

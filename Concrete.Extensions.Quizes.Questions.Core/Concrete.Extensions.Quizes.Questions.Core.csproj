@@ -18,6 +18,8 @@
 
 	<ItemGroup>
 
+		<ProjectReference Include="..\Concrete.Core.Data.Api.Client\Concrete.Core.Data.Api.Client.csproj" />
+
 		<ProjectReference Include="..\Concrete.CrossOriginFrameConfiguration\Concrete.CrossOriginFrameConfiguration.csproj" />
 
 		<ProjectReference Include="..\Concrete.Extensions.Quizes.Questions.Client\Concrete.Extensions.Quizes.Questions.Client.csproj" />

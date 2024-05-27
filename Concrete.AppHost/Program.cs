@@ -43,7 +43,9 @@ builder.Build().Run();
 IResourceBuilder<ProjectResource> BuildQuizesExtension(IDistributedApplicationBuilder builder, EndpointReference modelerUri, EndpointReference dataUri)
 {
 	var coreQuestions = builder.AddProject<Projects.Concrete_Extensions_Quizes_Questions_Core>("concreteextensions-quizes-questions")
-		.WithReference(dataUri);
+		.WithReference(dataUri)
+		.WithEnvironment("DataClient__DataApiUri", "https://data")
+		;
 
 	var quizesUi = builder.AddProject<Projects.ConcreteExtensions_Quizes_UI>("concreteextensions-quizes-ui")
 		.WithReference(data)
