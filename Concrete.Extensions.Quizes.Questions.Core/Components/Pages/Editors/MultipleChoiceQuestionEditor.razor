@@ -1,11 +1,30 @@
 ﻿@page "/editor/multiple-choice-question/{Id}"
 @using Concrete.Core.Data.Api.Client;
+@using Concrete.Extensions.Quizes.Api
+@using Concrete.Extensions.Quizes.Questions.Core.Data
+@using System.Text.Json
 @inject IDataClient dataClient
 <PageTitle>Multiple choice question</PageTitle>
 
-<span>multiple choice question editor</span>
+@if(_question is null)
+{
+<span>multiple choice question editor is loading</span>
+}
+else
+{
+    <Concrete.SharedUI.LocalisedTextEditor @bind-Value="_question.Question"/>
+}
 
 @code {
     [Parameter]
     public required string Id{ get; set; }
+    private MultipleChoiceQuestion? _question;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var data =await dataClient.GetExtensionData(MetadataConsts.ExtensionName(), Id, CancellationToken.None);
+        if (data is null || JsonSerializer.Deserialize<MultipleChoiceQuestion>(data) is not MultipleChoiceQuestion q)
+            throw new InvalidOperationException();
+        _question = q;
+    }
 }

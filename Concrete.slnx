@@ -1,6 +1,20 @@
 <Solution>
-  <Folder Name="/_Solution Items/">
-    <File Path="Directory.Build.props" />
+  <Folder Name="/Core/">
+    <Project Path="Concrete.Core.Data.Api.Client\Concrete.Core.Data.Api.Client.csproj" />
+    <Project Path="Concrete.Core.Data.Api\Concrete.Core.Data.Api.csproj" />
+    <Project Path="Concrete.Core.Data\Concrete.Core.Data.csproj" />
+    <Project Path="Concrete.Core\Concrete.Core.csproj" />
+  </Folder>
+  <Folder Name="/Extensions/" />
+  <Folder Name="/Extensions/Quizes/">
+    <Project Path="Concrete.Extensions.Quizes.Api\Concrete.Extensions.Quizes.Api.csproj" />
+    <Project Path="Concrete.Extensions.Quizes\Concrete.Extensions.Quizes.csproj" />
+    <Project Path="ConcreteExtensions.Quizes.UI\ConcreteExtensions.Quizes.UI.Client\ConcreteExtensions.Quizes.UI.Client.csproj" />
+    <Project Path="ConcreteExtensions.Quizes.UI\ConcreteExtensions.Quizes.UI\ConcreteExtensions.Quizes.UI.csproj" />
+  </Folder>
+  <Folder Name="/Extensions/Quizes/Questions/">
+    <Project Path="Concrete.Extensions.Quizes.Questions.Client\Concrete.Extensions.Quizes.Questions.Client.csproj" />
+    <Project Path="Concrete.Extensions.Quizes.Questions.Core\Concrete.Extensions.Quizes.Questions.Core.csproj" />
   </Folder>
   <Folder Name="/Modeling/">
     <Project Path="Concrete.Interface.Tests\Concrete.Interface.Tests.csproj" />
@@ -10,26 +24,13 @@
     <Project Path="Concrete.Modeler.Extension.Registration\Concrete.Modeler.Extension.Registration.csproj" />
     <Project Path="Concrete.Modeler\Concrete.Modeler.csproj" />
   </Folder>
-  <Folder Name="/Extensions/Quizes/Questions/">
-    <Project Path="Concrete.Extensions.Quizes.Questions.Client\Concrete.Extensions.Quizes.Questions.Client.csproj" />
-    <Project Path="Concrete.Extensions.Quizes.Questions.Core\Concrete.Extensions.Quizes.Questions.Core.csproj" />
-  </Folder>
-  <Folder Name="/Extensions/Quizes/">
-    <Project Path="Concrete.Extensions.Quizes.Api\Concrete.Extensions.Quizes.Api.csproj" />
-    <Project Path="Concrete.Extensions.Quizes\Concrete.Extensions.Quizes.csproj" />
-    <Project Path="ConcreteExtensions.Quizes.UI\ConcreteExtensions.Quizes.UI.Client\ConcreteExtensions.Quizes.UI.Client.csproj" />
-    <Project Path="ConcreteExtensions.Quizes.UI\ConcreteExtensions.Quizes.UI\ConcreteExtensions.Quizes.UI.csproj" />
-  </Folder>
-  <Folder Name="/Extensions/" />
-  <Folder Name="/Core/">
-    <Project Path="Concrete.Core.Data.Api.Client\Concrete.Core.Data.Api.Client.csproj" />
-    <Project Path="Concrete.Core.Data.Api\Concrete.Core.Data.Api.csproj" />
-    <Project Path="Concrete.Core.Data\Concrete.Core.Data.csproj" />
-    <Project Path="Concrete.Core\Concrete.Core.csproj" />
+  <Folder Name="/_Solution Items/">
+    <File Path="Directory.Build.props" />
   </Folder>
   <Project Path="Concrete.AppHost\Concrete.AppHost.csproj" />
   <Project Path="Concrete.CrossOriginFrameConfiguration\Concrete.CrossOriginFrameConfiguration.csproj" />
   <Project Path="Concrete.Serialization\Concrete.Serialization.csproj" />
   <Project Path="Concrete.ServiceDefaults\Concrete.ServiceDefaults.csproj" />
+  <Project Path="Concrete.SharedUI\Concrete.SharedUI.csproj" />
   <Project Path="Concrete.Web\Concrete.Web.csproj" />
 </Solution>

@@ -1,0 +1,16 @@
+﻿@using Concrete.Core
+@using System.Linq.Expressions
+@using Microsoft.AspNetCore.Components.Forms
+@inherits ComponentBase
+<h3>LocalisedTextEditor</h3>
+
+@code {
+
+    [Parameter, EditorRequired]
+    public required LocalisedText Value { get; set; }
+
+    [Parameter]
+    public EventCallback<LocalisedText> ValueChanged{ get; set; }
+    [Parameter]
+    public required Expression<Func<LocalisedText>> ValueExpression{ get; set; }
+}

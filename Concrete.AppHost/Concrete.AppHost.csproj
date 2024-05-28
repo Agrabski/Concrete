@@ -23,6 +23,7 @@
 			<Private>True</Private>
 		</ProjectReference>
 		<ProjectReference Include="..\Concrete.Modeler\Concrete.Modeler.csproj" />
+		<ProjectReference Include="..\Concrete.SharedUI\Concrete.SharedUI.csproj" />
 		<ProjectReference Include="..\Concrete.Web\Concrete.Web.csproj" />
 		<ProjectReference Include="..\ConcreteExtensions.Quizes.UI\ConcreteExtensions.Quizes.UI\ConcreteExtensions.Quizes.UI.csproj" />
 	</ItemGroup>

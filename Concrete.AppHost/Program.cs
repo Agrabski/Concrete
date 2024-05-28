@@ -37,6 +37,8 @@ modelerUi
 	.WithEnvironment("Logging__LogLevel__Default", "Debug")
 ;
 
+builder.AddProject<Projects.Concrete_SharedUI>("concrete-sharedui");
+
 builder.Build().Run();
 
 
