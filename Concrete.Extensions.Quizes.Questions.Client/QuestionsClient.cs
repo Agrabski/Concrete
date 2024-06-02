@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Net.Http.Json;
 using System.Text.Json;
@@ -9,7 +10,8 @@ namespace Concrete.Extensions.Quizes.Questions.Client;
 internal class QuestionsClient(
 	HttpClient client,
 	IOptions<QuestionsClientConfiguration> options,
-	IMemoryCache cache
+	IMemoryCache cache,
+	ILogger<QuestionsClient> logger
 ) : IQuestionExtenionsClient
 {
 	public async Task<QuestionTypeName[]> GetAllAvailableQuestionTypesAsync(CancellationToken token)
@@ -22,13 +24,24 @@ internal class QuestionsClient(
 		return await cache.GetOrCreateAsync("AllQuestionTypeNames", async e =>
 		{
 			e.SetSlidingExpiration(TimeSpan.FromMinutes(10));
-			return await options
+			var result = await Task.WhenAll(
+				options
 					.Value
 					.ExtensionUris
-					.Select(u => client.GetFromJsonAsAsyncEnumerable<QuestionTypeName>(new Uri(u, "api/extension/question-types")).Select(r => (u, r)))
-					.ToAsyncEnumerable()
-					.SelectMany(e => e)
-					.ToDictionaryAsync(kv => kv.r, kv => kv.u);
+					.Select(async u =>
+					{
+						try
+						{
+							return (await client.GetFromJsonAsAsyncEnumerable<QuestionTypeName>(new Uri(u, "api/extension/question-types")).Select(r => (u, r)).ToArrayAsync());
+						}
+						catch (Exception ex)
+						{
+							logger.LogError(ex, "Calling extension {ExtensionUri} resulted in an error", u);
+							throw;
+						}
+					})
+				);
+			return result.SelectMany(e => e).ToDictionary(kv => kv.r, kv => kv.u);
 		}) ?? throw new Exception();
 	}
 

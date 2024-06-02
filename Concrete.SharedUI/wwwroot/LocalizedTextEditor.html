@@ -1,0 +1,66 @@
+﻿<template id="localized-text-editor-template">
+    <slot name="items"></slot>
+    <div id="label">it works</div>
+</template>
+<template id="localized-text-editor-element-template">
+    <div>
+        <input id="locale-name">
+        <input id="text-value">
+    </div>
+</template>
+<script>
+    class LocalizedTextEditorElement extends HTMLElement {
+        static observedAttributes = ['locale-name', 'text-value']
+        constructor() {
+            super();
+        }
+        connectedCallback() {
+            this.shadow = this.attachShadow({ mode: 'open' });
+            this.shadow.appendChild(document.getElementById('localized-text-editor-element-template').content);
+            this.shadow.getElementById('locale-name').value = this['locale-name'];
+            this.shadow.getElementById('text-value').value = this['text-value'];
+        }
+        attributeChangedCallback(name, old, newValue) {
+            this[name] = newValue;
+        }
+    }
+    customElements.define('localized-text', LocalizedTextEditorElement);
+    class LocalizedTextEditor extends HTMLElement {
+        static observedAttributes = ["value-source"];
+        constructor() {
+            super();
+        }
+        connectedCallback() {
+            let template = document.getElementById('localized-text-editor-template').content;
+            this.shadow = this.attachShadow({ mode: 'open' });
+            this.shadow.appendChild(template.cloneNode(true));
+            this.updateValue();
+        }
+
+        attributeChangedCallback(name, oldValue, newValue) {
+            if (name === 'value-source' && newValue) {
+                this.value = window[newValue];
+            }
+        }
+
+        get value() {
+            return this._value;
+        }
+
+        set value(newValue) {
+            this._value = newValue;
+            if (this.shadow) {
+                this.updateValue();
+            }
+        }
+        updateValue() {
+            this.shadow.getElementById("label").innerText = this.value;
+        }
+    }
+    customElements.define("localized-text-editor", LocalizedTextEditor)
+    window.textValue = 'abcd'
+</script>
+
+<localized-text-editor>
+    <localized-text locale-name="pl" text-value="abcd" slot="items"></localized-text>
+</localized-text-editor>

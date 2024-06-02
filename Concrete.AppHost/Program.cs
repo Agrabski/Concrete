@@ -46,7 +46,7 @@ IResourceBuilder<ProjectResource> BuildQuizesExtension(IDistributedApplicationBu
 {
 	var coreQuestions = builder.AddProject<Projects.Concrete_Extensions_Quizes_Questions_Core>("concreteextensions-quizes-questions")
 		.WithReference(dataUri)
-		.WithEnvironment("DataClient__DataApiUri", "https://data")
+		.WithEnvironment("Data__DataApiUri", "https://data")
 		;
 
 	var quizesUi = builder.AddProject<Projects.ConcreteExtensions_Quizes_UI>("concreteextensions-quizes-ui")

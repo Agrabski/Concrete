@@ -20,7 +20,11 @@ internal class ConfigureActivityTemplate : IEntityTypeConfiguration<ActivityTemp
 			d => d.RootElement.GetRawText(),
 			s => JsonDocument.Parse(s, new JsonDocumentOptions())
 		);
-		builder.OwnsOne(t => t.DisplayName).ToJson();
+		builder.OwnsOne(t => t.DisplayName, o =>
+		{
+			o.ToJson();
+			o.OwnsMany(e => e.TextByLocale);
+		});
 		builder
 			.Property(t => t.Discriminator)
 			.HasConversion(n => n.ToString(), s => ActivityTypeName.Parse(s, null))
