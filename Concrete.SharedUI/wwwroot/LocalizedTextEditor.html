@@ -1,66 +1,85 @@
-﻿<template id="localized-text-editor-template">
-    <slot name="items"></slot>
-    <div id="label">it works</div>
-</template>
-<template id="localized-text-editor-element-template">
-    <div>
-        <input id="locale-name">
-        <input id="text-value">
-    </div>
-</template>
-<script>
-    class LocalizedTextEditorElement extends HTMLElement {
-        static observedAttributes = ['locale-name', 'text-value']
-        constructor() {
-            super();
-        }
-        connectedCallback() {
-            this.shadow = this.attachShadow({ mode: 'open' });
-            this.shadow.appendChild(document.getElementById('localized-text-editor-element-template').content);
-            this.shadow.getElementById('locale-name').value = this['locale-name'];
-            this.shadow.getElementById('text-value').value = this['text-value'];
-        }
-        attributeChangedCallback(name, old, newValue) {
-            this[name] = newValue;
-        }
-    }
-    customElements.define('localized-text', LocalizedTextEditorElement);
-    class LocalizedTextEditor extends HTMLElement {
-        static observedAttributes = ["value-source"];
-        constructor() {
-            super();
-        }
-        connectedCallback() {
-            let template = document.getElementById('localized-text-editor-template').content;
-            this.shadow = this.attachShadow({ mode: 'open' });
-            this.shadow.appendChild(template.cloneNode(true));
-            this.updateValue();
-        }
+﻿<!DOCTYPE html>
+<html>
 
-        attributeChangedCallback(name, oldValue, newValue) {
-            if (name === 'value-source' && newValue) {
-                this.value = window[newValue];
+<head>
+    <template id="localized-text-editor-template">
+        <style>
+            .wrapper {
+                display: grid;
+                grid-template-columns: repeat(3, auto);
+                background-color: #fff;
+                color: #444;
+                max-width: 800px;
+            }
+
+            ::slotted(localized-text) {
+                display: contents;
+            }
+
+            .box {}
+
+            .row {
+                display: contents;
+            }
+        </style>
+        <div class="wrapper">
+            <div class="box">Locale</div>
+            <div class="box">Text</div>
+            <div class="box"></div>
+            <slot id="items-source" name="items" class="row"></slot>
+        </div>
+        <button id="add-button">Add</button>
+    </template>
+
+    <template id="localized-text-editor-element-template">
+        <div style="display: contents;">
+            <input id="locale-name">
+            <input id="text-value">
+            <button>Remove</button>
+        </div>
+    </template>
+
+    <script>
+        class LocalizedTextEditorElement extends HTMLElement {
+            static observedAttributes = ['locale-name', 'text-value']
+            constructor() {
+                super();
+            }
+            connectedCallback() {
+                this.attachShadow({ mode: 'open' });
+                this.shadowRoot.appendChild(document.getElementById('localized-text-editor-element-template').content.cloneNode(true));
+                this.shadowRoot.getElementById('locale-name').value = this['locale-name'] || '';
+                this.shadowRoot.getElementById('text-value').value = this['text-value'] || '';
+            }
+            attributeChangedCallback(name, old, newValue) {
+                this[name] = newValue;
             }
         }
+        customElements.define('localized-text', LocalizedTextEditorElement);
+        class LocalizedTextEditor extends HTMLElement {
+            constructor() {
+                super();
+            }
+            connectedCallback() {
+                let template = document.getElementById('localized-text-editor-template').content;
+                const shadow = this.attachShadow({ mode: 'open' });
+                shadow.appendChild(template.cloneNode(true));
+            }
 
-        get value() {
-            return this._value;
-        }
+            get value() {
+                return this._value;
+            }
 
-        set value(newValue) {
-            this._value = newValue;
-            if (this.shadow) {
-                this.updateValue();
+            set value(newValue) {
+                this._value = newValue;
+
             }
         }
-        updateValue() {
-            this.shadow.getElementById("label").innerText = this.value;
-        }
-    }
-    customElements.define("localized-text-editor", LocalizedTextEditor)
-    window.textValue = 'abcd'
-</script>
-
+        customElements.define("localized-text-editor", LocalizedTextEditor)
+    </script>
+</head>
 <localized-text-editor>
     <localized-text locale-name="pl" text-value="abcd" slot="items"></localized-text>
 </localized-text-editor>
+
+</html>
