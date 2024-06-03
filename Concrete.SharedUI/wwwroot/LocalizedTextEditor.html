@@ -26,7 +26,7 @@
             <div class="box">Locale</div>
             <div class="box">Text</div>
             <div class="box"></div>
-            <slot id="items-source" name="items" class="row"></slot>
+            <slot id="items-container" name="items" class="row"></slot>
         </div>
         <button id="add-button">Add</button>
     </template>
@@ -64,6 +64,12 @@
                 let template = document.getElementById('localized-text-editor-template').content;
                 const shadow = this.attachShadow({ mode: 'open' });
                 shadow.appendChild(template.cloneNode(true));
+                let container = shadow.getElementById('items-container');
+                shadow.getElementById('add-button').addEventListener('click', () => {
+                    const newElement = new LocalizedTextEditorElement();
+                    newElement.slot = "items";
+                    this.appendChild(newElement);
+                })
             }
 
             get value() {
