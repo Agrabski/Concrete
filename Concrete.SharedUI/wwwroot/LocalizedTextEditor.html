@@ -26,7 +26,7 @@
             <div class="box">Locale</div>
             <div class="box">Text</div>
             <div class="box"></div>
-            <slot id="items-container" name="items" class="row"></slot>
+            <slot id="items-container" class="row"></slot>
         </div>
         <button id="add-button">Add</button>
     </template>
@@ -35,7 +35,7 @@
         <div style="display: contents;">
             <input id="locale-name">
             <input id="text-value">
-            <button>Remove</button>
+            <button id="remove-button">Remove</button>
         </div>
     </template>
 
@@ -48,11 +48,30 @@
             connectedCallback() {
                 this.attachShadow({ mode: 'open' });
                 this.shadowRoot.appendChild(document.getElementById('localized-text-editor-element-template').content.cloneNode(true));
-                this.shadowRoot.getElementById('locale-name').value = this['locale-name'] || '';
-                this.shadowRoot.getElementById('text-value').value = this['text-value'] || '';
+                const localeName = this.shadowRoot.getElementById('locale-name');
+                localeName.value = this.attributes['locale-name']?.nodeValue || '';
+                localeName.addEventListener('change', e => this.attributes['locale-name'].nodeValue = e.target.value);
+                const textValue = this.shadowRoot.getElementById('text-value');
+                textValue.addEventListener('change', e => this.attributes['text-value'].nodeValue = e.target.value);
+                textValue.value = this.attributes['text-value']?.nodeValue || '';
+                this.removedEvent = new CustomEvent('remove-clicked', {
+                    bubbles: true,
+                    cancelable: true,
+                    detail: 'raised when remove button is clicked'
+                })
+                this.shadowRoot.getElementById('remove-button').addEventListener('click', e => {
+                    this.dispatchEvent(this.removedEvent);
+                })
             }
             attributeChangedCallback(name, old, newValue) {
                 this[name] = newValue;
+            }
+
+            get editedValue() {
+                return {
+                    localeName: this.attributes['locale-name'].nodeValue,
+                    textValue: this.attributes['text-value'].nodeValue
+                }
             }
         }
         customElements.define('localized-text', LocalizedTextEditorElement);
@@ -65,27 +84,26 @@
                 const shadow = this.attachShadow({ mode: 'open' });
                 shadow.appendChild(template.cloneNode(true));
                 let container = shadow.getElementById('items-container');
+                for (const element of this.childNodes) {
+                    element.addEventListener('remove-clicked', e => this.removeChild(element));
+                }
                 shadow.getElementById('add-button').addEventListener('click', () => {
                     const newElement = new LocalizedTextEditorElement();
-                    newElement.slot = "items";
+                    newElement.addEventListener('remove-clicked', e => this.removeChild(newElement));
                     this.appendChild(newElement);
                 })
             }
 
-            get value() {
-                return this._value;
-            }
-
-            set value(newValue) {
-                this._value = newValue;
-
-            }
         }
         customElements.define("localized-text-editor", LocalizedTextEditor)
     </script>
 </head>
-<localized-text-editor>
-    <localized-text locale-name="pl" text-value="abcd" slot="items"></localized-text>
-</localized-text-editor>
+
+<body>
+
+    <localized-text-editor>
+        <localized-text locale-name="pl" text-value="abcd"></localized-text>
+    </localized-text-editor>
+</body>
 
 </html>
